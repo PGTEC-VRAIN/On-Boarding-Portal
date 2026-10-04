@@ -4,7 +4,7 @@
     <fieldset class="pg-card pg-fieldset">
         <legend class="pg-visually-hidden">{{ ui.t('form.entityGroup') }}</legend>
         <div class="pg-fieldset-title" aria-hidden="true">
-            <app-icon name="building" [size]="22" />
+            <app-icon icon="building" [size]="22" />
             <h2 class="pg-h3">{{ ui.t('form.entityGroup') }}</h2>
         </div>
         <div class="pg-field-grid">
@@ -63,7 +63,7 @@
         <div class="pg-actions__end">
             <button type="submit" class="pg-btn pg-btn--primary">
                 {{ ui.t('form.next') }}
-                <app-icon name="arrow-right" [size]="18" />
+                <app-icon icon="arrow-right" [size]="18" />
             </button>
         </div>
     </div>
@@ -75,7 +75,7 @@
     <fieldset class="pg-card pg-fieldset">
         <legend class="pg-visually-hidden">{{ ui.t('form.contactGroup') }}</legend>
         <div class="pg-fieldset-title" aria-hidden="true">
-            <app-icon name="mail" [size]="22" />
+            <app-icon icon="mail" [size]="22" />
             <h2 class="pg-h3">{{ ui.t('form.contactGroup') }}</h2>
         </div>
         @let email = contactForm.get('email');
@@ -90,7 +90,7 @@
     <fieldset class="pg-card pg-fieldset">
         <legend class="pg-visually-hidden">{{ ui.t('form.didGroup') }}</legend>
         <div class="pg-fieldset-title" aria-hidden="true">
-            <app-icon name="id-card" [size]="22" />
+            <app-icon icon="id-card" [size]="22" />
             <h2 class="pg-h3">{{ ui.t('form.didGroup') }}</h2>
         </div>
         @let did = contactForm.get('did');
@@ -108,7 +108,7 @@
         <div class="pg-actions__end">
             <button type="submit" class="pg-btn pg-btn--primary">
                 {{ ui.t('form.next') }}
-                <app-icon name="arrow-right" [size]="18" />
+                <app-icon icon="arrow-right" [size]="18" />
             </button>
         </div>
     </div>
@@ -120,7 +120,7 @@
     @if (pdfDocumentUrl) {
     <section class="pg-card contract-card">
         <div class="contract-thumb" aria-hidden="true">
-            <app-icon name="file-text" [size]="40" [strokeWidth]="1.5" />
+            <app-icon icon="file-text" [size]="40" [strokeWidth]="1.5" />
         </div>
         <div class="contract-info">
             <h2 class="pg-h3 contract-title">{{ ui.t('form.contractTitle') }}</h2>
@@ -128,12 +128,12 @@
         </div>
         <div class="contract-actions">
             <a class="pg-btn pg-btn--secondary" [href]="pdfDocumentUrl" target="_blank" rel="noopener noreferrer">
-                <app-icon name="external" [size]="18" />
+                <app-icon icon="external" [size]="18" />
                 {{ ui.t('form.viewContract') }}<span class="pg-visually-hidden"> {{ ui.t('common.newTab') }}</span>
             </a>
             <a class="pg-btn pg-btn--primary" [href]="pdfDocumentUrl" download target="_blank"
                 rel="noopener noreferrer">
-                <app-icon name="download" [size]="18" />
+                <app-icon icon="download" [size]="18" />
                 {{ ui.t('form.downloadPdf') }}
             </a>
         </div>
@@ -143,11 +143,11 @@
     <section class="pg-card card-section">
         <h2 class="pg-h3">{{ ui.t('form.essentialsTitle') }}</h2>
         <ul class="pg-check-list pg-check-list--primary">
-            <li><app-icon name="check" />{{ ui.t('form.essential1') }}</li>
-            <li><app-icon name="check" />{{ ui.t('form.essential2') }}</li>
-            <li><app-icon name="check" />{{ ui.t('form.essential3') }}</li>
-            <li><app-icon name="check" />{{ ui.t('form.essential4') }}</li>
-            <li><app-icon name="check" />{{ ui.t('form.essential5') }}</li>
+            <li><app-icon icon="check" />{{ ui.t('form.essential1') }}</li>
+            <li><app-icon icon="check" />{{ ui.t('form.essential2') }}</li>
+            <li><app-icon icon="check" />{{ ui.t('form.essential3') }}</li>
+            <li><app-icon icon="check" />{{ ui.t('form.essential4') }}</li>
+            <li><app-icon icon="check" />{{ ui.t('form.essential5') }}</li>
         </ul>
         <p class="pg-note">{{ ui.t('form.essentialsNote') }}</p>
     </section>
@@ -200,7 +200,7 @@
         <div class="pg-actions__end">
             <button type="submit" class="pg-btn pg-btn--primary" [disabled]="isProcessing()">
                 {{ isProcessing() ? ui.t('form.submitting') : ui.t('form.submit') }}
-                <app-icon name="send" [size]="18" />
+                <app-icon icon="send" [size]="18" />
             </button>
         </div>
     </div>

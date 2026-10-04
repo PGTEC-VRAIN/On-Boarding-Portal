@@ -16,7 +16,7 @@ const STATUS_ICONS: Record<RegistrationStatus, IconName> = {
   selector: 'app-status-tag',
   imports: [Icon],
   template: `<span class="tag" [attr.data-status]="status()">
-    <app-icon [name]="icon()" [size]="16" />{{ ui.t('status.' + status()) }}</span>`,
+    <app-icon [icon]="icon()" [size]="16" />{{ ui.t('status.' + status()) }}</span>`,
   styleUrl: './status-tag.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

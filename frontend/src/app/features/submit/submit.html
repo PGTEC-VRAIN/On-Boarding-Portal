@@ -13,7 +13,7 @@
             <app-step-indicator [heading]="ui.t('wizard.yourApplication')" [steps]="steps()"
                 [current]="currentStep()" />
             <p class="aside-note">
-                <app-icon name="globe" [size]="18" />
+                <app-icon icon="globe" [size]="18" />
                 <span>
                     {{ ui.t('wizard.helpPrefix') }}
                     <a [href]="ui.projectWebsiteUrl" target="_blank" rel="noopener noreferrer">{{
@@ -22,13 +22,13 @@
             </p>
             <p class="aside-note">
                 @if (mode() === 'register') {
-                <app-icon name="search" [size]="18" />
+                <app-icon icon="search" [size]="18" />
                 <span>
                     {{ ui.t('wizard.trackPrompt') }}
                     <a routerLink="/submit" fragment="search">{{ ui.t('wizard.trackLink') }}</a>
                 </span>
                 } @else {
-                <app-icon name="pen" [size]="18" />
+                <app-icon icon="pen" [size]="18" />
                 <span>
                     {{ ui.t('wizard.newPrompt') }}
                     <a routerLink="/submit" fragment="register">{{ ui.t('wizard.newLink') }}</a>
@@ -44,7 +44,7 @@
 
             @if (submittedId(); as id) {
             <section class="pg-card success-card" role="status">
-                <span class="success-icon"><app-icon name="check" [size]="22" [strokeWidth]="3" /></span>
+                <span class="success-icon"><app-icon icon="check" [size]="22" [strokeWidth]="3" /></span>
                 <div class="success-body">
                     <h2 class="pg-h3">{{ ui.t('form.submitSuccessTitle') }}</h2>
                     <p>{{ ui.t('form.submitSuccessDesc') }}</p>
@@ -65,7 +65,7 @@
                         spellcheck="false" [placeholder]="ui.t('submit.trackingId')" aria-describedby="search-desc"
                         [(ngModel)]="trackingId">
                     <button type="submit" class="pg-btn pg-btn--primary" [disabled]="!trackingId.trim() || isProcessing()">
-                        <app-icon name="search" [size]="18" />
+                        <app-icon icon="search" [size]="18" />
                         {{ ui.t('track.searchBtn') }}
                     </button>
                 </form>
@@ -89,7 +89,7 @@
             @if ((trackedRegistration() || submittedId()) && !_editing()) {
             <div class="pg-actions">
                 <button type="button" class="pg-btn pg-btn--secondary" (click)="lookUpAnother()">
-                    <app-icon name="search" [size]="18" />
+                    <app-icon icon="search" [size]="18" />
                     {{ ui.t('track.another') }}
                 </button>
             </div>

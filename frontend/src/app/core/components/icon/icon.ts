@@ -47,12 +47,13 @@ export type IconName = keyof typeof ICONS;
 export class Icon {
   private readonly sanitizer = inject(DomSanitizer);
 
-  readonly name = input.required<IconName>();
+  // Named `icon` rather than `name`: a `name` attribute would be matched by the router's anchor scrolling.
+  readonly icon = input.required<IconName>();
   readonly size = input<number>(20);
   readonly strokeWidth = input<number>(2);
 
   // Markup comes from the static ICONS map above, never from user input.
   protected readonly markup = computed<SafeHtml>(() =>
-    this.sanitizer.bypassSecurityTrustHtml(ICONS[this.name()] ?? ''),
+    this.sanitizer.bypassSecurityTrustHtml(ICONS[this.icon()] ?? ''),
   );
 }

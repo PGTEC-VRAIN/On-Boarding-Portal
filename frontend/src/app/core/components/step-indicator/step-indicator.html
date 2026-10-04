@@ -9,7 +9,7 @@
             [attr.aria-current]="state === 'current' ? 'step' : null">
             <span class="indicator-marker" aria-hidden="true">
                 @if (state === 'done') {
-                <app-icon name="check" [size]="18" [strokeWidth]="3" />
+                <app-icon icon="check" [size]="18" [strokeWidth]="3" />
                 } @else {
                 {{ i + 1 }}
                 }

@@ -5,10 +5,10 @@
         <div class="timeline-rail" aria-hidden="true">
             <span class="timeline-marker">
                 @switch (item.state) {
-                @case ('done') { <app-icon name="check" [size]="18" [strokeWidth]="3" /> }
-                @case ('current') { <app-icon name="clock" [size]="18" [strokeWidth]="2.5" /> }
-                @case ('warning') { <app-icon name="alert" [size]="18" [strokeWidth]="2.5" /> }
-                @case ('error') { <app-icon name="x" [size]="18" [strokeWidth]="3" /> }
+                @case ('done') { <app-icon icon="check" [size]="18" [strokeWidth]="3" /> }
+                @case ('current') { <app-icon icon="clock" [size]="18" [strokeWidth]="2.5" /> }
+                @case ('warning') { <app-icon icon="alert" [size]="18" [strokeWidth]="2.5" /> }
+                @case ('error') { <app-icon icon="x" [size]="18" [strokeWidth]="3" /> }
                 }
             </span>
             @if (!last) {
