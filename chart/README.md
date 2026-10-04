@@ -40,7 +40,7 @@ The application expects specific keys within those secrets. If your existing sec
 | Parameter | Description |
 | --- | --- |
 | `config.app.documentToSignUrl` | External URL for the document to be signed. |
-| `config.app.marketplaceUrl` | URL of the data space catalogue, linked from the header ("Catálogo"). The link is hidden when empty. |
+| `config.app.marketplaceUrl` | Marketplace URL. When set, the header shows a "Marketplace" button, the landing page a separate "Also at PGTEC" card and the footer a link; all hidden if empty. Can be read from an env var defined in `extraEnvVars` (e.g. `"${APP_MARKETPLACE_URL}"`). |
 | `config.app.keycloakAdminUrl` | Keycloak admin console URL (e.g. `https://onboarding-admin.example.com/admin/`). When set, a "Keycloak Admin" button is shown in the admin portal toolbar; hidden if empty. |
 | `config.app.login.openIdUrl` | Full OIDC discovery endpoint (must be reachable by the Pod) |
 | `config.app.tir.url` | Internal endpoint for the Trust Anchor Service. |

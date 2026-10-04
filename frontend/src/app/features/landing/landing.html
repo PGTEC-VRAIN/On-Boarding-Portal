@@ -21,6 +21,9 @@
       </div>
       <img class="hero-logo" src="/logos/logo_PGTEC.png" [alt]="ui.t('landing.logoAlt')" width="300" height="371" />
       <app-track-callout class="hero-track" />
+      @if (ui.marketplaceUrl) {
+      <app-marketplace-callout class="hero-market" />
+      }
       <a class="hero-trust" href="https://cred.digital.gob.es/espacios-de-datos/lista-de-confianza-de-espacios-de-datos" target="_blank" rel="noopener noreferrer">
         <img src="/logos/logo_EDC.svg" [alt]="ui.t('landing.trustLogoAlt')" width="208" height="56" />
         <span class="hero-trust-text">

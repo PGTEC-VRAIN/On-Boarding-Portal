@@ -145,6 +145,12 @@
     }
 }
 
+@media (max-width: 900px) {
+    .brand-tagline {
+        display: none;
+    }
+}
+
 @media (max-width: 720px) {
     .brand-tagline,
     .collapsible-label,

@@ -37,6 +37,9 @@
                 <a [href]="documentUrl" target="_blank" rel="noopener noreferrer">{{ ui.t('footer.agreement') }}</a>
                 }
                 <a routerLink="/submit" fragment="search">{{ ui.t('footer.status') }}</a>
+                @if(ui.marketplaceUrl) {
+                <a [href]="ui.marketplaceUrl" target="_blank" rel="noopener noreferrer">{{ ui.t('toolbar.marketplace') }}</a>
+                }
                 <a [href]="ui.projectWebsiteUrl" target="_blank" rel="noopener noreferrer">{{ ui.t('footer.project') }}</a>
                 <a [href]="ui.connectorRepositoryUrl" target="_blank" rel="noopener noreferrer">GitHub</a>
             </nav>

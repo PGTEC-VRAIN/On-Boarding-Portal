@@ -1,0 +1,75 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.callout-eyebrow {
+    margin: 4px 0 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--pgtec-muted);
+
+    &::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: var(--pgtec-line);
+    }
+}
+
+.callout {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 16px;
+    border: 1.5px dashed var(--pgtec-input-border);
+    border-radius: var(--pgtec-radius-md);
+    color: var(--pgtec-muted);
+    text-decoration: none;
+
+    &:hover {
+        border-style: solid;
+        border-color: var(--pgtec-indigo);
+        color: var(--pgtec-link);
+    }
+}
+
+.callout-icon {
+    flex: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--pgtec-soft);
+    color: var(--pgtec-ink);
+}
+
+.callout-text {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.callout-title {
+    font-weight: 700;
+    color: var(--pgtec-ink);
+}
+
+.callout-desc {
+    font-size: 14px;
+    color: var(--pgtec-body);
+}
+
+.callout-arrow {
+    flex: none;
+}

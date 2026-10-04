@@ -2,9 +2,6 @@
 
 <!-- PROJECT SHIELDS -->
 [![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
 [![Apache 2.0 License][license-shield]][license-url]
 [![Release][release-shield]][release-url]
 
@@ -97,14 +94,10 @@ The UI follows the design handoff in [docs/rediseño_pgtec-onboarding-handoff](d
 
 ### Built With
 
-* [![Angular][Angular-shield]][Angular-url]
-* [![TypeScript][TypeScript-shield]][TypeScript-url]
-* [![Node.js][Node-shield]][Node-url]
-* [![Express][Express-shield]][Express-url]
-* [![PostgreSQL][PostgreSQL-shield]][PostgreSQL-url]
-* [![Keycloak][Keycloak-shield]][Keycloak-url]
-* [![Docker][Docker-shield]][Docker-url]
-* [![Helm][Helm-shield]][Helm-url]
+| Frontend | Backend | Identity & data | Deployment |
+|:---:|:---:|:---:|:---:|
+| [![Angular][Angular-shield]][Angular-url] | [![Node.js][Node-shield]][Node-url] | [![Keycloak][Keycloak-shield]][Keycloak-url] | [![Docker][Docker-shield]][Docker-url] |
+| [![TypeScript][TypeScript-shield]][TypeScript-url] | [![Express][Express-shield]][Express-url] | [![PostgreSQL][PostgreSQL-shield]][PostgreSQL-url] | [![Helm][Helm-shield]][Helm-url] |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -769,12 +762,6 @@ Project Link: [https://github.com/PGTEC-VRAIN/On-Boarding-Portal](https://github
 <!-- MARKDOWN LINKS & IMAGES -->
 [contributors-shield]: https://img.shields.io/github/contributors/PGTEC-VRAIN/On-Boarding-Portal.svg?style=for-the-badge
 [contributors-url]: https://github.com/PGTEC-VRAIN/On-Boarding-Portal/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/PGTEC-VRAIN/On-Boarding-Portal.svg?style=for-the-badge
-[forks-url]: https://github.com/PGTEC-VRAIN/On-Boarding-Portal/network/members
-[stars-shield]: https://img.shields.io/github/stars/PGTEC-VRAIN/On-Boarding-Portal.svg?style=for-the-badge
-[stars-url]: https://github.com/PGTEC-VRAIN/On-Boarding-Portal/stargazers
-[issues-shield]: https://img.shields.io/github/issues/PGTEC-VRAIN/On-Boarding-Portal.svg?style=for-the-badge
-[issues-url]: https://github.com/PGTEC-VRAIN/On-Boarding-Portal/issues
 [license-shield]: https://img.shields.io/github/license/PGTEC-VRAIN/On-Boarding-Portal.svg?style=for-the-badge
 [license-url]: https://github.com/PGTEC-VRAIN/On-Boarding-Portal/blob/main/LICENSE
 [release-shield]: https://img.shields.io/github/v/tag/PGTEC-VRAIN/On-Boarding-Portal.svg?style=for-the-badge&label=release

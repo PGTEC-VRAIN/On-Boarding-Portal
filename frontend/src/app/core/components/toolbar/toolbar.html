@@ -17,11 +17,6 @@
                 {{ ui.t('toolbar.navGovernance') }}<span class="pg-visually-hidden"> {{ ui.t('common.newTab') }}</span>
             </a>
             }
-            @if(ui.marketplaceUrl) {
-            <a [href]="ui.marketplaceUrl" target="_blank" rel="noopener noreferrer">
-                {{ ui.t('toolbar.navCatalog') }}<span class="pg-visually-hidden"> {{ ui.t('common.newTab') }}</span>
-            </a>
-            }
         </nav>
         }
 
@@ -47,6 +42,13 @@
             }
 
             @if(!showUserMenu) {
+            @if(ui.marketplaceUrl) {
+            <a class="pg-btn pg-btn--secondary pg-btn--small" [href]="ui.marketplaceUrl" target="_blank"
+                rel="noopener noreferrer" [attr.aria-label]="ui.t('toolbar.marketplace') + ' ' + ui.t('common.newTab')">
+                <app-icon icon="store" [size]="18" />
+                <span class="collapsible-label">{{ ui.t('toolbar.marketplace') }}</span>
+            </a>
+            }
             <a class="pg-btn pg-btn--primary pg-btn--small cta" routerLink="/submit" fragment="register">
                 {{ ui.t('toolbar.start') }}
             </a>
@@ -64,7 +66,7 @@
                 }
                 @if(ui.marketplaceUrl) {
                 <a mat-menu-item [href]="ui.marketplaceUrl" target="_blank" rel="noopener noreferrer">
-                    {{ ui.t('toolbar.navCatalog') }}
+                    {{ ui.t('toolbar.marketplace') }}
                 </a>
                 }
                 <a mat-menu-item routerLink="/submit" fragment="register">{{ ui.t('toolbar.start') }}</a>

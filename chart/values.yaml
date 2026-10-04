@@ -154,6 +154,9 @@ config:
     # -- Show the light/dark switch in the header. The theme follows the OS preference by default.
     enableThemeToggle: true
     projectWebsiteUrl: "https://pgtec.webs.upv.es/"
+    # -- Marketplace URL. When set, the header shows a "Marketplace" button, the landing page a
+    # separate "Also at PGTEC" card and the footer a link; all hidden if empty. It can also come from an env var through
+    # `extraEnvVars`, e.g. marketplaceUrl: "${APP_MARKETPLACE_URL}".
     marketplaceUrl: ""
     # -- Keycloak admin console URL (e.g. https://onboarding-admin.example.com/admin/).
     # When set, a button to open it is shown in the admin portal toolbar.

@@ -11,6 +11,7 @@
   grid-template-areas:
     'copy logo'
     'track seal'
+    'market .'
     'meta .';
   column-gap: 48px;
   row-gap: 24px;
@@ -108,6 +109,11 @@
 
 .hero-track {
   grid-area: track;
+  max-width: 600px;
+}
+
+.hero-market {
+  grid-area: market;
   max-width: 600px;
 }
 
@@ -327,6 +333,7 @@ $waves-gap: 52px;
       'copy'
       'track'
       'seal'
+      'market'
       'meta';
     padding-top: 56px;
     padding-bottom: 64px;
@@ -335,6 +342,7 @@ $waves-gap: 52px;
   .hero-copy,
   .hero-track,
   .hero-trust,
+  .hero-market,
   .hero-meta {
     position: relative;
     z-index: 1;
@@ -351,7 +359,8 @@ $waves-gap: 52px;
     mask-image: linear-gradient(to bottom, #000 35%, transparent 95%);
   }
 
-  .hero-track {
+  .hero-track,
+  .hero-market {
     max-width: none;
   }
 
