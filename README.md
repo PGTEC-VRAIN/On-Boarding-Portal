@@ -1,26 +1,121 @@
-# PGTEC Onboarding Portal
+<a id="readme-top"></a>
 
-This repository contains the code for the Onboarding Portal of the [PGTEC](https://pgtec.webs.upv.es/) data space (Plataforma para la Gestión de prevención Temprana de Emergencias Climáticas), operated by VRAIN - Universitat Politècnica de València. The Onboarding Portal is the web application where an organization applies to join the data space: it registers the entity, collects the signed accession agreement and lets applicants track the review of their application.
+<!-- PROJECT SHIELDS -->
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![Apache 2.0 License][license-shield]][license-url]
+[![Release][release-shield]][release-url]
 
-[![Onboarding Portal Screenshot](imgs/onboading-portal.png)](https://onboarding.pgtec-vrain-dataspace.eu/)
 
-## About the upstream project
 
-A self-service portal that allows organizations to register on a decentralized trust infrastructure. Upon submission, the platform provisions a dedicated Keycloak realm, generates a DID (`did:web`), and registers the organization in the Trust Issuer Registry (TIR).
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/PGTEC-VRAIN/On-Boarding-Portal">
+    <img src="frontend/public/logos/logo_PGTEC.png" alt="PGTEC logo" width="80">
+  </a>
 
-## Table of Contents
+  <h3 align="center">PGTEC Onboarding Portal</h3>
 
-- [Prerequisites](#prerequisites)
-- [Onboarding Flow](#onboarding-flow)
-- [Configuration](#configuration)
-- [Enabling Dynamic DID Generation](#enabling-dynamic-did-generation)
-- [Running Locally (Development)](#running-locally-development)
-- [Running with Docker](#running-with-docker)
-- [Deploying with Helm (Kubernetes)](#deploying-with-helm-kubernetes)
-- [API Reference](#api-reference)
+  <p align="center">
+    Self-service portal for organizations that want to join the PGTEC trusted data space.
+    <br />
+    <a href="#getting-started"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://onboarding.pgtec-vrain-dataspace.eu/">View Demo</a>
+    &middot;
+    <a href="https://github.com/PGTEC-VRAIN/On-Boarding-Portal/issues/new?labels=bug">Report Bug</a>
+    &middot;
+    <a href="https://github.com/PGTEC-VRAIN/On-Boarding-Portal/issues/new?labels=enhancement">Request Feature</a>
+  </p>
+</div>
 
----
-## Prerequisites
+
+
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#usage">Usage</a>
+      <ul>
+        <li><a href="#onboarding-flow">Onboarding Flow</a></li>
+        <li><a href="#configuration">Configuration</a></li>
+        <li><a href="#enabling-dynamic-did-generation">Enabling Dynamic DID Generation</a></li>
+        <li><a href="#running-with-docker">Running with Docker</a></li>
+        <li><a href="#deploying-with-helm-kubernetes">Deploying with Helm (Kubernetes)</a></li>
+        <li><a href="#releases">Releases</a></li>
+      </ul>
+    </li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
+  </ol>
+</details>
+
+
+
+<!-- ABOUT THE PROJECT -->
+## About The Project
+
+[![PGTEC Onboarding Portal screenshot][product-screenshot]](https://onboarding.pgtec-vrain-dataspace.eu/)
+
+[PGTEC](https://pgtec.webs.upv.es/) (Plataforma para la Gestión de prevención Temprana de Emergencias Climáticas) is a VRAIN - Universitat Politècnica de València project that operates a trusted data space for meteorological, hydrological and environmental data, listed in the [CRED trusted data spaces list](https://cred.digital.gob.es/espacios-de-datos/lista-de-confianza-de-espacios-de-datos).
+
+The Onboarding Portal is where an organization applies to join the data space. Upon approval, the platform provisions a dedicated Keycloak realm, generates a DID (`did:web`) and registers the organization in the Trust Issuer Registry (TIR).
+
+Key features:
+* **Guided application** in four steps: organization details, contact and DID, signed accession agreement, and status.
+* **Application tracking** with a public status page (`/submit?id=<id>#search`) linked from every notification email.
+* **Admin review panel** to approve, reject or request changes, protected by OpenID Connect.
+* **Automatic provisioning** of the Keycloak realm, `did:web` identifier and TIR/TIL registration.
+* **PGTEC design system**: brand tokens in `frontend/src/styles/_pgtec-tokens.scss`, light/dark theme that follows the operating system, Spanish and English.
+
+The UI follows the design handoff in [docs/rediseño_pgtec-onboarding-handoff](docs/rediseño_pgtec-onboarding-handoff/HANDOFF.md).
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+### Built With
+
+* [![Angular][Angular-shield]][Angular-url]
+* [![TypeScript][TypeScript-shield]][TypeScript-url]
+* [![Node.js][Node-shield]][Node-url]
+* [![Express][Express-shield]][Express-url]
+* [![PostgreSQL][PostgreSQL-shield]][PostgreSQL-url]
+* [![Keycloak][Keycloak-shield]][Keycloak-url]
+* [![Docker][Docker-shield]][Docker-url]
+* [![Helm][Helm-shield]][Helm-url]
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- GETTING STARTED -->
+## Getting Started
+
+The quickest way to get a local copy running is the Docker Compose stack (PostgreSQL + portal). To develop on the code, run the backend and the frontend separately.
+
+### Prerequisites
 
 | Dependency | Version | Purpose |
 |---|---|---|
@@ -49,7 +144,36 @@ A self-service portal that allows organizations to register on a decentralized t
 > did-helper publishes each realm's verification method as `<did>#<kid>`, reading the `kid`
 > straight from the realm's JWKS.
 
-## Onboarding Flow
+### Installation
+
+1. Clone the repo
+   ```sh
+   git clone https://github.com/PGTEC-VRAIN/On-Boarding-Portal.git
+   cd On-Boarding-Portal
+   ```
+2. Start the local stack (PostgreSQL + portal, configured by `local/config/application.yaml`)
+   ```sh
+   make local-up
+   ```
+   The portal is available at `http://localhost:8082`. Stop it with `make local-down`, or `make local-reset` to also drop the data volumes.
+3. For development, run the backend and the frontend separately
+   ```sh
+   # Terminal 1 — backend (TypeScript watch mode)
+   cd backend && pnpm install && pnpm run dev
+
+   # Terminal 2 — frontend (Angular dev server with hot reload)
+   cd frontend && pnpm install && pnpm start
+   ```
+   In development the frontend calls the backend at `http://localhost:8080` (see `frontend/src/environments/environment.ts`).
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- USAGE -->
+## Usage
+
+### Onboarding Flow
 
 The following describes the end-to-end lifecycle of an organization joining the trust infrastructure.
 
@@ -57,11 +181,11 @@ The following describes the end-to-end lifecycle of an organization joining the 
 
 > **Dynamic DID creation:** By default the registration form requires the applicant to supply an existing DID. To let the portal generate one automatically, enable the `didCreationEnabled` flag — see [Enabling Dynamic DID Generation](#enabling-dynamic-did-generation).
 
-### Step 1 — Registration request
+#### Step 1 — Registration request
 
 A representative of the new organization fills in the registration form in the portal and submits it. The portal saves the request and sends a confirmation email to the applicant.
 
-### Step 2 — Admin review
+#### Step 2 — Admin review
 
 A portal administrator reviews the pending request in the admin panel. Once satisfied, the admin approves the application. The portal then automatically:
 
@@ -69,7 +193,7 @@ A portal administrator reviews the pending request in the admin panel. Once sati
 - Generates a `did:web` identifier and registers it with the did-helper.
 - Registers the organization in the Trust Issuer Registry (TIR).
 
-### Step 3 — Welcome emails
+#### Step 3 — Welcome emails
 
 Upon approval the organization contact receives **two emails**:
 
@@ -97,7 +221,7 @@ Upon approval the organization contact receives **two emails**:
 
 > **Important:** The default admin user created automatically in each realm (configured via `app.keycloak.adminUserConfig`) has realm-management privileges but **cannot issue Verifiable Credentials**. VC issuance requires a regular user with the `consumer` role assigned (see Step 4).
 
-### Step 4 — User provisioning
+#### Step 4 — User provisioning
 
 The organization admin must log into the Keycloak admin console and create end users within their realm. Each user that needs to issue VCs must be assigned the **`consumer`** role, which is defined by default in the provisioned realm.
 
@@ -105,11 +229,11 @@ The organization admin must log into the Keycloak admin console and create end u
 Admin console → Users → Add user → Assign role: consumer
 ```
 
----
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Configuration
+### Configuration
 
-### Full configuration reference
+#### Full configuration reference
 
 ```yaml
 # ──────────────────────────────────────────────
@@ -374,7 +498,7 @@ didGenerator:
   didWebHost: did:web:example.com    # Base domain for generated did:web identifiers
 ```
 
-### Environment variable substitution
+#### Environment variable substitution
 
 Any value in the YAML can reference an environment variable using `${VAR_NAME}`:
 
@@ -385,7 +509,7 @@ database:
 
 If the variable is not set the literal string `${DB_PASSWORD}` is used — make sure all substitutions are resolved before starting the app.
 
-### Keycloak realm template variables
+#### Keycloak realm template variables
 
 Several fields inside `app.keycloak.defaultRealmConfig` and `app.keycloak.additionalClientScopes` contain `${DID}`, `${REALM}`, and `${ID}` placeholders. These are **not** environment variables and must not be replaced by the operator — they are resolved automatically at runtime each time a new Keycloak realm is provisioned:
 
@@ -397,7 +521,7 @@ Several fields inside `app.keycloak.defaultRealmConfig` and `app.keycloak.additi
 
 These placeholders allow the realm template to reference its own DID and name without hardcoding them, so every provisioned realm gets its own correctly scoped client and credential configuration.
 
-### OID4VCI credential model
+#### OID4VCI credential model
 
 The realm template targets the OID4VCI model introduced in **Keycloak 26.4**
 ([keycloak#39768](https://github.com/keycloak/keycloak/pull/39768)) and is **not backwards
@@ -438,17 +562,17 @@ endpoint answers `403 invalid_client`.
 > Users added later from the organization's own Keycloak console will not be able to obtain the
 > credential until that list is set on them — Keycloak offers no realm-wide default.
 
----
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Enabling Dynamic DID Generation
+### Enabling Dynamic DID Generation
 
 By default (`didCreationEnabled: false`) the registration form requires applicants to provide an existing DID. When dynamic generation is enabled, the portal creates a `did:web` identifier automatically during realm provisioning, so applicants do not need to supply one.
 
-### Prerequisites
+#### Prerequisites
 
 - A running [did-helper](https://github.com/SEAMWARE/did-helper) instance with Keycloak integration enabled. Without it the generated DID cannot be resolved and VC issuance will fail.
 
-### Configuration
+#### Configuration
 
 1. Set the flag in `application.yaml`:
 
@@ -467,43 +591,24 @@ By default (`didCreationEnabled: false`) the registration form requires applican
 
    At provisioning time the portal derives the full DID by appending the generated realm name: `did:web:example.com:<realm-name>`.
 
-### Behavior when the flag is `false` (default)
+#### Behavior when the flag is `false` (default)
 
 - The registration form shows a DID input field and will not accept submissions without one.
 - The portal skips DID generation entirely on approval; the applicant-supplied DID is used for Keycloak realm configuration and TIR registration.
 
----
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Running Locally (Development)
+### Running with Docker
 
-```bash
-# Terminal 1 — backend (TypeScript watch mode)
-cd backend && pnpm install && pnpm run dev
+Build the image (multi-stage: compiles the backend and bundles the frontend):
 
-# Terminal 2 — frontend (Angular dev server with hot reload)
-cd frontend && pnpm install && pnpm start
-```
-
-The frontend dev server proxies `/api` calls to `http://localhost:8080` automatically.
-
----
-
-## Running with Docker
-
-### Build the image
-
-```bash
-# Build frontend first
-cd frontend && pnpm install && pnpm build
-cd ..
-
-# Build the Docker image (multi-stage: compiles backend + bundles frontend)
+```sh
 docker build -t onboarding-pgtec:0.1 .
 ```
 
-### Run the container
+Run the container:
 
-```bash
+```sh
 docker run -p 8080:8080 \
   -v $(pwd)/backend/src/config/application.yaml:/app/application.yaml \
   -v $(pwd)/files:/app/files \
@@ -514,22 +619,20 @@ The application is available at `http://localhost:8080`.
 
 > Mount a host directory to `/app/files` to persist uploaded files across container restarts.
 
----
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Deploying with Helm (Kubernetes)
+### Deploying with Helm (Kubernetes)
 
-The `chart/` directory contains a production-ready Helm chart.
+The `chart/` directory contains a production-ready Helm chart (see [chart/README.md](chart/README.md) for every value).
 
-### Install
-
-```bash
+```sh
 helm upgrade --install onboarding-pgtec ./chart \
   --set ingress.enabled=true \
   --set ingress.hosts[0].host=onboarding.example.com \
   -f my-values.yaml
 ```
 
-### Key `values.yaml` options
+Key `values.yaml` options:
 
 ```yaml
 replicaCount: 1
@@ -574,3 +677,122 @@ persistence:
   size: 5Gi
   storageClass: ""
 ```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Releases
+
+Versioning starts at `0.1`. Pushing a tag named `onboarding-pgtec-<version>` from `main` runs the [release workflow](.github/workflows/release.yaml), which:
+
+* builds and pushes the multi-arch image `ghcr.io/pgtec-vrain/onboarding-pgtec:<version>`;
+* packages the Helm chart with `version: <version>.0` and `appVersion: <version>` and pushes it to `oci://ghcr.io/pgtec-vrain/helm`.
+
+```sh
+git tag onboarding-pgtec-0.1
+git push origin onboarding-pgtec-0.1
+```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- ROADMAP -->
+## Roadmap
+
+- [x] PGTEC branding and redesigned public portal (v0.1)
+- [x] Light/dark theme following the operating system
+- [ ] Support contact address and estimated verification time in the status page
+- [ ] Decide whether the participant profile (provider/consumer), legal representative and technical contact must be stored with the application
+- [ ] Links to the data space catalogue and help pages once they are published
+
+See the [open issues](https://github.com/PGTEC-VRAIN/On-Boarding-Portal/issues) for a full list of proposed features (and known issues).
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- CONTRIBUTING -->
+## Contributing
+
+Contributions are welcome. If you have a suggestion that would make this better, please fork the repo and create a pull request, or open an issue with the tag "enhancement".
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+### Top contributors:
+
+<a href="https://github.com/PGTEC-VRAIN/On-Boarding-Portal/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=PGTEC-VRAIN/On-Boarding-Portal" alt="contrib.rocks image" />
+</a>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- LICENSE -->
+## License
+
+Distributed under the Apache License 2.0. See [`LICENSE`](LICENSE) for more information.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- CONTACT -->
+## Contact
+
+PGTEC - VRAIN, Universitat Politècnica de València - [pgtec.webs.upv.es](https://pgtec.webs.upv.es/)
+
+Project Link: [https://github.com/PGTEC-VRAIN/On-Boarding-Portal](https://github.com/PGTEC-VRAIN/On-Boarding-Portal)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- ACKNOWLEDGMENTS -->
+## Acknowledgments
+
+* [SEAMWARE On-Boarding-Portal](https://github.com/SEAMWARE/On-Boarding-Portal), the upstream project this portal is based on
+* [did-helper](https://github.com/SEAMWARE/did-helper) and the [FIWARE Data Space Connector](https://github.com/FIWARE/data-space-connector)
+* [Centro de Referencia de Espacios de Datos (CRED)](https://cred.digital.gob.es/)
+* Funded by the European Union - NextGenerationEU, within the Recovery, Transformation and Resilience Plan
+* [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
+* [Img Shields](https://shields.io)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- MARKDOWN LINKS & IMAGES -->
+[contributors-shield]: https://img.shields.io/github/contributors/PGTEC-VRAIN/On-Boarding-Portal.svg?style=for-the-badge
+[contributors-url]: https://github.com/PGTEC-VRAIN/On-Boarding-Portal/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/PGTEC-VRAIN/On-Boarding-Portal.svg?style=for-the-badge
+[forks-url]: https://github.com/PGTEC-VRAIN/On-Boarding-Portal/network/members
+[stars-shield]: https://img.shields.io/github/stars/PGTEC-VRAIN/On-Boarding-Portal.svg?style=for-the-badge
+[stars-url]: https://github.com/PGTEC-VRAIN/On-Boarding-Portal/stargazers
+[issues-shield]: https://img.shields.io/github/issues/PGTEC-VRAIN/On-Boarding-Portal.svg?style=for-the-badge
+[issues-url]: https://github.com/PGTEC-VRAIN/On-Boarding-Portal/issues
+[license-shield]: https://img.shields.io/github/license/PGTEC-VRAIN/On-Boarding-Portal.svg?style=for-the-badge
+[license-url]: https://github.com/PGTEC-VRAIN/On-Boarding-Portal/blob/main/LICENSE
+[release-shield]: https://img.shields.io/github/v/tag/PGTEC-VRAIN/On-Boarding-Portal.svg?style=for-the-badge&label=release
+[release-url]: https://github.com/PGTEC-VRAIN/On-Boarding-Portal/tags
+[product-screenshot]: imgs/onboading-portal.png
+[Angular-shield]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
+[Angular-url]: https://angular.dev/
+[TypeScript-shield]: https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white
+[TypeScript-url]: https://www.typescriptlang.org/
+[Node-shield]: https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white
+[Node-url]: https://nodejs.org/
+[Express-shield]: https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white
+[Express-url]: https://expressjs.com/
+[PostgreSQL-shield]: https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white
+[PostgreSQL-url]: https://www.postgresql.org/
+[Keycloak-shield]: https://img.shields.io/badge/Keycloak-4D4D4D?style=for-the-badge&logo=keycloak&logoColor=white
+[Keycloak-url]: https://www.keycloak.org/
+[Docker-shield]: https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white
+[Docker-url]: https://www.docker.com/
+[Helm-shield]: https://img.shields.io/badge/Helm-0F1689?style=for-the-badge&logo=helm&logoColor=white
+[Helm-url]: https://helm.sh/
