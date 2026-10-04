@@ -53,7 +53,7 @@ export class UiPreferencesService {
             'toolbar.langSpanish': 'Spanish',
             'common.newTab': '(opens in a new tab)',
 
-            'landing.badge': 'Trusted data space · CRED Trust List',
+            'landing.badge': 'Trusted data space',
             'landing.trustBadge': 'Listed in the CRED Trust List',
             'landing.trustLogoAlt': 'Trusted data space',
             'landing.title': 'Join the data space for climate emergency prevention',
@@ -106,8 +106,7 @@ export class UiPreferencesService {
 
             'footer.logosLabel': 'Funding and institutions',
             'footer.links': 'Footer',
-            'footer.funding':
-                'Project within the sectoral data spaces call of the Data Spaces Reference Centre (CRED). Funded by the European Union – NextGenerationEU.',
+            'footer.funding': 'Funded by the European Union – NextGenerationEU.',
             'footer.governance': 'Governance Framework',
             'footer.agreement': 'Accession agreement (PDF)',
             'footer.status': 'Check an application',
@@ -353,7 +352,7 @@ export class UiPreferencesService {
             'toolbar.langSpanish': 'Español',
             'common.newTab': '(se abre en una pestaña nueva)',
 
-            'landing.badge': 'Espacio de datos de confianza · Lista del CRED',
+            'landing.badge': 'Espacio de datos de confianza',
             'landing.trustBadge': 'Incluido en la Lista de confianza del CRED',
             'landing.trustLogoAlt': 'Espacio de datos de confianza',
             'landing.title': 'Únete al espacio de datos para la prevención de emergencias climáticas',
@@ -406,8 +405,7 @@ export class UiPreferencesService {
 
             'footer.logosLabel': 'Financiación e instituciones',
             'footer.links': 'Pie de página',
-            'footer.funding':
-                'Proyecto enmarcado en la convocatoria de espacios de datos sectoriales del Centro de Referencia de Espacios de Datos (CRED). Financiado por la Unión Europea – NextGenerationEU.',
+            'footer.funding': 'Financiado por la Unión Europea – NextGenerationEU.',
             'footer.governance': 'Marco de Gobernanza',
             'footer.agreement': 'Contrato de adhesión (PDF)',
             'footer.status': 'Consultar una solicitud',

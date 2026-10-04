@@ -4,8 +4,6 @@ This repository contains the code for the Onboarding Portal of the [PGTEC](https
 
 [![Onboarding Portal Screenshot](imgs/onboading-portal.png)](https://onboarding.pgtec-vrain-dataspace.eu/)
 
-The UI follows the PGTEC design handoff in [docs/rediseño_pgtec-onboarding-handoff](docs/rediseño_pgtec-onboarding-handoff/HANDOFF.md). Design tokens live in `frontend/src/styles/_pgtec-tokens.scss`.
-
 ## About the upstream project
 
 A self-service portal that allows organizations to register on a decentralized trust infrastructure. Upon submission, the platform provisions a dedicated Keycloak realm, generates a DID (`did:web`), and registers the organization in the Trust Issuer Registry (TIR).

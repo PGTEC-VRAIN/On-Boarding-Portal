@@ -150,9 +150,18 @@
 }
 
 // Antenna waves from the PGTEC logo. The arcs' centre (420, 380 in the 760 viewBox,
-// scaled to 460px) sits on the top-right corner of the cards, which cover part of them.
+// scaled to 400px: 221px, 200px) sits just outside the top-right corner of the cards.
+// The outer arc ends ~29px below/left of the centre, so a 52px offset leaves ~20px of
+// air to the cards.
+$waves-gap: 52px;
+
 .roles-section {
   overflow: hidden;
+}
+
+// Extra room above the heading so the outer arc is not clipped by the section edge.
+.roles-inner.section--top {
+  padding-top: 120px;
 }
 
 .roles-inner .pg-section-head {
@@ -162,8 +171,8 @@
 
 .roles-waves {
   position: absolute;
-  left: calc(100% - 254px);
-  top: -230px;
+  left: calc(100% - 221px + #{$waves-gap});
+  top: calc(-200px - #{$waves-gap});
   opacity: 0.9;
   pointer-events: none;
 }
