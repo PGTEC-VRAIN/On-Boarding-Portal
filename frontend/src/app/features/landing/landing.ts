@@ -5,6 +5,7 @@ import { UiPreferencesService } from '../../core/services/ui-preferences';
 import { SiteFooter } from '../../core/components/site-footer/site-footer';
 import { ServerConfigService } from '../../core/services/server-config';
 import { Icon, IconName } from '../../core/components/icon/icon';
+import { TrackCallout } from '../../core/components/track-callout/track-callout';
 
 interface LandingItem {
   key: string;
@@ -18,7 +19,8 @@ interface LandingItem {
     RouterLink,
     Toolbar,
     SiteFooter,
-    Icon
+    Icon,
+    TrackCallout
   ],
   templateUrl: './landing.html',
   styleUrls: ['./landing.scss']

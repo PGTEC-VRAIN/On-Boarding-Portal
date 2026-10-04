@@ -13,6 +13,7 @@ import { StepIndicator, WizardStep } from '../../core/components/step-indicator/
 import { ApplicationStatus } from '../../core/components/application-status/application-status';
 import { CopyInput } from '../../core/components/copy-input/copy-input';
 import { Icon } from '../../core/components/icon/icon';
+import { TrackCallout } from '../../core/components/track-callout/track-callout';
 import { Registration } from '../../core/types/registration';
 import { RegistrationStatus } from '../../core/types/registration-status';
 
@@ -33,7 +34,8 @@ const STEP_HEADINGS = ['org', 'contact', 'contract', 'status'];
     StepIndicator,
     ApplicationStatus,
     CopyInput,
-    Icon
+    Icon,
+    TrackCallout
   ],
   templateUrl: './submit.html',
   styleUrl: './submit.scss',

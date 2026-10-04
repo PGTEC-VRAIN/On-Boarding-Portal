@@ -19,7 +19,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px 24px;
+    gap: 16px 20px;
     padding-top: 12px;
     padding-bottom: 12px;
 }
@@ -63,7 +63,7 @@
 .site-nav {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 16px;
 
     a {
         padding: 12px 4px;
@@ -135,13 +135,7 @@
     display: none;
 }
 
-@media (max-width: 1320px) {
-    .brand-tagline {
-        display: none;
-    }
-}
-
-@media (max-width: 1080px) {
+@media (max-width: 1180px) {
     .site-nav {
         display: none;
     }

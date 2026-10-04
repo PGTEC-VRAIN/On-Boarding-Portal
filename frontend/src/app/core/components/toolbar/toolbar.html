@@ -12,7 +12,6 @@
         @if(!showUserMenu) {
         <nav class="site-nav" [attr.aria-label]="ui.t('toolbar.mainNav')">
             <a routerLink="/" fragment="como-funciona">{{ ui.t('toolbar.navHow') }}</a>
-            <a routerLink="/" fragment="requisitos">{{ ui.t('toolbar.navRequirements') }}</a>
             @if(governanceUrl) {
             <a [href]="governanceUrl" target="_blank" rel="noopener noreferrer">
                 {{ ui.t('toolbar.navGovernance') }}<span class="pg-visually-hidden"> {{ ui.t('common.newTab') }}</span>
@@ -58,7 +57,6 @@
             </button>
             <mat-menu #navMenu="matMenu">
                 <a mat-menu-item routerLink="/" fragment="como-funciona">{{ ui.t('toolbar.navHow') }}</a>
-                <a mat-menu-item routerLink="/" fragment="requisitos">{{ ui.t('toolbar.navRequirements') }}</a>
                 @if(governanceUrl) {
                 <a mat-menu-item [href]="governanceUrl" target="_blank" rel="noopener noreferrer">
                     {{ ui.t('toolbar.navGovernance') }}

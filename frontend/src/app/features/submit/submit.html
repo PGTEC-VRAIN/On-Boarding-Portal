@@ -20,21 +20,17 @@
                         ui.t('wizard.helpLink') }}</a>
                 </span>
             </p>
+            @if (mode() === 'register') {
+            <app-track-callout />
+            } @else {
             <p class="aside-note">
-                @if (mode() === 'register') {
-                <app-icon icon="search" [size]="18" />
-                <span>
-                    {{ ui.t('wizard.trackPrompt') }}
-                    <a routerLink="/submit" fragment="search">{{ ui.t('wizard.trackLink') }}</a>
-                </span>
-                } @else {
                 <app-icon icon="pen" [size]="18" />
                 <span>
                     {{ ui.t('wizard.newPrompt') }}
                     <a routerLink="/submit" fragment="register">{{ ui.t('wizard.newLink') }}</a>
                 </span>
-                }
             </p>
+            }
         </aside>
 
         <div class="wizard-main">
