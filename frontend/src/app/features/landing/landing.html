@@ -1,28 +1,12 @@
 <app-toolbar />
 <main id="main" class="content-wrapper">
   <section class="hero">
-    <svg class="hero-waves" width="560" height="560" viewBox="0 0 760 760" aria-hidden="true" focusable="false">
-      <defs>
-        <linearGradient id="pgtec-waves" gradientUnits="userSpaceOnUse" x1="0" y1="760" x2="760" y2="0">
-          <stop offset="0" stop-color="#F8CD2B"></stop>
-          <stop offset="1" stop-color="#EE7306"></stop>
-        </linearGradient>
-      </defs>
-      <g fill="none" stroke="url(#pgtec-waves)" stroke-width="22" stroke-linecap="round">
-        <path d="M311.7 399.1 A110 110 0 1 1 400.9 488.3"></path>
-        <path d="M232.9 413.0 A190 190 0 1 1 387.0 567.1"></path>
-        <path d="M154.1 426.9 A270 270 0 1 1 373.1 645.9"></path>
-      </g>
-    </svg>
     <div class="pg-container hero-inner">
       <div class="hero-copy">
-        <a class="hero-trust" href="https://cred.digital.gob.es/espacios-de-datos-prin/lista-de-confianza"
-          target="_blank" rel="noopener noreferrer">
-          <img src="/logos/logo_EDC.svg" [alt]="ui.t('landing.trustLogoAlt')" width="208" height="56" />
-          <span class="hero-trust-text">
-            {{ ui.t('landing.trustBadge') }}<span class="pg-visually-hidden"> {{ ui.t('common.newTab') }}</span>
-          </span>
-        </a>
+        <p class="hero-badge">
+          <app-icon icon="shield-check" [size]="18" />
+          {{ ui.t('landing.badge') }}
+        </p>
         <h1 class="hero-title">{{ ui.t('landing.title') }}</h1>
         <p class="hero-subtitle">{{ ui.t('landing.subtitle') }}</p>
         <div class="hero-actions">
@@ -34,52 +18,71 @@
             {{ ui.t('landing.ctaRequirements') }}
           </a>
         </div>
-        <app-track-callout class="hero-track" />
-        <p class="hero-meta">{{ ui.t('landing.governance') }}</p>
       </div>
-      <div class="hero-media">
-        <img src="/logos/logo_PGTEC.png" [alt]="ui.t('landing.logoAlt')" width="300" height="371" />
-      </div>
+      <img class="hero-logo" src="/logos/logo_PGTEC.png" [alt]="ui.t('landing.logoAlt')" width="300" height="371" />
+      <app-track-callout class="hero-track" />
+      <a class="hero-trust" href="https://cred.digital.gob.es/espacios-de-datos/lista-de-confianza-de-espacios-de-datos" target="_blank" rel="noopener noreferrer">
+        <img src="/logos/logo_EDC.svg" [alt]="ui.t('landing.trustLogoAlt')" width="208" height="56" />
+        <span class="hero-trust-text">
+          {{ ui.t('landing.trustBadge') }}<span class="pg-visually-hidden"> {{ ui.t('common.newTab') }}</span>
+        </span>
+      </a>
+      <p class="hero-meta">{{ ui.t('landing.governance') }}</p>
     </div>
   </section>
 
-  <section id="roles" class="pg-container section section--top">
-    <div class="pg-section-head">
-      <p class="pg-eyebrow">{{ ui.t('landing.rolesEyebrow') }}</p>
-      <h2 class="pg-h2">{{ ui.t('landing.rolesTitle') }}</h2>
-    </div>
-    <div class="roles">
-      <article class="pg-card role-card">
-        <div class="pg-icon-tile pg-icon-tile--orange"><app-icon icon="database" [size]="28" /></div>
-        <h3 class="pg-h3 role-title">{{ ui.t('landing.providerTitle') }}</h3>
-        <p class="role-desc">{{ ui.t('landing.providerDesc') }}</p>
-        <ul class="pg-check-list">
-          <li><app-icon icon="check" />{{ ui.t('landing.providerPoint1') }}</li>
-          <li><app-icon icon="check" />{{ ui.t('landing.providerPoint2') }}</li>
-          <li><app-icon icon="check" />{{ ui.t('landing.providerPoint3') }}</li>
-        </ul>
-      </article>
-      <article class="pg-card role-card">
-        <div class="pg-icon-tile"><app-icon icon="search" [size]="28" /></div>
-        <h3 class="pg-h3 role-title">{{ ui.t('landing.consumerTitle') }}</h3>
-        <p class="role-desc">{{ ui.t('landing.consumerDesc') }}</p>
-        <ul class="pg-check-list">
-          <li><app-icon icon="check" />{{ ui.t('landing.consumerPoint1') }}</li>
-          <li><app-icon icon="check" />{{ ui.t('landing.consumerPoint2') }}</li>
-          <li><app-icon icon="check" />{{ ui.t('landing.consumerPoint3') }}</li>
-        </ul>
-      </article>
-    </div>
-    <div class="pg-card same-process">
-      <span class="pg-icon-tile pg-icon-tile--small"><app-icon icon="file-text" [size]="22" /></span>
-      <div class="same-process-text">
-        <h3 class="same-process-title">{{ ui.t('landing.sameProcessTitle') }}</h3>
-        <p>{{ ui.t('landing.sameProcessDesc') }}</p>
+  <section id="roles" class="roles-section">
+    <div class="pg-container section section--top roles-inner">
+      <div class="pg-section-head">
+        <p class="pg-eyebrow">{{ ui.t('landing.rolesEyebrow') }}</p>
+        <h2 class="pg-h2">{{ ui.t('landing.rolesTitle') }}</h2>
       </div>
-      <a class="pg-btn pg-btn--primary" routerLink="/submit" fragment="register">
-        {{ ui.t('landing.ctaStart') }}
-        <app-icon icon="arrow-right" [size]="18" />
-      </a>
+      <div class="roles">
+        <svg class="roles-waves" width="460" height="460" viewBox="0 0 760 760" aria-hidden="true" focusable="false">
+          <defs>
+            <linearGradient id="pgtec-waves" gradientUnits="userSpaceOnUse" x1="0" y1="760" x2="760" y2="0">
+              <stop offset="0" stop-color="#F8CD2B"></stop>
+              <stop offset="1" stop-color="#EE7306"></stop>
+            </linearGradient>
+          </defs>
+          <g fill="none" stroke="url(#pgtec-waves)" stroke-width="22" stroke-linecap="round">
+            <path d="M311.7 399.1 A110 110 0 1 1 400.9 488.3"></path>
+            <path d="M232.9 413.0 A190 190 0 1 1 387.0 567.1"></path>
+            <path d="M154.1 426.9 A270 270 0 1 1 373.1 645.9"></path>
+          </g>
+        </svg>
+        <article class="pg-card role-card">
+          <div class="pg-icon-tile pg-icon-tile--orange"><app-icon icon="database" [size]="28" /></div>
+          <h3 class="pg-h3 role-title">{{ ui.t('landing.providerTitle') }}</h3>
+          <p class="role-desc">{{ ui.t('landing.providerDesc') }}</p>
+          <ul class="pg-check-list">
+            <li><app-icon icon="check" />{{ ui.t('landing.providerPoint1') }}</li>
+            <li><app-icon icon="check" />{{ ui.t('landing.providerPoint2') }}</li>
+            <li><app-icon icon="check" />{{ ui.t('landing.providerPoint3') }}</li>
+          </ul>
+        </article>
+        <article class="pg-card role-card">
+          <div class="pg-icon-tile"><app-icon icon="search" [size]="28" /></div>
+          <h3 class="pg-h3 role-title">{{ ui.t('landing.consumerTitle') }}</h3>
+          <p class="role-desc">{{ ui.t('landing.consumerDesc') }}</p>
+          <ul class="pg-check-list">
+            <li><app-icon icon="check" />{{ ui.t('landing.consumerPoint1') }}</li>
+            <li><app-icon icon="check" />{{ ui.t('landing.consumerPoint2') }}</li>
+            <li><app-icon icon="check" />{{ ui.t('landing.consumerPoint3') }}</li>
+          </ul>
+        </article>
+      </div>
+      <div class="pg-card same-process">
+        <span class="pg-icon-tile pg-icon-tile--small"><app-icon icon="file-text" [size]="22" /></span>
+        <div class="same-process-text">
+          <h3 class="same-process-title">{{ ui.t('landing.sameProcessTitle') }}</h3>
+          <p>{{ ui.t('landing.sameProcessDesc') }}</p>
+        </div>
+        <a class="pg-btn pg-btn--primary" routerLink="/submit" fragment="register">
+          {{ ui.t('landing.ctaStart') }}
+          <app-icon icon="arrow-right" [size]="18" />
+        </a>
+      </div>
     </div>
   </section>
 
