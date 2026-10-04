@@ -60,8 +60,6 @@
         <li><a href="#releases">Releases</a></li>
       </ul>
     </li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
@@ -160,8 +158,6 @@ The quickest way to get a local copy running is the Docker Compose stack (Postgr
    In development the frontend calls the backend at `http://localhost:8080` (see `frontend/src/environments/environment.ts`).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- USAGE -->
 ## Usage
@@ -690,40 +686,6 @@ git push origin onboarding-pgtec-0.1
 
 
 <!-- ROADMAP -->
-## Roadmap
-
-- [x] PGTEC branding and redesigned public portal (v0.1)
-- [x] Light/dark theme following the operating system
-- [ ] Support contact address and estimated verification time in the status page
-- [ ] Decide whether the participant profile (provider/consumer), legal representative and technical contact must be stored with the application
-- [ ] Links to the data space catalogue and help pages once they are published
-
-See the [open issues](https://github.com/PGTEC-VRAIN/On-Boarding-Portal/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- CONTRIBUTING -->
-## Contributing
-
-Contributions are welcome. If you have a suggestion that would make this better, please fork the repo and create a pull request, or open an issue with the tag "enhancement".
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-### Top contributors:
-
-<a href="https://github.com/PGTEC-VRAIN/On-Boarding-Portal/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=PGTEC-VRAIN/On-Boarding-Portal" alt="contrib.rocks image" />
-</a>
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- LICENSE -->
 ## License
