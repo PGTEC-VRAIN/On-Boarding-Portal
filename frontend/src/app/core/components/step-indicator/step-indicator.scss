@@ -1,0 +1,78 @@
+:host {
+    display: block;
+}
+
+.indicator {
+    padding: 20px;
+}
+
+.indicator-heading {
+    margin: 0 0 12px;
+    padding: 0 12px;
+}
+
+.indicator-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.indicator-step {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    padding: 12px;
+    border-radius: 12px;
+
+    &--current {
+        background: var(--pgtec-tint-indigo);
+    }
+}
+
+.indicator-marker {
+    flex: none;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--pgtec-radius-pill);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+
+    .indicator-step--done & {
+        background: var(--pgtec-green);
+        color: #ffffff;
+    }
+
+    .indicator-step--current & {
+        background: var(--pgtec-indigo);
+        color: #ffffff;
+    }
+
+    .indicator-step--pending & {
+        border: 1.5px solid var(--pgtec-input-border);
+        color: var(--pgtec-muted);
+    }
+}
+
+.indicator-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.indicator-label {
+    font-weight: 700;
+    color: var(--pgtec-ink);
+
+    .indicator-step--pending & {
+        color: var(--pgtec-muted);
+    }
+}
+
+.indicator-desc {
+    font-size: 13px;
+    color: var(--pgtec-muted);
+}

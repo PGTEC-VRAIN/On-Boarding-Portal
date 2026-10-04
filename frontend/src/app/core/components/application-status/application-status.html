@@ -1,0 +1,56 @@
+<div class="status-layout">
+    <section class="pg-card status-card" aria-labelledby="status-headline">
+        <div class="status-head">
+            <div class="status-heading">
+                <span class="status-id">
+                    {{ ui.replace('track.application', { id: registration().id }) }}
+                    @if (registration().name) { &middot; {{ registration().name }} }
+                </span>
+                <h2 class="pg-h3 status-title" id="status-headline">
+                    {{ ui.t('track.headline.' + registration().status) }}
+                </h2>
+            </div>
+            <app-status-tag [status]="registration().status" />
+        </div>
+        <app-status-timeline [items]="timeline()" />
+        <p class="pg-note">{{ note() }}</p>
+    </section>
+
+    <section class="pg-card meanwhile" aria-labelledby="meanwhile-title">
+        <h2 class="pg-h3 meanwhile-title" id="meanwhile-title">{{ ui.t('track.meanwhile') }}</h2>
+        <div class="resource">
+            <span class="resource-icon"><app-icon name="plug" [size]="22" /></span>
+            <div class="resource-body">
+                <span class="resource-title">{{ ui.t('track.connectorTitle') }}</span>
+                <span class="resource-desc">{{ ui.t('track.connectorDesc') }}</span>
+                <a class="pg-link resource-link" [href]="ui.connectorRepositoryUrl" target="_blank"
+                    rel="noopener noreferrer">
+                    {{ ui.t('track.connectorLink') }}<span class="pg-visually-hidden"> {{ ui.t('common.newTab') }}</span>
+                </a>
+            </div>
+        </div>
+        @if (documentUrl) {
+        <div class="resource">
+            <span class="resource-icon"><app-icon name="file-text" [size]="22" /></span>
+            <div class="resource-body">
+                <span class="resource-title">{{ ui.t('track.governanceTitle') }}</span>
+                <span class="resource-desc">{{ ui.t('track.governanceDesc') }}</span>
+                <a class="pg-link resource-link" [href]="documentUrl" target="_blank" rel="noopener noreferrer">
+                    {{ ui.t('track.governanceLink') }}<span class="pg-visually-hidden"> {{ ui.t('common.newTab') }}</span>
+                </a>
+            </div>
+        </div>
+        }
+        <div class="resource">
+            <span class="resource-icon"><app-icon name="globe" [size]="22" /></span>
+            <div class="resource-body">
+                <span class="resource-title">{{ ui.t('track.projectTitle') }}</span>
+                <span class="resource-desc">{{ ui.t('track.projectDesc') }}</span>
+                <a class="pg-link resource-link" [href]="ui.projectWebsiteUrl" target="_blank"
+                    rel="noopener noreferrer">
+                    {{ ui.t('track.projectLink') }}<span class="pg-visually-hidden"> {{ ui.t('common.newTab') }}</span>
+                </a>
+            </div>
+        </div>
+    </section>
+</div>

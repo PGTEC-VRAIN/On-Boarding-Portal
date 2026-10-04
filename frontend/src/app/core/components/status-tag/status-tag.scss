@@ -1,0 +1,32 @@
+:host {
+    display: inline-flex;
+}
+
+.tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: var(--pgtec-radius-pill);
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+    background: var(--pgtec-tint-indigo);
+    color: var(--pgtec-link);
+
+    &[data-status='under_review'],
+    &[data-status='action_required'] {
+        background: var(--pgtec-tint-orange);
+        color: var(--pgtec-orange-text);
+    }
+
+    &[data-status='rejected'] {
+        background: var(--pgtec-tint-red);
+        color: var(--pgtec-red-text);
+    }
+
+    &[data-status='active'] {
+        background: var(--pgtec-tint-green);
+        color: var(--pgtec-green);
+    }
+}

@@ -1,30 +1,128 @@
-.upload-container {
-    border: 2px dashed var(--app-border);
-    border-radius: 8px;
-    padding: 24px;
+:host {
+    display: block;
+}
+
+.upload {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.upload-label {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--pgtec-ink);
+}
+
+.dropzone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 40px 24px;
+    border: 2px dashed var(--pgtec-dropzone-border);
+    border-radius: 14px;
+    background: var(--pgtec-dropzone-bg);
     text-align: center;
-    transition: border-color 0.3s ease;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
 
-    .chip-list {
-        margin-top: 16px;
-        display: flex;
-        justify-content: center;
+    &:hover,
+    &--active {
+        border-color: var(--pgtec-indigo);
     }
 
-    .static-chip {
-        cursor: pointer !important;
-        transition: transform 0.2s ease;
-
-        &:hover {
-            transform: translateY(-2px);
-        }
+    .upload--invalid & {
+        border-color: var(--pgtec-red);
     }
+}
 
-    .truncate {
-        max-width: 200px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        user-select: none;
+input:focus-visible+.file-list,
+input:focus-visible {
+    outline: none;
+}
+
+.upload:has(input:focus-visible) .dropzone {
+    box-shadow: var(--pgtec-focus-ring);
+    border-color: var(--pgtec-indigo);
+}
+
+.dropzone-icon {
+    color: var(--pgtec-link);
+}
+
+.dropzone-title {
+    font-weight: 700;
+    color: var(--pgtec-ink);
+}
+
+.dropzone-hint {
+    font-size: 14px;
+    color: var(--pgtec-muted);
+}
+
+.file-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border: 1px solid var(--pgtec-line);
+    border-radius: var(--pgtec-radius-sm);
+    background: var(--pgtec-surface);
+    color: var(--pgtec-link);
+}
+
+.file-name {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 4px 0;
+    border: 0;
+    background: none;
+    color: var(--pgtec-ink);
+    font: 600 15px var(--pgtec-font-body);
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.file-size {
+    flex: none;
+    font-size: 13px;
+    color: var(--pgtec-muted);
+}
+
+.file-remove {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: var(--pgtec-radius-pill);
+    background: transparent;
+    color: var(--pgtec-muted);
+    cursor: pointer;
+
+    &:hover {
+        background: var(--pgtec-tint-red);
+        color: var(--pgtec-red);
     }
 }

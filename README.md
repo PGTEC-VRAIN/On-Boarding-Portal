@@ -1,8 +1,10 @@
-# CitCom.ai Onboarding Portal
+# PGTEC Onboarding Portal
 
-This repository contains the code for the Onboarding Portal of the CitCom.ai project. The Onboarding Portal is a web application that allows users to sign up, log in, and access the resources of the CitCom.ai data space.
+This repository contains the code for the Onboarding Portal of the [PGTEC](https://pgtec.webs.upv.es/) data space (Plataforma para la Gestión de prevención Temprana de Emergencias Climáticas), operated by VRAIN - Universitat Politècnica de València. The Onboarding Portal is the web application where an organization applies to join the data space: it registers the entity, collects the signed accession agreement and lets applicants track the review of their application.
 
-[![Onboarding Portal Screenshot](imgs/onboading-portal.png)](https://onboarding.citcom.ai/)
+[![Onboarding Portal Screenshot](imgs/onboading-portal.png)](https://onboarding.pgtec-vrain-dataspace.eu/)
+
+The UI follows the PGTEC design handoff in [docs/rediseño_pgtec-onboarding-handoff](docs/rediseño_pgtec-onboarding-handoff/HANDOFF.md). Design tokens live in `frontend/src/styles/_pgtec-tokens.scss`.
 
 ## About the upstream project
 
@@ -498,7 +500,7 @@ cd frontend && pnpm install && pnpm build
 cd ..
 
 # Build the Docker image (multi-stage: compiles backend + bundles frontend)
-docker build -t onboarding-portal:latest .
+docker build -t onboarding-pgtec:0.1 .
 ```
 
 ### Run the container
@@ -507,7 +509,7 @@ docker build -t onboarding-portal:latest .
 docker run -p 8080:8080 \
   -v $(pwd)/backend/src/config/application.yaml:/app/application.yaml \
   -v $(pwd)/files:/app/files \
-  onboarding-portal:latest
+  onboarding-pgtec:0.1
 ```
 
 The application is available at `http://localhost:8080`.
@@ -523,7 +525,7 @@ The `chart/` directory contains a production-ready Helm chart.
 ### Install
 
 ```bash
-helm upgrade --install onboarding ./chart \
+helm upgrade --install onboarding-pgtec ./chart \
   --set ingress.enabled=true \
   --set ingress.hosts[0].host=onboarding.example.com \
   -f my-values.yaml
@@ -535,8 +537,8 @@ helm upgrade --install onboarding ./chart \
 replicaCount: 1
 
 image:
-  repository: mortega5/onboarding
-  tag: latest
+  repository: ghcr.io/pgtec-vrain/onboarding-pgtec
+  tag: "0.1"
   pullPolicy: IfNotPresent
 
 service:

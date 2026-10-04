@@ -1,0 +1,97 @@
+// PGTEC design tokens (derived from the PGTEC logo).
+// Source of truth: docs/rediseño_pgtec-onboarding-handoff/tokens/tokens.css
+
+:root {
+  // Brand colors (logo)
+  --pgtec-indigo: #3634e8; // primary: buttons, links, active step
+  --pgtec-indigo-hover: #2422b0;
+  --pgtec-blue: #3478e0;
+  --pgtec-cyan: #33d0e6; // decorative only: never for text
+  --pgtec-teal: #1a7fa0;
+  --pgtec-green: #0e8424; // success / completed steps
+  --pgtec-lime: #c8dc32; // decorative only
+  --pgtec-yellow: #f8cd2b; // decorative only
+  --pgtec-orange: #ee7306; // in progress / warnings (icons and backgrounds)
+  --pgtec-orange-strong: #c25a00;
+  --pgtec-orange-text: #8a3f00; // text on light orange backgrounds
+  --pgtec-orange-dark: #b85400; // orange text on white
+  --pgtec-red: #c62828;
+  --pgtec-red-text: #8e1b1b;
+
+  // Soft tints
+  --pgtec-tint-indigo: #eef0ff;
+  --pgtec-tint-orange: #fff3e3;
+  --pgtec-tint-green: #f0f8e4;
+  --pgtec-tint-red: #fdecec;
+  --pgtec-dropzone-bg: #f7f8ff;
+  --pgtec-dropzone-border: #b9beea;
+
+  // Neutrals
+  --pgtec-ink: #16193a; // headings and main text
+  --pgtec-body: #3c4160; // paragraph text
+  --pgtec-muted: #5f6485; // secondary text (4.5:1 on white)
+  --pgtec-bg: #fdfdfe;
+  --pgtec-surface: #ffffff;
+  --pgtec-soft: #f3f4f8;
+  --pgtec-line: #e3e5ee;
+  --pgtec-input-border: #c9cde0;
+  --pgtec-link: var(--pgtec-indigo);
+  --pgtec-link-hover: var(--pgtec-indigo-hover);
+  --pgtec-on-primary: #ffffff;
+
+  // Brand bar (logo gradient)
+  --pgtec-spectrum: linear-gradient(90deg, #3634e8 0%, #33d0e6 25%, #6ab02e 50%, #f8cd2b 75%, #ee7306 100%);
+
+  // Typography
+  --pgtec-font-heading: 'Montserrat', system-ui, sans-serif;
+  --pgtec-font-body: 'Inter', system-ui, sans-serif;
+  --pgtec-text-h1: 56px; // landing; 40px on wizard screens
+  --pgtec-text-h2: 36px;
+  --pgtec-text-h3: 20px;
+  --pgtec-text-body: 16px;
+  --pgtec-text-small: 14px;
+
+  // Shape and spacing
+  --pgtec-radius-sm: 10px; // inputs
+  --pgtec-radius-md: 16px; // cards
+  --pgtec-radius-pill: 999px; // buttons and tags
+  --pgtec-shadow-card: 0 2px 10px rgba(22, 25, 58, 0.06);
+  --pgtec-container: 1200px;
+  --pgtec-gutter: 32px;
+  --pgtec-control-height: 48px; // 44px minimum for touch targets
+  --pgtec-focus-ring: 0 0 0 3px rgba(54, 52, 232, 0.35);
+
+  @media (max-width: 600px) {
+    --pgtec-gutter: 16px;
+    --pgtec-text-h1: 38px;
+    --pgtec-text-h2: 28px;
+  }
+}
+
+:root[data-theme='dark'] {
+  --pgtec-green: #4cc265;
+  --pgtec-orange-text: #ffc58a;
+  --pgtec-orange-dark: #ffad5c;
+  --pgtec-red: #f28b82;
+  --pgtec-red-text: #ffb4ab;
+
+  --pgtec-tint-indigo: #24275c;
+  --pgtec-tint-orange: #3a2a16;
+  --pgtec-tint-green: #1b3320;
+  --pgtec-tint-red: #3c2224;
+  --pgtec-dropzone-bg: #1c1f45;
+  --pgtec-dropzone-border: #4a4f8c;
+
+  --pgtec-ink: #eef0fa;
+  --pgtec-body: #c8cce2;
+  --pgtec-muted: #a5abc8;
+  --pgtec-bg: #0f1226;
+  --pgtec-surface: #171a33;
+  --pgtec-soft: #1f2342;
+  --pgtec-line: #2c3155;
+  --pgtec-input-border: #454b7c;
+  --pgtec-link: #9b99ff;
+  --pgtec-link-hover: #c3c2ff;
+  --pgtec-shadow-card: 0 2px 12px rgba(0, 0, 0, 0.4);
+  --pgtec-focus-ring: 0 0 0 3px rgba(155, 153, 255, 0.5);
+}

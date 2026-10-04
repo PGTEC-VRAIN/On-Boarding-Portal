@@ -11,8 +11,8 @@ database:
 app:
   browserTitle: "${APP_BROWSER_TITLE}"
   enableThemeToggle: "${APP_ENABLE_THEME_TOGGLE}"
-  documentToSignUrl: "https://example.com/documento-a-firmar.pdf"
-  projectWebsiteUrl: "https://citcomtef.eu/"
+  documentToSignUrl: "https://onboarding-docs.pgtec-vrain-dataspace.eu/documents/onboarding/agreement.pdf"
+  projectWebsiteUrl: "https://pgtec.webs.upv.es/"
   marketplaceUrl: "${APP_MARKETPLACE_URL}"
   keycloakAdminUrl: "${APP_KEYCLOAK_ADMIN_URL}"
   tir:

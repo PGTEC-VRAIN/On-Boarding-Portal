@@ -1,55 +1,101 @@
-<div class="page-container">
-    <app-toolbar [showAdminLogin]="false" />
-    <div class="onboarding-wrapper">
-        <mat-card class="main-container animate-fade-in">
+<app-toolbar />
+<main id="main" class="pg-container wizard">
+    <header class="pg-section-head">
+        <p class="pg-eyebrow">
+            {{ ui.replace('wizard.stepOf', { current: (currentStep() > 3 ? 4 : currentStep() + 1), total: 4 }) }}
+        </p>
+        <h1 class="pg-h1">{{ ui.t('wizard.' + heading() + 'Title') }}</h1>
+        <p class="pg-lead">{{ ui.t('wizard.' + heading() + 'Lead') }}</p>
+    </header>
 
-            <mat-tab-group animationDuration="400ms" [selectedIndex]="selectedTabIndex"
-                (selectedIndexChange)="updateAnchor($event)">
+    <div class="wizard-layout">
+        <aside class="wizard-aside">
+            <app-step-indicator [heading]="ui.t('wizard.yourApplication')" [steps]="steps()"
+                [current]="currentStep()" />
+            <p class="aside-note">
+                <app-icon name="globe" [size]="18" />
+                <span>
+                    {{ ui.t('wizard.helpPrefix') }}
+                    <a [href]="ui.projectWebsiteUrl" target="_blank" rel="noopener noreferrer">{{
+                        ui.t('wizard.helpLink') }}</a>
+                </span>
+            </p>
+            <p class="aside-note">
+                @if (mode() === 'register') {
+                <app-icon name="search" [size]="18" />
+                <span>
+                    {{ ui.t('wizard.trackPrompt') }}
+                    <a routerLink="/submit" fragment="search">{{ ui.t('wizard.trackLink') }}</a>
+                </span>
+                } @else {
+                <app-icon name="pen" [size]="18" />
+                <span>
+                    {{ ui.t('wizard.newPrompt') }}
+                    <a routerLink="/submit" fragment="register">{{ ui.t('wizard.newLink') }}</a>
+                </span>
+                }
+            </p>
+        </aside>
 
-                <mat-tab>
-                    <ng-template mat-tab-label>
-                        <mat-icon class="tab-icon">add</mat-icon>
-                        <span>{{ ui.t('submit.tabRegister') }}</span>
-                    </ng-template>
-                    <div class="tab-content">
-                        <app-registration-form />
-                    </div>
-                </mat-tab>
-                <mat-tab>
-                    <ng-template mat-tab-label>
-                        <mat-icon class="tab-icon">track_changes</mat-icon>
-                        <span>{{ ui.t('submit.tabTrack') }}</span>
-                    </ng-template>
+        <div class="wizard-main">
+            @if (mode() === 'register') {
+            <app-registration-form (stepChange)="formStep.set($event)" (submitted)="onSubmitted($event)" />
+            } @else {
 
-                    <div class="tab-content">
-                        <div class="status-lookup-wrapper">
-                            @if(!trackedRegistration) {
-                            <div class="search-info">
-                                <h2>{{ ui.t('submit.resumeTitle') }}</h2>
-                                <p>{{ ui.t('submit.resumeDesc') }}</p>
-                            </div>
-                            }
-                            @if(isProcessing()){
-                            <mat-progress-bar mode="indeterminate" style="margin-top: 16px;"></mat-progress-bar>
-                            }
-                            @if(!_editing()) {
-                            <mat-form-field appearance="outline" style="width: 100%; margin-top: 24px;">
-                                <mat-label>{{ ui.t('submit.trackingId') }}</mat-label>
-                                <input matInput [(ngModel)]="trackingId">
-                                <button mat-icon-button matSuffix (click)="onSearch()" [disabled]="!trackingId">
-                                    <mat-icon>search</mat-icon>
-                                </button>
-                            </mat-form-field>
-                            }
+            @if (submittedId(); as id) {
+            <section class="pg-card success-card" role="status">
+                <span class="success-icon"><app-icon name="check" [size]="22" [strokeWidth]="3" /></span>
+                <div class="success-body">
+                    <h2 class="pg-h3">{{ ui.t('form.submitSuccessTitle') }}</h2>
+                    <p>{{ ui.t('form.submitSuccessDesc') }}</p>
+                    <app-copy-input [value]="id" appearance="outline" [label]="ui.t('form.copyLabel')"
+                        [hint]="ui.t('form.copyHint')" [notificationText]="ui.t('copy.notification')"
+                        [tooltipText]="ui.t('copy.tooltip')" />
+                </div>
+            </section>
+            }
 
-                            @if(trackedRegistration) {
-                            <app-registration-details (editingChange)="_editing.set($event)"
-                                [registration]="trackedRegistration" [editable]="true" />
-                            }
-                        </div>
-                    </div>
-                </mat-tab>
-            </mat-tab-group>
-        </mat-card>
+            @if (!trackedRegistration() && !submittedId()) {
+            <section class="pg-card search-card" aria-labelledby="search-title">
+                <h2 class="pg-h3" id="search-title">{{ ui.t('track.searchTitle') }}</h2>
+                <p class="search-desc" id="search-desc">{{ ui.t('track.searchDesc') }}</p>
+                <form class="search-form" (ngSubmit)="onSearch()">
+                    <label class="pg-visually-hidden" for="tracking-id">{{ ui.t('submit.trackingId') }}</label>
+                    <input id="tracking-id" name="trackingId" class="pg-input" type="text" autocomplete="off"
+                        spellcheck="false" [placeholder]="ui.t('submit.trackingId')" aria-describedby="search-desc"
+                        [(ngModel)]="trackingId">
+                    <button type="submit" class="pg-btn pg-btn--primary" [disabled]="!trackingId.trim() || isProcessing()">
+                        <app-icon name="search" [size]="18" />
+                        {{ ui.t('track.searchBtn') }}
+                    </button>
+                </form>
+            </section>
+            }
+
+            @if (isProcessing()) {
+            <div class="progress" role="progressbar" aria-busy="true"></div>
+            }
+
+            @if (trackedRegistration(); as registration) {
+            <app-application-status [registration]="registration" />
+
+            <section class="pg-card details-card" aria-labelledby="details-title">
+                <h2 class="pg-h3" id="details-title">{{ ui.t('track.detailsTitle') }}</h2>
+                <app-registration-details (editingChange)="_editing.set($event)" [registration]="registration"
+                    (registrationChange)="trackedRegistration.set($event)" [editable]="true" />
+            </section>
+            }
+
+            @if ((trackedRegistration() || submittedId()) && !_editing()) {
+            <div class="pg-actions">
+                <button type="button" class="pg-btn pg-btn--secondary" (click)="lookUpAnother()">
+                    <app-icon name="search" [size]="18" />
+                    {{ ui.t('track.another') }}
+                </button>
+            </div>
+            }
+            }
+        </div>
     </div>
-</div>
+</main>
+<app-site-footer />

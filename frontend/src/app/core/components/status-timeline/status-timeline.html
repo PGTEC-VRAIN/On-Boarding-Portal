@@ -1,0 +1,27 @@
+<ol class="timeline">
+    @for (item of items(); track $index; let last = $last) {
+    <li class="timeline-item" [attr.data-state]="item.state"
+        [attr.aria-current]="item.state === 'current' || item.state === 'warning' ? 'step' : null">
+        <div class="timeline-rail" aria-hidden="true">
+            <span class="timeline-marker">
+                @switch (item.state) {
+                @case ('done') { <app-icon name="check" [size]="18" [strokeWidth]="3" /> }
+                @case ('current') { <app-icon name="clock" [size]="18" [strokeWidth]="2.5" /> }
+                @case ('warning') { <app-icon name="alert" [size]="18" [strokeWidth]="2.5" /> }
+                @case ('error') { <app-icon name="x" [size]="18" [strokeWidth]="3" /> }
+                }
+            </span>
+            @if (!last) {
+            <span class="timeline-line"></span>
+            }
+        </div>
+        <div class="timeline-body">
+            <span class="timeline-title">{{ item.title }}</span>
+            <span class="timeline-desc">{{ item.description }}</span>
+            @if (item.detail) {
+            <span class="timeline-detail">{{ item.detail }}</span>
+            }
+        </div>
+    </li>
+    }
+</ol>

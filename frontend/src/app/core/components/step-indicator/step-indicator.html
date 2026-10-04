@@ -1,0 +1,26 @@
+<nav class="pg-card indicator" [attr.aria-label]="heading()">
+    @if (heading()) {
+    <p class="pg-eyebrow pg-eyebrow--muted indicator-heading" aria-hidden="true">{{ heading() }}</p>
+    }
+    <ol class="indicator-list">
+        @for (step of steps(); track $index; let i = $index) {
+        @let state = i < current() ? 'done' : (i === current() ? 'current' : 'pending');
+        <li [class]="'indicator-step indicator-step--' + state"
+            [attr.aria-current]="state === 'current' ? 'step' : null">
+            <span class="indicator-marker" aria-hidden="true">
+                @if (state === 'done') {
+                <app-icon name="check" [size]="18" [strokeWidth]="3" />
+                } @else {
+                {{ i + 1 }}
+                }
+            </span>
+            <span class="indicator-text">
+                <span class="indicator-label">{{ step.label }}</span>
+                <span class="indicator-desc">
+                    {{ ui.t('wizard.' + state) }} &middot; {{ step.description }}
+                </span>
+            </span>
+        </li>
+        }
+    </ol>
+</nav>

@@ -35,10 +35,10 @@ database:
   # Force UTC timezone for date storage. Ignored by PostgreSQL driver, required for MySQL to store dates in UTC.
   timezone: "Z"
 app:
-  browserTitle: "Onboarding Portal"
+  browserTitle: "PGTEC Onboarding Portal"
   enableThemeToggle: true
-  projectWebsiteUrl: "https://project.example.com/"
-  marketplaceUrl: "https://marketplace.example.com/"
+  projectWebsiteUrl: "https://pgtec.webs.upv.es/"
+  marketplaceUrl: ""
   keycloakAdminUrl: ""
   login:
     openIdUrl: ""

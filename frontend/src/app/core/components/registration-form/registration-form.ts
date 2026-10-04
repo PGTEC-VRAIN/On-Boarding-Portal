@@ -1,50 +1,38 @@
-import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatStepperModule } from '@angular/material/stepper';
+import { Component, ElementRef, output, signal } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { UploadFile } from '../upload-file/upload-file';
-import { CopyInput } from '../copy-input/copy-input';
 import { OnBoardingService, RegistrationInfo } from '../../services/onboarding.service';
 import { NotificationService } from '../../services/notification';
-import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { ServerConfigService } from '../../services/server-config';
-import { MatTooltip } from "@angular/material/tooltip";
 import { UiPreferencesService } from '../../services/ui-preferences';
+import { FormField } from '../form-field/form-field';
+import { Icon } from '../icon/icon';
+
+export const REGISTRATION_FORM_STEPS = 3;
 
 @Component({
   selector: 'app-registration-form',
-  providers: [
-    {
-      provide: STEPPER_GLOBAL_OPTIONS,
-      useValue: { showError: true },
-    },
-  ],
   imports: [
-    CommonModule,
     ReactiveFormsModule,
-    MatStepperModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
-    MatProgressBarModule,
+    RouterLink,
     UploadFile,
-    CopyInput,
-    MatTooltip
+    FormField,
+    Icon
   ],
   templateUrl: './registration-form.html',
   styleUrl: './registration-form.scss',
 })
 export class RegistrationForm {
 
+  readonly stepChange = output<number>();
+  readonly submitted = output<string>();
+
+  readonly step = signal(0);
   isProcessing = signal<boolean>(false);
   registrationId?: string;
 
+  readonly maxFileSizeMB = 5;
   pdfDocumentUrl: string;
   didCreationEnabled: boolean;
   contactForm: FormGroup;
@@ -55,6 +43,7 @@ export class RegistrationForm {
     private fb: FormBuilder,
     private onBoardingService: OnBoardingService,
     private notification: NotificationService,
+    private host: ElementRef<HTMLElement>,
     config: ServerConfigService,
     readonly ui: UiPreferencesService,
   ) {
@@ -80,24 +69,90 @@ export class RegistrationForm {
       country: ['', Validators.required]
     });
 
+    // The acceptance checkboxes are a client-side confirmation only: they are not sent to the API.
     this.legalForm = this.fb.group({
-      file: [null, Validators.required]
+      file: [null, Validators.required],
+      acceptGovernance: [false, Validators.requiredTrue],
+      acceptRepresentation: [false, Validators.requiredTrue]
+    });
+  }
+
+  private get forms(): FormGroup[] {
+    return [this.orgForm, this.contactForm, this.legalForm];
+  }
+
+  errorFor(control: AbstractControl | null): string | null {
+    if (!control || !control.invalid || !control.touched) {
+      return null;
+    }
+    if (control.hasError('required')) {
+      return this.ui.t('form.required');
+    }
+    if (control.hasError('minlength')) {
+      return this.ui.replace('form.minLength', { min: control.getError('minlength').requiredLength });
+    }
+    if (control.hasError('email')) {
+      return this.ui.t('form.invalidEmail');
+    }
+    if (control.hasError('pattern')) {
+      return this.ui.t('form.invalidDid');
+    }
+    return null;
+  }
+
+  describedBy(id: string, control: AbstractControl | null, hasHint = false): string | null {
+    if (this.errorFor(control)) {
+      return `${id}-error`;
+    }
+    return hasHint ? `${id}-hint` : null;
+  }
+
+  next(): void {
+    const form = this.forms[this.step()];
+    if (form.invalid) {
+      form.markAllAsTouched();
+      this.focusFirstInvalid();
+      return;
+    }
+    this.goTo(this.step() + 1);
+  }
+
+  back(): void {
+    this.goTo(this.step() - 1);
+  }
+
+  private goTo(step: number): void {
+    const target = Math.max(0, Math.min(step, REGISTRATION_FORM_STEPS - 1));
+    this.step.set(target);
+    this.stepChange.emit(target);
+    window.scrollTo({ top: 0 });
+  }
+
+  private focusFirstInvalid(): void {
+    setTimeout(() => {
+      const invalid = this.host.nativeElement.querySelector<HTMLElement>('input.ng-invalid');
+      invalid?.focus();
     });
   }
 
   onFileSelected(files: File[]): void {
+    const control = this.legalForm.get('file');
     if (files && files.length > 0) {
       this.legalForm.patchValue({ file: files[0] });
-      this.legalForm.get('file')?.markAsDirty();
-      this.legalForm.get('file')?.updateValueAndValidity();
+      control?.markAsDirty();
     } else {
       this.legalForm.patchValue({ file: null });
-      this.legalForm.get('file')?.updateValueAndValidity();
     }
+    control?.markAsTouched();
+    control?.updateValueAndValidity();
   }
 
-
   submitRegistration(): void {
+    if (this.legalForm.invalid) {
+      this.legalForm.markAllAsTouched();
+      this.focusFirstInvalid();
+      return;
+    }
 
     if (this.contactForm.valid && this.orgForm.valid && this.legalForm.valid) {
       this.isProcessing.set(true);
@@ -110,6 +165,7 @@ export class RegistrationForm {
         next: (response) => {
           this.registrationId = response.id;
           this.isProcessing.set(false);
+          this.submitted.emit(response.id);
         },
         error: (err) => {
           this.isProcessing.set(false);

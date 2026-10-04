@@ -1,0 +1,351 @@
+// Shared PGTEC UI primitives. Applied as classes on native elements
+// (button, a, label, input) so accessibility comes from the platform.
+
+.pg-container {
+  width: 100%;
+  max-width: var(--pgtec-container);
+  margin: 0 auto;
+  padding-left: var(--pgtec-gutter);
+  padding-right: var(--pgtec-gutter);
+}
+
+.pg-visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Headings
+.pg-eyebrow {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--pgtec-link);
+
+  &--green {
+    color: var(--pgtec-green);
+  }
+
+  &--orange {
+    color: var(--pgtec-orange-dark);
+  }
+
+  &--muted {
+    color: var(--pgtec-muted);
+  }
+}
+
+.pg-h1,
+.pg-h2,
+.pg-h3 {
+  margin: 0;
+  font-family: var(--pgtec-font-heading);
+  color: var(--pgtec-ink);
+}
+
+.pg-h1 {
+  font-size: 40px;
+  line-height: 1.1;
+  font-weight: 800;
+
+  @media (max-width: 600px) {
+    font-size: 30px;
+  }
+}
+
+.pg-h2 {
+  font-size: var(--pgtec-text-h2);
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.pg-h3 {
+  font-size: var(--pgtec-text-h3);
+  font-weight: 700;
+}
+
+.pg-section-head {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pg-lead {
+  margin: 0;
+  font-size: 17px;
+  color: var(--pgtec-body);
+  max-width: 720px;
+}
+
+// Buttons
+.pg-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: var(--pgtec-control-height);
+  padding: 0 24px;
+  border-radius: var(--pgtec-radius-pill);
+  border: 1.5px solid transparent;
+  font-family: var(--pgtec-font-body);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--pgtec-focus-ring);
+  }
+
+  &:disabled,
+  &[aria-disabled='true'] {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+
+  &--primary {
+    background: var(--pgtec-indigo);
+    color: var(--pgtec-on-primary);
+
+    &:hover:not(:disabled) {
+      background: var(--pgtec-indigo-hover);
+      color: var(--pgtec-on-primary);
+    }
+  }
+
+  &--secondary {
+    background: var(--pgtec-surface);
+    color: var(--pgtec-ink);
+    border-color: var(--pgtec-input-border);
+
+    &:hover:not(:disabled) {
+      border-color: var(--pgtec-indigo);
+      color: var(--pgtec-ink);
+    }
+  }
+
+  &--ghost {
+    background: transparent;
+    color: var(--pgtec-link);
+    padding: 0 12px;
+
+    &:hover:not(:disabled) {
+      background: var(--pgtec-tint-indigo);
+      color: var(--pgtec-link);
+    }
+  }
+
+  &--small {
+    min-height: 44px;
+    padding: 0 18px;
+    font-size: 15px;
+  }
+}
+
+.pg-link {
+  color: var(--pgtec-link);
+  font-weight: 600;
+
+  &:hover {
+    color: var(--pgtec-link-hover);
+  }
+}
+
+// Card
+.pg-card {
+  background: var(--pgtec-surface);
+  border: 1px solid var(--pgtec-line);
+  border-radius: var(--pgtec-radius-md);
+  box-shadow: var(--pgtec-shadow-card);
+  color: var(--pgtec-body);
+}
+
+.pg-note {
+  margin: 0;
+  padding: 14px 16px;
+  border-radius: var(--pgtec-radius-sm);
+  background: var(--pgtec-soft);
+  color: var(--pgtec-body);
+  font-size: 15px;
+}
+
+// Check list
+.pg-check-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: var(--pgtec-ink);
+
+  li {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  app-icon {
+    flex: none;
+    margin-top: 2px;
+    color: var(--pgtec-green);
+  }
+
+  &--primary app-icon {
+    color: var(--pgtec-link);
+  }
+}
+
+// Icon tile
+.pg-icon-tile {
+  flex: none;
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--pgtec-tint-indigo);
+  color: var(--pgtec-link);
+
+  &--orange {
+    background: var(--pgtec-tint-orange);
+    color: var(--pgtec-orange-dark);
+  }
+
+  &--small {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+  }
+}
+
+// Native form controls
+.pg-input {
+  width: 100%;
+  min-height: var(--pgtec-control-height);
+  padding: 0 14px;
+  border: 1.5px solid var(--pgtec-input-border);
+  border-radius: var(--pgtec-radius-sm);
+  background: var(--pgtec-surface);
+  color: var(--pgtec-ink);
+  font-family: var(--pgtec-font-body);
+  font-size: 16px;
+
+  &::placeholder {
+    color: var(--pgtec-muted);
+    opacity: 0.85;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--pgtec-indigo);
+    box-shadow: var(--pgtec-focus-ring);
+  }
+
+  &.ng-invalid.ng-touched {
+    border-color: var(--pgtec-red);
+  }
+}
+
+.pg-checkbox {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  color: var(--pgtec-ink);
+
+  input {
+    flex: none;
+    width: 22px;
+    height: 22px;
+    margin: 2px 0 0;
+    accent-color: var(--pgtec-indigo);
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: var(--pgtec-focus-ring);
+    }
+  }
+
+  label {
+    cursor: pointer;
+  }
+}
+
+.pg-fieldset {
+  margin: 0;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+
+  @media (max-width: 600px) {
+    padding: 20px;
+  }
+}
+
+.pg-fieldset-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--pgtec-link);
+}
+
+.pg-field-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px 20px;
+
+  .pg-span-all {
+    grid-column: 1 / -1;
+  }
+}
+
+.pg-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 8px;
+
+  &__end {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-left: auto;
+  }
+
+  @media (max-width: 600px) {
+    .pg-btn {
+      flex: 1 1 100%;
+    }
+
+    &__end {
+      width: 100%;
+    }
+  }
+}
+
+// Focus visible for plain links
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--pgtec-indigo);
+  outline-offset: 2px;
+}
+
+.pg-btn:focus-visible {
+  outline: none;
+}

@@ -1,0 +1,91 @@
+:host {
+    display: block;
+}
+
+.status-layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    align-items: flex-start;
+}
+
+.status-card {
+    flex: 999 1 380px;
+    min-width: 0;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.status-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.status-heading {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.status-id {
+    font-size: 14px;
+    color: var(--pgtec-muted);
+    overflow-wrap: anywhere;
+}
+
+.status-title {
+    font-size: 24px;
+}
+
+.meanwhile {
+    flex: 1 1 300px;
+    padding: 28px 28px 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+.meanwhile-title {
+    margin-bottom: 12px;
+}
+
+.resource {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 16px 0;
+    border-top: 1px solid var(--pgtec-line);
+}
+
+.resource-icon {
+    flex: none;
+    color: var(--pgtec-link);
+}
+
+.resource-body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.resource-title {
+    font-weight: 700;
+    color: var(--pgtec-ink);
+}
+
+.resource-desc,
+.resource-link {
+    font-size: 14px;
+}
+
+@media (max-width: 600px) {
+    .status-card,
+    .meanwhile {
+        padding: 20px;
+    }
+}

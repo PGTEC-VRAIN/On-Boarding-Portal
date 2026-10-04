@@ -25,9 +25,9 @@ services:
       db:
         condition: service_healthy
     environment:
-      APP_BROWSER_TITLE: ${APP_BROWSER_TITLE:-CitCom.ai Onboarding DS}
+      APP_BROWSER_TITLE: ${APP_BROWSER_TITLE:-PGTEC Onboarding Portal}
       APP_ENABLE_THEME_TOGGLE: ${APP_ENABLE_THEME_TOGGLE:-false}
-      APP_MARKETPLACE_URL: ${APP_MARKETPLACE_URL:-https://marketplace.example.com/}
+      APP_MARKETPLACE_URL: ${APP_MARKETPLACE_URL:-}
       APP_KEYCLOAK_ADMIN_URL: ${APP_KEYCLOAK_ADMIN_URL:-}
     ports:
       - "8082:8080"

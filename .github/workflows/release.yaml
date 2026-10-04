@@ -3,7 +3,7 @@ name: Release By Tag
 on:
   push:
     tags:
-      - "onboarding-citcom-*"
+      - "onboarding-pgtec-*"
 
 permissions:
   contents: read
@@ -40,9 +40,9 @@ jobs:
         id: versions
         run: |
           TAG_NAME="${GITHUB_REF_NAME}"
-          APP_VERSION="${TAG_NAME#onboarding-citcom-}"
+          APP_VERSION="${TAG_NAME#onboarding-pgtec-}"
           OWNER_LC="${GITHUB_REPOSITORY_OWNER,,}"
-          IMAGE_NAME="${OWNER_LC}/onboarding-citcom"
+          IMAGE_NAME="${OWNER_LC}/onboarding-pgtec"
 
           if [[ "${APP_VERSION}" =~ ^[0-9]+\.[0-9]+$ ]]; then
             CHART_VERSION="${APP_VERSION}.0"

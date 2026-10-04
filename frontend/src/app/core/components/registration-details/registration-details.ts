@@ -16,6 +16,7 @@ import { Subscription } from 'rxjs';
 import { UploadFile } from '../upload-file/upload-file';
 import { MatTabsModule } from '@angular/material/tabs';
 import { UiPreferencesService } from '../../services/ui-preferences';
+import { StatusTag } from '../status-tag/status-tag';
 
 @Component({
   selector: 'app-registration-details',
@@ -30,7 +31,8 @@ import { UiPreferencesService } from '../../services/ui-preferences';
     MatChipsModule,
     MatTooltipModule,
     UploadFile,
-    MatTabsModule
+    MatTabsModule,
+    StatusTag
   ],
   templateUrl: './registration-details.html',
   styleUrl: './registration-details.scss',

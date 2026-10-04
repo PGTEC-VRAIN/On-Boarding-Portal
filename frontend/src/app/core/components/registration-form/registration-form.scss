@@ -1,75 +1,99 @@
-.mat-stepper-horizontal {
-  border-radius: 8px;
+:host {
+  display: block;
 }
 
-.stepper-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  margin-top: 24px;
-}
-
-.actions-footer {
-  margin-top: 20px;
-
-  mat-progress-bar {
-    margin-bottom: 10px;
-  }
-}
-
-.success-container {
+.wizard-form {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 20px 0;
+  gap: 24px;
+}
 
-  .id-input-field {
-    flex: 1;
-    min-width: 450px;
+.card-section {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  @media (max-width: 600px) {
+    padding: 20px;
   }
 }
 
-.documentPdfLink {
-  color: var(--mat-sys-primary);
-  text-decoration: none;
-  font-weight: 500;
-  position: relative;
-  transition: color 0.1s ease;
-  display: inline-block;
+.contract-card {
+  padding: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: center;
 
-  &::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    bottom: -2px;
-    left: 0;
-    background-color: var(--mat-sys-primary);
-    transform: scaleX(0);
-    transform-origin: bottom right;
-    transition: transform 0.1s ease-out;
+  @media (max-width: 600px) {
+    padding: 20px;
+  }
+}
+
+.contract-thumb {
+  width: 88px;
+  height: 112px;
+  flex: none;
+  border-radius: var(--pgtec-radius-sm);
+  background: var(--pgtec-soft);
+  border: 1px solid var(--pgtec-line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--pgtec-link);
+}
+
+.contract-info {
+  flex: 1 1 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.contract-title {
+  font-size: 22px;
+}
+
+.contract-meta {
+  margin: 0;
+  color: var(--pgtec-muted);
+  font-size: 15px;
+}
+
+.contract-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.field-error {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--pgtec-red);
+  margin-top: -8px;
+}
+
+.progress {
+  height: 4px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--pgtec-tint-indigo) 0%, var(--pgtec-indigo) 50%, var(--pgtec-tint-indigo) 100%);
+  background-size: 200% 100%;
+  animation: progress 1.2s linear infinite;
+}
+
+@keyframes progress {
+  from {
+    background-position: 100% 0;
   }
 
-  &:hover,
-  &:focus-visible {
-    color: var(--mat-sys-secondary);
-    outline: none;
-
-    &::after {
-      transform: scaleX(1);
-      transform-origin: bottom left;
-      background-color: var(--mat-sys-secondary);
-    }
+  to {
+    background-position: -100% 0;
   }
+}
 
-  &:focus-visible {
-    border-radius: 4px;
-    box-shadow: 0 0 0 2px var(--mat-sys-outline-variant);
-  }
-
-  &:active {
-    opacity: 0.8;
-    transform: translateY(1px);
+@media (prefers-reduced-motion: reduce) {
+  .progress {
+    animation: none;
   }
 }

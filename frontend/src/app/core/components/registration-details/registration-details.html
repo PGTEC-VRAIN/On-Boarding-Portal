@@ -15,11 +15,7 @@
                 </mat-form-field>
                 <div class="detail-header span-3">
                     @if(editable()) {
-                    <mat-chip-set>
-                        <mat-chip [attr.status]="registration().status" disabled>
-                            {{ prettyStatus(registration().status) | uppercase }}
-                        </mat-chip>
-                    </mat-chip-set>
+                    <app-status-tag [status]="registration().status" />
                     }
                 </div>
 
@@ -68,7 +64,7 @@
                     </mat-chip-set>
                 </div>
                 } @else {
-                <app-upload-file label="Acuerdo de aceptacion firmado" accept="application/pdf" [maxFileSizeMB]="5"
+                <app-upload-file [label]="ui.t('form.uploadTitle')" accept="application/pdf" [maxFileSizeMB]="5"
                     [multiple]="false" (filesChanged)="onFileSelected($event)" class="span-12" />
                 }
                 @if(needRevision()) {

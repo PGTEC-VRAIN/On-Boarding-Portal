@@ -1,40 +1,47 @@
 <footer class="site-footer">
-    <div class="container footer-top">
-        <div class="footer-brand-block">
-            <img src="/logo-citcom.png" class="logo-white" alt="CitCom" width="220" height="52"
-                onerror="this.src='/logo-citcom.png';" />
+    <div class="pg-container footer-inner">
+        <ul class="footer-logos" [attr.aria-label]="ui.t('footer.logosLabel')">
+            <li>
+                <a href="https://next-generation-eu.europa.eu/index_es" target="_blank" rel="noopener noreferrer">
+                    <img class="logo-eu" src="/logos/logo_EU-NG_es.png" [alt]="ui.t('footer.altEu')" />
+                </a>
+            </li>
+            <li>
+                <a href="https://avance.digital.gob.es/" target="_blank" rel="noopener noreferrer">
+                    <img class="logo-sedia" src="/logos/logo_MTDFP-SEDIA.png" [alt]="ui.t('footer.altSedia')" />
+                </a>
+            </li>
+            <li>
+                <a href="https://planderecuperacion.gob.es/" target="_blank" rel="noopener noreferrer">
+                    <img class="logo-prtr" src="/logos/logo_PRTR.png" [alt]="ui.t('footer.altPrtr')" />
+                </a>
+            </li>
+            <li>
+                <a href="https://www.upv.es/" target="_blank" rel="noopener noreferrer">
+                    <img class="logo-upv" src="/logos/logo_UPV.png" [alt]="ui.t('footer.altUpv')" />
+                </a>
+            </li>
+            <li>
+                <a href="https://cred.digital.gob.es/espacios-de-datos-prin/lista-de-confianza" target="_blank"
+                    rel="noopener noreferrer">
+                    <img class="logo-edc" src="/logos/logo_EDC.svg" [alt]="ui.t('footer.altEdc')" />
+                </a>
+            </li>
+        </ul>
 
-            <div class="eu-note">
-                <img src="/eu-co-funded.png" class="eu-cofunded-img" alt="Co-funded by the European Union"
-                    onerror="this.style.display='none';" />
-                <p>{{ ui.t('footer.euText') }}</p>
-            </div>
-        </div>
+        <p class="footer-funding">{{ ui.t('footer.funding') }}</p>
 
-        <nav class="footer-links" aria-label="Footer links">
-            <a href="/submit">{{ ui.t('landing.ctaStart') }}</a>
-            <a href="/submit#search">{{ ui.t('landing.ctaStatus') }}</a>
-            <a href="/admin">{{ ui.t('toolbar.admin') }}</a>
-            <button type="button" class="footer-link-btn" (click)="openExternal(ui.projectWebsiteUrl)">
-                {{ ui.t('landing.ctaProject') }}
-            </button>
-            <button type="button" class="footer-link-btn" (click)="openExternal(ui.marketplaceUrl)">
-                {{ ui.t('landing.ctaMarketplace') }}
-            </button>
-        </nav>
-
-        <nav class="footer-social" aria-label="Social links">
-            <a href="https://www.linkedin.com/company/tef-citcom-smart-cities-and-communities/" target="_blank"
-                rel="noopener noreferrer">LinkedIn</a>
-            <a href="https://citcomai-hub.github.io/" target="_blank" rel="noopener noreferrer">GitHub</a>
-        </nav>
-    </div>
-
-    <div class="footer-divider"></div>
-
-    <div class="container footer-bottom">
-        <div class="copyright">
-            <p>{{ ui.t('footer.rights') }} {{ year }}</p>
+        <div class="footer-bottom">
+            <nav class="footer-links" [attr.aria-label]="ui.t('footer.links')">
+                @if(documentUrl) {
+                <a [href]="documentUrl" target="_blank" rel="noopener noreferrer">{{ ui.t('footer.agreement') }}</a>
+                }
+                <a routerLink="/submit" fragment="search">{{ ui.t('footer.status') }}</a>
+                <a routerLink="/admin">{{ ui.t('footer.admin') }}</a>
+                <a [href]="ui.projectWebsiteUrl" target="_blank" rel="noopener noreferrer">{{ ui.t('footer.project') }}</a>
+                <a [href]="ui.connectorRepositoryUrl" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </nav>
+            <p class="copyright">&copy; {{ year }} {{ ui.t('footer.rights') }}</p>
         </div>
     </div>
 </footer>

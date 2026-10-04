@@ -5,111 +5,127 @@
 // Learn more about theming and how to use it for your application's
 // custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
+@use './styles/pgtec-tokens';
+@use './styles/pgtec-ui';
 
+// Legacy `--app-*` variables used across the app, mapped onto the PGTEC tokens
+// so every screen (including the admin area) inherits the brand and dark mode.
 :root {
-  --app-container-width: 1160px;
+  --app-container-width: var(--pgtec-container);
   --app-white: #ffffff;
-  --app-bg: #f3f4f6;
-  --app-surface: var(--app-white);
-  --app-surface-soft: #eceff2;
-  --app-surface-soft-strong: #e6e9ee;
-  --app-ink: #232528;
-  --app-ink-muted: #5e6571;
-  --app-border: #d4d9e0;
-  --app-border-subtle: rgba(0, 0, 0, 0.08);
-  --app-overlay-soft: rgba(0, 0, 0, 0.1);
-  --app-primary: #232528;
-  --app-primary-rgb: 35, 37, 40;
-  --app-primary-strong: #232528;
-  --app-accent: #f2b632;
-  --app-shadow: 0 18px 35px rgba(20, 23, 28, 0.12);
-  --app-shadow-soft: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --app-bg: var(--pgtec-bg);
+  --app-surface: var(--pgtec-surface);
+  --app-surface-soft: var(--pgtec-soft);
+  --app-surface-soft-strong: var(--pgtec-line);
+  --app-ink: var(--pgtec-ink);
+  --app-ink-muted: var(--pgtec-muted);
+  --app-border: var(--pgtec-line);
+  --app-border-subtle: rgba(22, 25, 58, 0.08);
+  --app-overlay-soft: rgba(22, 25, 58, 0.06);
+  --app-primary: var(--pgtec-indigo);
+  --app-primary-rgb: 54, 52, 232;
+  --app-primary-strong: var(--pgtec-ink);
+  --app-accent: var(--pgtec-orange);
+  --app-shadow: var(--pgtec-shadow-card);
+  --app-shadow-soft: var(--pgtec-shadow-card);
 
   --app-text-on-dark: var(--app-white);
-  --app-toolbar-surface: color-mix(in srgb, var(--app-white) 86%, var(--app-surface-soft));
+  --app-toolbar-surface: var(--pgtec-surface);
 
-  --app-status-pending-bg: #eff6ff;
-  --app-status-under-review-bg: #fffbeb;
-  --app-status-under-review-text: #b45309;
-  --app-status-rejected-bg: #fef2f2;
-  --app-status-rejected-text: #b91c1c;
-  --app-status-rejected-border: #fee2e2;
-  --app-status-active-bg: #f0fdf4;
-  --app-status-active-text: #15803d;
-  --app-status-active-border: #dcfce7;
+  --app-status-pending-bg: var(--pgtec-tint-indigo);
+  --app-status-under-review-bg: var(--pgtec-tint-orange);
+  --app-status-under-review-text: var(--pgtec-orange-text);
+  --app-status-rejected-bg: var(--pgtec-tint-red);
+  --app-status-rejected-text: var(--pgtec-red-text);
+  --app-status-rejected-border: #f6caca;
+  --app-status-active-bg: var(--pgtec-tint-green);
+  --app-status-active-text: var(--pgtec-green);
+  --app-status-active-border: #cfe8c2;
 
-  --app-danger: #d32f2f;
+  --app-danger: var(--pgtec-red);
 
   --app-snackbar-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
-  --app-snackbar-error-bg: #ce2b38;
-  --app-snackbar-error-fg: #fef2f2;
-  --app-snackbar-success-bg: #006435;
-  --app-snackbar-success-fg: #f0fdf4;
-  --app-snackbar-warning-bg: #ce8a00;
-  --app-snackbar-warning-fg: #fffbeb;
-  --app-snackbar-info-bg: #2b3038;
-  --app-snackbar-info-fg: #eff6ff;
+  --app-snackbar-error-bg: #b3261e;
+  --app-snackbar-error-fg: #fdecec;
+  --app-snackbar-success-bg: #0b6b1d;
+  --app-snackbar-success-fg: #f0f8e4;
+  --app-snackbar-warning-bg: #8a3f00;
+  --app-snackbar-warning-fg: #fff3e3;
+  --app-snackbar-info-bg: #16193a;
+  --app-snackbar-info-fg: #eef0ff;
 
-  /* Force Material primary tones away from blue. */
-  --mat-sys-primary: var(--app-primary);
+  // Material system colors aligned with the PGTEC primary.
+  --mat-sys-primary: var(--pgtec-indigo);
   --mat-sys-on-primary: var(--app-white);
-  --mat-sys-primary-fixed: var(--app-primary);
-  --mat-sys-on-primary-fixed: var(--app-bg);
+  --mat-sys-primary-container: var(--pgtec-tint-indigo);
+  --mat-sys-on-primary-container: var(--pgtec-ink);
+  --mat-sys-primary-fixed: var(--pgtec-indigo);
+  --mat-sys-on-primary-fixed: var(--app-white);
+  --mat-sys-surface: var(--pgtec-surface);
+  --mat-sys-on-surface: var(--pgtec-ink);
+  --mat-sys-on-surface-variant: var(--pgtec-muted);
+  --mat-sys-outline: var(--pgtec-input-border);
+  --mat-sys-outline-variant: var(--pgtec-line);
+  --mat-sys-surface-container-low: var(--pgtec-surface);
+  --mat-sys-surface-container: var(--pgtec-soft);
+  --mat-form-field-outlined-container-shape: var(--pgtec-radius-sm);
 
   --mdc-elevated-card-container-color: var(--app-surface);
   --mdc-outlined-card-container-color: var(--app-surface);
 }
 
 :root[data-theme='dark'] {
-  --app-bg: #14181f;
-  --app-surface: #1c222c;
-  --app-surface-soft: #252d39;
-  --app-surface-soft-strong: #303846;
-  --app-ink: #edf1f7;
-  --app-ink-muted: #b3bcc9;
-  --app-border: #3b4555;
   --app-border-subtle: rgba(255, 255, 255, 0.12);
   --app-overlay-soft: rgba(255, 255, 255, 0.08);
-  --app-shadow: 0 18px 35px rgba(0, 0, 0, 0.45);
-  --app-shadow-soft: 0 2px 4px rgba(0, 0, 0, 0.35);
-  --app-toolbar-surface: color-mix(in srgb, var(--app-surface) 92%, #000000);
-
-  --app-status-pending-bg: #2a3341;
-  --app-status-under-review-bg: #3a3324;
-  --app-status-under-review-text: #f5c36e;
-  --app-status-rejected-bg: #3c262a;
-  --app-status-rejected-text: #f1a0a7;
   --app-status-rejected-border: #5d373d;
-  --app-status-active-bg: #20362b;
-  --app-status-active-text: #8fe0ae;
   --app-status-active-border: #2e5740;
+  --mat-sys-primary: var(--pgtec-link);
+  --mat-sys-on-primary: #0f1226;
+  --mat-sys-surface-container: var(--pgtec-soft);
+  --mat-sys-surface-container-low: var(--pgtec-surface);
+  --mat-sys-surface-container-high: var(--pgtec-soft);
 
   color-scheme: dark;
 }
 
 html {
   color-scheme: light;
-  @include mat.theme((color: mat.$azure-palette,
-      typography: "Barlow",
+  @include mat.theme((color: mat.$blue-palette,
+      typography: (plain-family: 'Inter', brand-family: 'Montserrat'),
       density: 0));
-  background: radial-gradient(circle at 14% 8%, var(--app-surface-soft-strong) 0%, var(--app-surface-soft) 42%, var(--app-bg) 100%);
+  scroll-behavior: smooth;
+  background: var(--pgtec-bg);
 }
 
 body {
   margin: 0;
   box-sizing: border-box;
-  color: var(--app-ink);
-  background:
-    linear-gradient(160deg, rgba(var(--app-primary-rgb), 0.08) 0%, rgba(var(--app-primary-rgb), 0) 45%),
-    linear-gradient(0deg, var(--app-bg), var(--app-bg));
-  font-family: "Barlow", "Segoe UI", sans-serif;
+  color: var(--pgtec-body);
+  background: var(--pgtec-bg);
+  font-family: var(--pgtec-font-body);
+  font-size: var(--pgtec-text-body);
+  line-height: 1.5;
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+a {
+  color: var(--pgtec-link);
+
+  &:hover {
+    color: var(--pgtec-link-hover);
+  }
 }
 
 *,
 *::before,
 *::after {
   box-sizing: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 
@@ -168,7 +184,7 @@ body {
   background: var(--app-surface);
   color: var(--app-ink);
   box-shadow: var(--app-shadow);
-  border-radius: 24px;
+  border-radius: var(--pgtec-radius-md);
 }
 
 .mat-mdc-card {

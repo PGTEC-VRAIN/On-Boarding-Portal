@@ -1,4 +1,4 @@
-# Default values for o-cei-helm-builder.
+# Default values for onboarding-pgtec.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -7,11 +7,11 @@ replicaCount: 1
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
-  repository: ghcr.io/citcomai-hub/onboarding-citcom
+  repository: ghcr.io/pgtec-vrain/onboarding-pgtec
   # This sets the pull policy for images.
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "1.0"
+  tag: "0.1"
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
@@ -150,9 +150,9 @@ config:
   logging:
     level: info
   app:
-    browserTitle: "CitCom.ai Onboarding DS"
+    browserTitle: "PGTEC Onboarding Portal"
     enableThemeToggle: true
-    projectWebsiteUrl: "https://citcomtef.eu/"
+    projectWebsiteUrl: "https://pgtec.webs.upv.es/"
     marketplaceUrl: ""
     # -- Keycloak admin console URL (e.g. https://onboarding-admin.example.com/admin/).
     # When set, a button to open it is shown in the admin portal toolbar.

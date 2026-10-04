@@ -1,27 +1,33 @@
-<div class="upload-container">
-    <p class="upload-label">{{ label }}</p>
+<div class="upload" [class.upload--invalid]="invalid">
+    @if (label) {
+    <p class="upload-label" [id]="inputId + '-label'">{{ label }}</p>
+    }
+    <label class="dropzone" [for]="inputId" [class.dropzone--active]="dragging" (dragover)="onDragOver($event)"
+        (dragleave)="dragging = false" (drop)="onDrop($event)">
+        <span class="dropzone-icon"><app-icon name="upload" [size]="32" /></span>
+        <span class="dropzone-title">{{ ui.t('upload.dropTitle') }}</span>
+        <span class="dropzone-hint">{{ hint || ui.replace('upload.dropHint', { size: maxFileSizeMB }) }}</span>
+    </label>
+    <input #fileInput class="pg-visually-hidden" type="file" [id]="inputId" [accept]="accept" [multiple]="multiple"
+        [attr.aria-describedby]="describedBy" (change)="onFileSelected($event)">
 
-    <button type="button" mat-stroked-button color="primary" (click)="fileInput.click()">
-        <mat-icon>upload_file</mat-icon>
-        {{ selectedFiles.length === 0 || !multiple ? ui.t('upload.select') : ui.t('upload.addMore') }}
-    </button>
-
-    <input #fileInput type="file" [accept]="accept" [multiple]="multiple" (change)="onFileSelected($event)" hidden>
-
-    @if(selectedFiles.length > 0) {
-    <mat-chip-set class="chip-list">
-        @for(file of selectedFiles; track $index) {
-        <mat-chip-row (removed)="removeFile($index)" class="preview-chip" (click)="previewFile(file)"
-            [matTooltip]="ui.t('upload.previewTooltip')" [matTooltipShowDelay]="500" #chipTooltip="matTooltip">
-            <mat-icon matChipAvatar>picture_as_pdf</mat-icon>
-            <span class="truncate">{{ file.name }}</span>
-
-            <button matChipRemove [matTooltip]="ui.t('details.remove')" [matTooltipShowDelay]="500"
-                (mouseenter)="chipTooltip.disabled = true" (mouseleave)="chipTooltip.disabled = false">
-                <mat-icon>cancel</mat-icon>
+    @if (selectedFiles.length > 0) {
+    <ul class="file-list">
+        @for (file of selectedFiles; track $index) {
+        <li class="file-item">
+            <app-icon name="file-text" [size]="22" />
+            <button type="button" class="file-name" (click)="previewFile(file)"
+                [attr.aria-label]="ui.replace('upload.preview', { name: file.name })"
+                [matTooltip]="ui.t('upload.previewTooltip')" [matTooltipShowDelay]="500">
+                {{ file.name }}
             </button>
-        </mat-chip-row>
+            <span class="file-size">{{ formatSize(file.size) }}</span>
+            <button type="button" class="file-remove" (click)="removeFile($index)"
+                [attr.aria-label]="ui.replace('upload.remove', { name: file.name })">
+                <app-icon name="x" [size]="18" />
+            </button>
+        </li>
         }
-    </mat-chip-set>
+    </ul>
     }
 </div>

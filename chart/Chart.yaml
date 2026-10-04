@@ -1,14 +1,14 @@
 apiVersion: v2
-name: onboarding-citcom
-description: A Helm chart for the OnBoarding Portal to CitCom.ai project
+name: onboarding-pgtec
+description: A Helm chart for the Onboarding Portal of the PGTEC data space
 type: application
-version: 1.0.0
-appVersion: 0.2.2
+version: 0.1.0
+appVersion: "0.1"
 maintainers:
   - name: "Sergio Marti"
     email: "sermars7@upv.es"
 keywords:
   - onboarding
   - portal
-  - citcom
+  - pgtec
   - fiware-data-space

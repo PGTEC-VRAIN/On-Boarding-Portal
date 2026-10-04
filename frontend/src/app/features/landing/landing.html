@@ -1,107 +1,153 @@
 <app-toolbar />
-<main class="content-wrapper">
-  <section class="hero-bg">
-    <div class="container">
-      <mat-card class="main-card surface-card animate-fade-in">
-        <mat-card-content class="hero-grid">
-          <div class="hero-copy">
-            <p class="eyebrow">{{ ui.t('landing.eyebrow') }}</p>
-            <h1 class="title">{{ ui.t('landing.title') }}</h1>
-            <p class="subtitle">{{ ui.t('landing.subtitle') }}</p>
-
-            <div class="action-row">
-              <button matFab extended class="primary-action" (click)="onSubmit()">
-                <mat-icon>add_business</mat-icon>
-                {{ ui.t('landing.ctaStart') }}
-              </button>
-              <button matFab extended class="secondary-action" (click)="onSubmit('search')">
-                <mat-icon>search</mat-icon>
-                {{ ui.t('landing.ctaStatus') }}
-              </button>
-            </div>
-
-            <div class="external-row">
-              <button mat-stroked-button type="button" (click)="openExternal(ui.projectWebsiteUrl)">
-                <mat-icon>language</mat-icon>
-                {{ ui.t('landing.ctaProject') }}
-              </button>
-              <button mat-stroked-button type="button" (click)="openExternal(ui.marketplaceUrl)">
-                <mat-icon>storefront</mat-icon>
-                {{ ui.t('landing.ctaMarketplace') }}
-              </button>
-            </div>
-          </div>
-
-          <figure class="hero-media">
-            <img src="/onboarding-hero.webp" alt="Smart city innovation" />
-          </figure>
-        </mat-card-content>
-      </mat-card>
-    </div>
-  </section>
-
-  <section class="features-section">
-    <div class="container grid-layout">
-      <mat-card class="feature-card span-4" appearance="outlined">
-        <mat-card-header>
-          <div mat-card-avatar class="icon-box"><mat-icon>fingerprint</mat-icon></div>
-          <mat-card-title>{{ ui.t('landing.pillarTrust') }}</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>{{ ui.t('landing.pillarTrustDesc') }}</p>
-        </mat-card-content>
-      </mat-card>
-
-      <mat-card class="feature-card span-4" appearance="outlined">
-        <mat-card-header>
-          <div mat-card-avatar class="icon-box"><mat-icon>workspace_premium</mat-icon></div>
-          <mat-card-title>{{ ui.t('landing.pillarCompliance') }}</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>{{ ui.t('landing.pillarComplianceDesc') }}</p>
-        </mat-card-content>
-      </mat-card>
-
-      <mat-card class="feature-card span-4" appearance="outlined">
-        <mat-card-header>
-          <div mat-card-avatar class="icon-box"><mat-icon>account_balance_wallet</mat-icon></div>
-          <mat-card-title>{{ ui.t('landing.pillarBusiness') }}</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>{{ ui.t('landing.pillarBusinessDesc') }}</p>
-        </mat-card-content>
-      </mat-card>
-    </div>
-  </section>
-
-  <section class="impact-section">
-    <div class="container impact-grid">
-      <mat-card class="impact-copy surface-card">
-        <h2>{{ ui.t('landing.storyTitle') }}</h2>
-        <p>{{ ui.t('landing.storyBody') }}</p>
-
-        <ul>
-          <li>{{ ui.t('landing.storyPoint1') }}</li>
-          <li>{{ ui.t('landing.storyPoint2') }}</li>
-          <li>{{ ui.t('landing.storyPoint3') }}</li>
-        </ul>
-      </mat-card>
-
-      <div class="stats-grid">
-        <mat-card class="stat-card surface-card">
-          <span>{{ ui.t('landing.statsParticipants') }}</span>
-          <strong>{{ ui.t('landing.statsParticipantsValue') }}</strong>
-        </mat-card>
-        <mat-card class="stat-card surface-card">
-          <span>{{ ui.t('landing.statsNodes') }}</span>
-          <strong>{{ ui.t('landing.statsNodesValue') }}</strong>
-        </mat-card>
-        <mat-card class="stat-card surface-card">
-          <span>{{ ui.t('landing.statsTime') }}</span>
-          <strong>{{ ui.t('landing.statsTimeValue') }}</strong>
-        </mat-card>
+<main id="main" class="content-wrapper">
+  <section class="hero">
+    <svg class="hero-waves" width="560" height="560" viewBox="0 0 760 760" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="pgtec-waves" gradientUnits="userSpaceOnUse" x1="0" y1="760" x2="760" y2="0">
+          <stop offset="0" stop-color="#F8CD2B"></stop>
+          <stop offset="1" stop-color="#EE7306"></stop>
+        </linearGradient>
+      </defs>
+      <g fill="none" stroke="url(#pgtec-waves)" stroke-width="22" stroke-linecap="round">
+        <path d="M311.7 399.1 A110 110 0 1 1 400.9 488.3"></path>
+        <path d="M232.9 413.0 A190 190 0 1 1 387.0 567.1"></path>
+        <path d="M154.1 426.9 A270 270 0 1 1 373.1 645.9"></path>
+      </g>
+    </svg>
+    <div class="pg-container hero-inner">
+      <div class="hero-copy">
+        <p class="hero-badge">
+          <app-icon name="shield-check" [size]="18" />
+          {{ ui.t('landing.badge') }}
+        </p>
+        <h1 class="hero-title">{{ ui.t('landing.title') }}</h1>
+        <p class="hero-subtitle">{{ ui.t('landing.subtitle') }}</p>
+        <div class="hero-actions">
+          <a class="pg-btn pg-btn--primary" routerLink="/submit" fragment="register">
+            {{ ui.t('landing.ctaStart') }}
+            <app-icon name="arrow-right" [size]="18" />
+          </a>
+          <a class="pg-btn pg-btn--secondary" routerLink="/" fragment="requisitos">
+            {{ ui.t('landing.ctaRequirements') }}
+          </a>
+        </div>
+        <p class="hero-status">
+          {{ ui.t('landing.statusPrompt') }}
+          <a class="pg-link" routerLink="/submit" fragment="search">{{ ui.t('landing.ctaStatus') }}</a>
+        </p>
+        <p class="hero-meta">{{ ui.t('landing.governance') }}</p>
+      </div>
+      <div class="hero-media">
+        <img src="/logos/logo_PGTEC.png" [alt]="ui.t('landing.logoAlt')" width="300" height="371" />
       </div>
     </div>
+  </section>
+
+  <section id="roles" class="pg-container section section--top">
+    <div class="pg-section-head">
+      <p class="pg-eyebrow">{{ ui.t('landing.rolesEyebrow') }}</p>
+      <h2 class="pg-h2">{{ ui.t('landing.rolesTitle') }}</h2>
+    </div>
+    <div class="roles">
+      <article class="pg-card role-card">
+        <div class="pg-icon-tile pg-icon-tile--orange"><app-icon name="database" [size]="28" /></div>
+        <h3 class="pg-h3 role-title">{{ ui.t('landing.providerTitle') }}</h3>
+        <p class="role-desc">{{ ui.t('landing.providerDesc') }}</p>
+        <ul class="pg-check-list">
+          <li><app-icon name="check" />{{ ui.t('landing.providerPoint1') }}</li>
+          <li><app-icon name="check" />{{ ui.t('landing.providerPoint2') }}</li>
+          <li><app-icon name="check" />{{ ui.t('landing.providerPoint3') }}</li>
+        </ul>
+        <a class="pg-btn pg-btn--primary role-cta" routerLink="/submit" fragment="register">
+          {{ ui.t('landing.providerCta') }}
+          <app-icon name="arrow-right" [size]="18" />
+        </a>
+      </article>
+      <article class="pg-card role-card">
+        <div class="pg-icon-tile"><app-icon name="search" [size]="28" /></div>
+        <h3 class="pg-h3 role-title">{{ ui.t('landing.consumerTitle') }}</h3>
+        <p class="role-desc">{{ ui.t('landing.consumerDesc') }}</p>
+        <ul class="pg-check-list">
+          <li><app-icon name="check" />{{ ui.t('landing.consumerPoint1') }}</li>
+          <li><app-icon name="check" />{{ ui.t('landing.consumerPoint2') }}</li>
+          <li><app-icon name="check" />{{ ui.t('landing.consumerPoint3') }}</li>
+        </ul>
+        <a class="pg-btn pg-btn--primary role-cta" routerLink="/submit" fragment="register">
+          {{ ui.t('landing.consumerCta') }}
+          <app-icon name="arrow-right" [size]="18" />
+        </a>
+      </article>
+    </div>
+  </section>
+
+  <section id="como-funciona" class="pg-container section">
+    <div class="pg-section-head">
+      <p class="pg-eyebrow pg-eyebrow--green">{{ ui.t('landing.howEyebrow') }}</p>
+      <h2 class="pg-h2">{{ ui.t('landing.howTitle') }}</h2>
+    </div>
+    <ol class="steps">
+      @for (step of steps; track step.key; let i = $index) {
+      <li class="step" [style.--step-color]="step.color">
+        <div class="step-head">
+          <span class="step-number">{{ i + 1 }}</span>
+          <span class="step-icon"><app-icon [name]="step.icon" [size]="24" /></span>
+        </div>
+        <h3 class="step-title">{{ ui.t('landing.' + step.key + 'Title') }}</h3>
+        <p class="step-desc">{{ ui.t('landing.' + step.key + 'Desc') }}</p>
+      </li>
+      }
+    </ol>
+  </section>
+
+  <section id="requisitos" class="pg-container section">
+    <div class="requirements-head">
+      <div class="pg-section-head">
+        <p class="pg-eyebrow pg-eyebrow--orange">{{ ui.t('landing.reqEyebrow') }}</p>
+        <h2 class="pg-h2">{{ ui.t('landing.reqTitle') }}</h2>
+      </div>
+      @if (documentUrl) {
+      <a class="pg-btn pg-btn--secondary" [href]="documentUrl" target="_blank" rel="noopener noreferrer">
+        <app-icon name="download" [size]="18" />
+        {{ ui.t('landing.reqDownload') }}<span class="pg-visually-hidden"> {{ ui.t('common.newTab') }}</span>
+      </a>
+      }
+    </div>
+    <div class="requirements">
+      @for (req of requirements; track req.key) {
+      <div class="pg-card requirement">
+        <span class="requirement-icon"><app-icon [name]="req.icon" [size]="24" /></span>
+        <div>
+          <h3 class="requirement-title">{{ ui.t('landing.' + req.key + 'Title') }}</h3>
+          <p class="requirement-desc">{{ ui.t(req.descKey) }}</p>
+        </div>
+      </div>
+      }
+    </div>
+  </section>
+
+  <section class="pg-container section section--last">
+    <div class="pg-section-head">
+      <p class="pg-eyebrow">{{ ui.t('landing.trustEyebrow') }}</p>
+      <h2 class="pg-h2">{{ ui.t('landing.trustTitle') }}</h2>
+    </div>
+    <ul class="trust">
+      <li>
+        <div class="trust-logo"><img src="/logos/logo_EDC.svg" alt="CRED" /></div>
+        <p>{{ ui.t('landing.trustCred') }}</p>
+      </li>
+      <li>
+        <div class="trust-logo trust-logo--text" aria-hidden="true">Gaia-X</div>
+        <p><span class="pg-visually-hidden">Gaia-X: </span>{{ ui.t('landing.trustGaiax') }}</p>
+      </li>
+      <li>
+        <div class="trust-logo trust-logo--text" aria-hidden="true">FIWARE</div>
+        <p><span class="pg-visually-hidden">FIWARE: </span>{{ ui.t('landing.trustFiware') }}</p>
+      </li>
+      <li>
+        <div class="trust-logo"><img src="/logos/logo_UPV.png" alt="VRAIN · Universitat Politècnica de València" /></div>
+        <p>{{ ui.t('landing.trustVrain') }}</p>
+      </li>
+    </ul>
   </section>
 </main>
 <app-site-footer />

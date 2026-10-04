@@ -1,35 +1,66 @@
-<mat-toolbar color="primary" class="main-header mat-elevation-z4">
-    <div class="header-container">
-        <div class="brand" (click)="goLanding()">
-            <img src="/logo-citcom.png" [class.logo-white]="ui.theme() === 'dark'" width="170" height="40" alt="CitCom"
-                onerror="this.src='/logo-citcom.png';" />
-            <div class="brand-text">
-                <strong>{{ ui.t('toolbar.portal') }}</strong>
-                <span>{{ ui.t('toolbar.space') }}</span>
-            </div>
-        </div>
+<div class="brand-bar" aria-hidden="true"></div>
+<header class="site-header">
+    <div class="pg-container header-inner">
+        <a class="brand" routerLink="/" [attr.aria-label]="ui.t('toolbar.home')">
+            <img src="/logos/logo_PGTEC.png" alt="" width="36" height="44" />
+            <span class="brand-text">
+                <span class="brand-name">PGTEC</span>
+                <span class="brand-tagline">{{ ui.t('toolbar.portal') }}</span>
+            </span>
+        </a>
 
-        <span class="spacer"></span>
-        <div class="toolbar-actions">
-            @if(showAdminLogin || showUserMenu) {
-            @if(showAdminLogin) {
-            <button mat-button class="nav-link admin-button" [attr.aria-label]="ui.t('toolbar.admin')"
-                (click)="onAdminLogin()">
-                <mat-icon>lock_open</mat-icon>
-                <span class="admin-label">{{ ui.t('toolbar.admin') }}</span>
+        @if(!showUserMenu) {
+        <nav class="site-nav" [attr.aria-label]="ui.t('toolbar.mainNav')">
+            <a routerLink="/" fragment="como-funciona">{{ ui.t('toolbar.navHow') }}</a>
+            <a routerLink="/" fragment="requisitos">{{ ui.t('toolbar.navRequirements') }}</a>
+            @if(governanceUrl) {
+            <a [href]="governanceUrl" target="_blank" rel="noopener noreferrer">
+                {{ ui.t('toolbar.navGovernance') }}<span class="pg-visually-hidden"> {{ ui.t('common.newTab') }}</span>
+            </a>
+            }
+            @if(ui.marketplaceUrl) {
+            <a [href]="ui.marketplaceUrl" target="_blank" rel="noopener noreferrer">
+                {{ ui.t('toolbar.navCatalog') }}<span class="pg-visually-hidden"> {{ ui.t('common.newTab') }}</span>
+            </a>
+            }
+        </nav>
+        }
+
+        <div class="header-actions">
+            <button type="button" class="icon-button lang-button" [matMenuTriggerFor]="languageMenu"
+                [attr.aria-label]="ui.t('toolbar.language')">
+                <img class="lang-flag" [src]="'/flags/' + ui.language() + '.svg'" alt="" width="20" height="14" />
+                <span class="lang-code">{{ ui.language().toUpperCase() }}</span>
+            </button>
+            <mat-menu #languageMenu="matMenu">
+                <button mat-menu-item (click)="ui.setLanguage('es')">
+                    <img class="lang-flag" src="/flags/es.svg" alt="" width="20" height="14" />
+                    {{ ui.t('toolbar.langSpanish') }}
+                </button>
+                <button mat-menu-item (click)="ui.setLanguage('en')">
+                    <img class="lang-flag" src="/flags/en.svg" alt="" width="20" height="14" />
+                    {{ ui.t('toolbar.langEnglish') }}
+                </button>
+            </mat-menu>
+
+            @if(ui.enableThemeToggle) {
+            <button type="button" class="icon-button" [attr.aria-label]="ui.t('toolbar.theme')"
+                (click)="ui.toggleTheme()">
+                <mat-icon aria-hidden="true">{{ ui.theme() === 'dark' ? 'light_mode' : 'dark_mode' }}</mat-icon>
             </button>
             }
+
             @if(showUserMenu && user && ui.keycloakAdminUrl) {
-            <button mat-button class="nav-link admin-button" [attr.aria-label]="ui.t('toolbar.keycloakAdmin')"
-                (click)="openExternal(ui.keycloakAdminUrl)">
-                <mat-icon>admin_panel_settings</mat-icon>
-                <span class="admin-label">{{ ui.t('toolbar.keycloakAdmin') }}</span>
+            <button type="button" class="pg-btn pg-btn--secondary pg-btn--small"
+                [attr.aria-label]="ui.t('toolbar.keycloakAdmin')" (click)="openExternal(ui.keycloakAdminUrl)">
+                <mat-icon aria-hidden="true">admin_panel_settings</mat-icon>
+                <span class="collapsible-label">{{ ui.t('toolbar.keycloakAdmin') }}</span>
             </button>
             }
             @if(showUserMenu && user) {
-            <button matButton="text" [matMenuTriggerFor]="menu">
-                <mat-icon>person</mat-icon>
-                {{ user.given_name }} {{ user.family_name }}
+            <button type="button" class="pg-btn pg-btn--secondary pg-btn--small" [matMenuTriggerFor]="menu">
+                <mat-icon aria-hidden="true">person</mat-icon>
+                <span class="collapsible-label">{{ user.given_name }} {{ user.family_name }}</span>
             </button>
             <mat-menu #menu="matMenu">
                 <button mat-menu-item disabled>
@@ -38,29 +69,39 @@
                 <button (click)="onLogout()" mat-menu-item>{{ ui.t('toolbar.logout') }}</button>
             </mat-menu>
             }
+
+            @if(showAdminLogin && !showUserMenu) {
+            <button type="button" class="pg-btn pg-btn--secondary pg-btn--small" [attr.aria-label]="ui.t('toolbar.adminAria')"
+                (click)="onAdminLogin()">
+                <app-icon name="log-in" [size]="18" />
+                <span class="collapsible-label">{{ ui.t('toolbar.admin') }}</span>
+            </button>
             }
+            @if(!showUserMenu) {
+            <a class="pg-btn pg-btn--primary pg-btn--small cta" routerLink="/submit" fragment="register">
+                {{ ui.t('toolbar.start') }}
+            </a>
 
-            <button mat-button [matMenuTriggerFor]="languageMenu" class="lang-button">
-                <img class="lang-flag" [src]="'/flags/' + ui.language() + '.svg'" alt="" aria-hidden="true" width="20" height="14" />
-                <span class="lang-code">{{ ui.language().toUpperCase() }}</span>
+            <button type="button" class="icon-button menu-button" [matMenuTriggerFor]="navMenu"
+                [attr.aria-label]="ui.t('toolbar.menu')">
+                <app-icon name="menu" [size]="22" />
             </button>
-
-            <mat-menu #languageMenu="matMenu">
-                <button mat-menu-item (click)="ui.setLanguage('en')">
-                    <img class="lang-flag" src="/flags/en.svg" alt="" aria-hidden="true" width="20" height="14" />
-                    {{ ui.t('toolbar.langEnglish') }}
-                </button>
-                <button mat-menu-item (click)="ui.setLanguage('es')">
-                    <img class="lang-flag" src="/flags/es.svg" alt="" aria-hidden="true" width="20" height="14" />
-                    {{ ui.t('toolbar.langSpanish') }}
-                </button>
+            <mat-menu #navMenu="matMenu">
+                <a mat-menu-item routerLink="/" fragment="como-funciona">{{ ui.t('toolbar.navHow') }}</a>
+                <a mat-menu-item routerLink="/" fragment="requisitos">{{ ui.t('toolbar.navRequirements') }}</a>
+                @if(governanceUrl) {
+                <a mat-menu-item [href]="governanceUrl" target="_blank" rel="noopener noreferrer">
+                    {{ ui.t('toolbar.navGovernance') }}
+                </a>
+                }
+                @if(ui.marketplaceUrl) {
+                <a mat-menu-item [href]="ui.marketplaceUrl" target="_blank" rel="noopener noreferrer">
+                    {{ ui.t('toolbar.navCatalog') }}
+                </a>
+                }
+                <a mat-menu-item routerLink="/submit" fragment="register">{{ ui.t('toolbar.start') }}</a>
             </mat-menu>
-
-            @if(ui.enableThemeToggle) {
-            <button mat-icon-button type="button" [attr.aria-label]="ui.t('toolbar.theme')" (click)="ui.toggleTheme()">
-                <mat-icon>{{ ui.theme() === 'dark' ? 'light_mode' : 'dark_mode' }}</mat-icon>
-            </button>
             }
         </div>
     </div>
-</mat-toolbar>
+</header>
