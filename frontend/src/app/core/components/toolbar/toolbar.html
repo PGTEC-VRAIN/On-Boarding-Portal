@@ -27,29 +27,6 @@
         }
 
         <div class="header-actions">
-            <button type="button" class="icon-button lang-button" [matMenuTriggerFor]="languageMenu"
-                [attr.aria-label]="ui.t('toolbar.language')">
-                <img class="lang-flag" [src]="'/flags/' + ui.language() + '.svg'" alt="" width="20" height="14" />
-                <span class="lang-code">{{ ui.language().toUpperCase() }}</span>
-            </button>
-            <mat-menu #languageMenu="matMenu">
-                <button mat-menu-item (click)="ui.setLanguage('es')">
-                    <img class="lang-flag" src="/flags/es.svg" alt="" width="20" height="14" />
-                    {{ ui.t('toolbar.langSpanish') }}
-                </button>
-                <button mat-menu-item (click)="ui.setLanguage('en')">
-                    <img class="lang-flag" src="/flags/en.svg" alt="" width="20" height="14" />
-                    {{ ui.t('toolbar.langEnglish') }}
-                </button>
-            </mat-menu>
-
-            @if(ui.enableThemeToggle) {
-            <button type="button" class="icon-button" [attr.aria-label]="ui.t('toolbar.theme')"
-                (click)="ui.toggleTheme()">
-                <mat-icon aria-hidden="true">{{ ui.theme() === 'dark' ? 'light_mode' : 'dark_mode' }}</mat-icon>
-            </button>
-            }
-
             @if(showUserMenu && user && ui.keycloakAdminUrl) {
             <button type="button" class="pg-btn pg-btn--secondary pg-btn--small"
                 [attr.aria-label]="ui.t('toolbar.keycloakAdmin')" (click)="openExternal(ui.keycloakAdminUrl)">
@@ -70,13 +47,6 @@
             </mat-menu>
             }
 
-            @if(showAdminLogin && !showUserMenu) {
-            <button type="button" class="pg-btn pg-btn--secondary pg-btn--small" [attr.aria-label]="ui.t('toolbar.adminAria')"
-                (click)="onAdminLogin()">
-                <app-icon name="log-in" [size]="18" />
-                <span class="collapsible-label">{{ ui.t('toolbar.admin') }}</span>
-            </button>
-            }
             @if(!showUserMenu) {
             <a class="pg-btn pg-btn--primary pg-btn--small cta" routerLink="/submit" fragment="register">
                 {{ ui.t('toolbar.start') }}
@@ -102,6 +72,30 @@
                 <a mat-menu-item routerLink="/submit" fragment="register">{{ ui.t('toolbar.start') }}</a>
             </mat-menu>
             }
+
+            @if(ui.enableThemeToggle) {
+            <button type="button" class="icon-button"
+                [attr.aria-label]="ui.t(ui.theme() === 'dark' ? 'toolbar.themeLight' : 'toolbar.themeDark')"
+                (click)="ui.toggleTheme()">
+                <mat-icon aria-hidden="true">{{ ui.theme() === 'dark' ? 'light_mode' : 'dark_mode' }}</mat-icon>
+            </button>
+            }
+
+            <button type="button" class="icon-button lang-button" [matMenuTriggerFor]="languageMenu"
+                [attr.aria-label]="ui.t('toolbar.language')">
+                <img class="lang-flag" [src]="'/flags/' + ui.language() + '.svg'" alt="" width="20" height="14" />
+                <span class="lang-code">{{ ui.language().toUpperCase() }}</span>
+            </button>
+            <mat-menu #languageMenu="matMenu" xPosition="before">
+                <button mat-menu-item (click)="ui.setLanguage('es')">
+                    <img class="lang-flag" src="/flags/es.svg" alt="" width="20" height="14" />
+                    {{ ui.t('toolbar.langSpanish') }}
+                </button>
+                <button mat-menu-item (click)="ui.setLanguage('en')">
+                    <img class="lang-flag" src="/flags/en.svg" alt="" width="20" height="14" />
+                    {{ ui.t('toolbar.langEnglish') }}
+                </button>
+            </mat-menu>
         </div>
     </div>
 </header>

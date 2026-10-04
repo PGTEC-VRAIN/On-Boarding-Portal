@@ -20,7 +20,6 @@ import { Icon } from '../icon/icon';
 })
 export class Toolbar {
 
-  @Input() showAdminLogin = true;
   @Input() showUserMenu = false;
   user: any;
   // The Governance Framework is Annex I of the accession agreement.
@@ -34,22 +33,6 @@ export class Toolbar {
   ) {
     this.user = this.authService.getUser();
     this.governanceUrl = config.getProperty('documentToSignUrl') || '';
-  }
-
-  isLogged() {
-    return this.authService.isLoggedIn;
-  }
-
-  onAdminLogin() {
-    if (this.authService.isLoggedIn) {
-      this.goAdminDashboard();
-    } else {
-      this.authService.login();
-    }
-  }
-
-  goAdminDashboard() {
-    this.router.navigate(['/admin'])
   }
 
   goLanding(): void {

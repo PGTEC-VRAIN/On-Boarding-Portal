@@ -13,7 +13,11 @@ export class UiPreferencesService {
     private static readonly THEME_STORAGE_KEY = 'onboarding.theme';
     private static readonly LANGUAGE_STORAGE_KEY = 'onboarding.lang';
 
-    private readonly currentTheme = signal<ThemeMode>('light');
+    // Follows the operating system until the user picks a theme explicitly.
+    private readonly systemDarkQuery =
+        typeof window !== 'undefined' && window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+    private readonly currentTheme = signal<ThemeMode>(this.systemTheme());
+    private followSystem = true;
     private readonly currentLanguage = signal<Language>('es');
 
     readonly projectWebsiteUrl =
@@ -43,6 +47,8 @@ export class UiPreferencesService {
             'toolbar.logout': 'Logout',
             'toolbar.keycloakAdmin': 'Keycloak Admin',
             'toolbar.theme': 'Switch theme',
+            'toolbar.themeLight': 'Switch to light mode',
+            'toolbar.themeDark': 'Switch to dark mode',
             'toolbar.language': 'Language',
             'toolbar.langEnglish': 'English',
             'toolbar.langSpanish': 'Spanish',
@@ -59,22 +65,23 @@ export class UiPreferencesService {
             'landing.governance':
                 'Governance Framework v1.0 · approved on 02/02/2026 by the data space Governance Authority',
             'landing.logoAlt': 'PGTEC logo',
-            'landing.rolesEyebrow': 'Choose how to take part',
-            'landing.rolesTitle': 'Two ways to be part of the data space',
+            'landing.rolesEyebrow': 'Participant profiles',
+            'landing.rolesTitle': 'Two ways to take part in the data space',
             'landing.providerTitle': 'Data and service provider',
             'landing.providerDesc':
                 'Publish data and services in the catalogue, set their terms of use and keep control over your assets.',
-            'landing.providerPoint1': 'Accession agreement as a provider',
-            'landing.providerPoint2': 'Registration and upkeep of your assets in the catalogue',
+            'landing.providerPoint1': 'Publishing data and services in the catalogue',
+            'landing.providerPoint2': 'Terms of use defined by you for each asset',
             'landing.providerPoint3': 'Audits and data quality checks',
-            'landing.providerCta': 'Join as a provider',
             'landing.consumerTitle': 'Data and service consumer',
             'landing.consumerDesc':
                 'Access meteorological, hydrological and environmental data to anticipate and manage climate emergencies.',
-            'landing.consumerPoint1': 'Accession agreement to the data space',
+            'landing.consumerPoint1': 'Finding data and services in the catalogue',
             'landing.consumerPoint2': "Access under each provider's terms of use",
             'landing.consumerPoint3': 'Consumption through the data space connector',
-            'landing.consumerCta': 'Join as a consumer',
+            'landing.sameProcessTitle': 'A single joining process',
+            'landing.sameProcessDesc':
+                'Registration is the same for every organisation and everyone signs the same accession agreement, whether you will offer data, consume it or both.',
             'landing.howEyebrow': 'How it works',
             'landing.howTitle': 'Joining, in four steps',
             'landing.step1Title': 'Register your organisation',
@@ -346,6 +353,8 @@ export class UiPreferencesService {
             'toolbar.logout': 'Cerrar sesión',
             'toolbar.keycloakAdmin': 'Admin Keycloak',
             'toolbar.theme': 'Cambiar tema',
+            'toolbar.themeLight': 'Cambiar a modo claro',
+            'toolbar.themeDark': 'Cambiar a modo oscuro',
             'toolbar.language': 'Idioma',
             'toolbar.langEnglish': 'Inglés',
             'toolbar.langSpanish': 'Español',
@@ -362,22 +371,23 @@ export class UiPreferencesService {
             'landing.governance':
                 'Marco de Gobernanza v1.0 · aprobado el 02/02/2026 por la Autoridad de Gobierno del espacio de datos',
             'landing.logoAlt': 'Logo de PGTEC',
-            'landing.rolesEyebrow': 'Elige cómo participar',
-            'landing.rolesTitle': 'Dos formas de formar parte del espacio de datos',
+            'landing.rolesEyebrow': 'Perfiles de participación',
+            'landing.rolesTitle': 'Dos formas de participar en el espacio de datos',
             'landing.providerTitle': 'Proveedor de datos y servicios',
             'landing.providerDesc':
                 'Publica datos y servicios en el catálogo, define sus condiciones de uso y mantén el control sobre tus activos.',
-            'landing.providerPoint1': 'Contrato de adhesión como proveedor',
-            'landing.providerPoint2': 'Registro y mantenimiento de activos en el catálogo',
+            'landing.providerPoint1': 'Publicación de datos y servicios en el catálogo',
+            'landing.providerPoint2': 'Condiciones de uso definidas por ti para cada activo',
             'landing.providerPoint3': 'Auditorías y verificación de calidad del dato',
-            'landing.providerCta': 'Adherirme como proveedor',
             'landing.consumerTitle': 'Consumidor de datos y servicios',
             'landing.consumerDesc':
                 'Accede a datos meteorológicos, hidrológicos y ambientales para anticipar y gestionar emergencias climáticas.',
-            'landing.consumerPoint1': 'Contrato de adhesión al espacio de datos',
+            'landing.consumerPoint1': 'Búsqueda de datos y servicios en el catálogo',
             'landing.consumerPoint2': 'Acceso según las condiciones de uso de cada proveedor',
             'landing.consumerPoint3': 'Consumo a través del conector del espacio de datos',
-            'landing.consumerCta': 'Adherirme como consumidor',
+            'landing.sameProcessTitle': 'Un único proceso de adhesión',
+            'landing.sameProcessDesc':
+                'El registro es igual para todas las organizaciones y todas firman el mismo contrato de adhesión, tanto si vais a ofrecer datos como a consumirlos o ambas cosas.',
             'landing.howEyebrow': 'Cómo funciona',
             'landing.howTitle': 'La adhesión, en cuatro pasos',
             'landing.step1Title': 'Registra tu organización',
@@ -638,9 +648,16 @@ export class UiPreferencesService {
 
     constructor() {
         const storedTheme = this.readStorage(UiPreferencesService.THEME_STORAGE_KEY);
-        if (storedTheme === 'light' || storedTheme === 'dark') {
+        if (this.enableThemeToggle && (storedTheme === 'light' || storedTheme === 'dark')) {
+            this.followSystem = false;
             this.currentTheme.set(storedTheme);
         }
+        this.systemDarkQuery?.addEventListener('change', () => {
+            if (this.followSystem) {
+                this.currentTheme.set(this.systemTheme());
+                this.applyTheme();
+            }
+        });
 
         const storedLanguage = this.readStorage(UiPreferencesService.LANGUAGE_STORAGE_KEY);
         if (storedLanguage === 'en' || storedLanguage === 'es') {
@@ -662,8 +679,18 @@ export class UiPreferencesService {
     toggleTheme(): void {
         const nextTheme: ThemeMode = this.currentTheme() === 'light' ? 'dark' : 'light';
         this.currentTheme.set(nextTheme);
-        this.writeStorage(UiPreferencesService.THEME_STORAGE_KEY, nextTheme);
+        // Choosing the same theme as the system goes back to following the system.
+        this.followSystem = nextTheme === this.systemTheme();
+        if (this.followSystem) {
+            this.removeStorage(UiPreferencesService.THEME_STORAGE_KEY);
+        } else {
+            this.writeStorage(UiPreferencesService.THEME_STORAGE_KEY, nextTheme);
+        }
         this.applyTheme();
+    }
+
+    private systemTheme(): ThemeMode {
+        return this.systemDarkQuery?.matches ? 'dark' : 'light';
     }
 
     t(key: string): string {
@@ -707,6 +734,17 @@ export class UiPreferencesService {
             return localStorage.getItem(key);
         } catch {
             return null;
+        }
+    }
+
+    private removeStorage(key: string): void {
+        if (typeof localStorage === 'undefined') {
+            return;
+        }
+        try {
+            localStorage.removeItem(key);
+        } catch {
+            // Ignore storage errors in private mode or restricted environments.
         }
     }
 

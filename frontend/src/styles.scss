@@ -74,7 +74,7 @@
   --mdc-outlined-card-container-color: var(--app-surface);
 }
 
-:root[data-theme='dark'] {
+@mixin app-dark {
   --app-border-subtle: rgba(255, 255, 255, 0.12);
   --app-overlay-soft: rgba(255, 255, 255, 0.08);
   --app-status-rejected-border: #5d373d;
@@ -86,6 +86,16 @@
   --mat-sys-surface-container-high: var(--pgtec-soft);
 
   color-scheme: dark;
+}
+
+:root[data-theme='dark'] {
+  @include app-dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    @include app-dark;
+  }
 }
 
 html {

@@ -58,10 +58,6 @@
           <li><app-icon name="check" />{{ ui.t('landing.providerPoint2') }}</li>
           <li><app-icon name="check" />{{ ui.t('landing.providerPoint3') }}</li>
         </ul>
-        <a class="pg-btn pg-btn--primary role-cta" routerLink="/submit" fragment="register">
-          {{ ui.t('landing.providerCta') }}
-          <app-icon name="arrow-right" [size]="18" />
-        </a>
       </article>
       <article class="pg-card role-card">
         <div class="pg-icon-tile"><app-icon name="search" [size]="28" /></div>
@@ -72,11 +68,18 @@
           <li><app-icon name="check" />{{ ui.t('landing.consumerPoint2') }}</li>
           <li><app-icon name="check" />{{ ui.t('landing.consumerPoint3') }}</li>
         </ul>
-        <a class="pg-btn pg-btn--primary role-cta" routerLink="/submit" fragment="register">
-          {{ ui.t('landing.consumerCta') }}
-          <app-icon name="arrow-right" [size]="18" />
-        </a>
       </article>
+    </div>
+    <div class="pg-card same-process">
+      <span class="pg-icon-tile pg-icon-tile--small"><app-icon name="file-text" [size]="22" /></span>
+      <div class="same-process-text">
+        <h3 class="same-process-title">{{ ui.t('landing.sameProcessTitle') }}</h3>
+        <p>{{ ui.t('landing.sameProcessDesc') }}</p>
+      </div>
+      <a class="pg-btn pg-btn--primary" routerLink="/submit" fragment="register">
+        {{ ui.t('landing.ctaStart') }}
+        <app-icon name="arrow-right" [size]="18" />
+      </a>
     </div>
   </section>
 

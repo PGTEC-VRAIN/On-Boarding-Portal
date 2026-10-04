@@ -95,8 +95,30 @@
 
 .copyright {
     margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 8px;
     font-size: 14px;
     color: var(--pgtec-muted);
+}
+
+.admin-access {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    min-height: 32px;
+    padding: 0 4px;
+    border: 0;
+    background: none;
+    color: var(--pgtec-muted);
+    font: 13px var(--pgtec-font-body);
+    cursor: pointer;
+
+    &:hover {
+        color: var(--pgtec-link);
+        text-decoration: underline;
+    }
 }
 
 @media (max-width: 720px) {

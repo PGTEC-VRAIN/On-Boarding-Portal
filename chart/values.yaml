@@ -151,6 +151,7 @@ config:
     level: info
   app:
     browserTitle: "PGTEC Onboarding Portal"
+    # -- Show the light/dark switch in the header. The theme follows the OS preference by default.
     enableThemeToggle: true
     projectWebsiteUrl: "https://pgtec.webs.upv.es/"
     marketplaceUrl: ""

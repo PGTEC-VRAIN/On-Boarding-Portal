@@ -68,7 +68,9 @@
   }
 }
 
-:root[data-theme='dark'] {
+// Dark palette. Applied when the app selects the dark theme and, before the app
+// boots (no data-theme yet), when the operating system prefers dark mode.
+@mixin dark-tokens {
   --pgtec-green: #4cc265;
   --pgtec-orange-text: #ffc58a;
   --pgtec-orange-dark: #ffad5c;
@@ -94,4 +96,14 @@
   --pgtec-link-hover: #c3c2ff;
   --pgtec-shadow-card: 0 2px 12px rgba(0, 0, 0, 0.4);
   --pgtec-focus-ring: 0 0 0 3px rgba(155, 153, 255, 0.5);
+}
+
+:root[data-theme='dark'] {
+  @include dark-tokens;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    @include dark-tokens;
+  }
 }
