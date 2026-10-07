@@ -15,7 +15,10 @@ concurrency:
 
 env:
   REGISTRY: ghcr.io
-  PLATFORMS: linux/amd64,linux/arm64
+  # Solo amd64 (el servidor de la UPV es x86). arm64 se emula con QEMU y Node 22
+  # revienta dentro (Illegal instruction / Segmentation fault en pnpm install),
+  # dejando el build colgado hasta el timeout del job.
+  PLATFORMS: linux/amd64
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 
 jobs:
