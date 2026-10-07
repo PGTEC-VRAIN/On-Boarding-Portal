@@ -24,7 +24,11 @@ export class ApplicationStatus {
   readonly registration = input.required<Registration>();
 
   readonly note = computed(() => {
-    const status = this.registration().status;
+    const { status, didGenerated } = this.registration();
+    // Sin realm creado por el portal no se envían enlaces de gestión de usuarios.
+    if (status === RegistrationStatus.ACTIVE && !didGenerated) {
+      return this.ui.t('track.note.activeOwnDid');
+    }
     const specific = `track.note.${status}`;
     const text = this.ui.t(specific);
     return text === specific ? this.ui.t('track.note.default') : text;
@@ -74,11 +78,19 @@ export class ApplicationStatus {
         detail: verificationDetail,
         state: verificationState,
       },
-      {
-        title: this.ui.t('timeline.credentials'),
-        description: this.ui.t(isActive ? 'timeline.credentialsDone' : 'timeline.credentialsPending'),
-        state: isActive ? 'done' : 'pending',
-      },
+      // Las credenciales solo las emite el portal cuando crea el realm de la
+      // organización; con un DID propio, al aprobar solo se registra en el TIR.
+      registration.didGenerated
+        ? {
+          title: this.ui.t('timeline.credentials'),
+          description: this.ui.t(isActive ? 'timeline.credentialsDone' : 'timeline.credentialsPending'),
+          state: isActive ? 'done' : 'pending',
+        }
+        : {
+          title: this.ui.t('timeline.trust'),
+          description: this.ui.t(isActive ? 'timeline.trustDone' : 'timeline.trustPending'),
+          state: isActive ? 'done' : 'pending',
+        },
       {
         title: this.ui.t('timeline.connection'),
         description: this.ui.t('timeline.connectionDesc'),
