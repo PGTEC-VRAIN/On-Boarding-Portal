@@ -4,6 +4,7 @@ import { NodemailerConfig } from "../type/app-config";
 import { resolve } from "path";
 import { readFileSync } from "fs";
 import nodemailer, { Transporter } from 'nodemailer';
+import { convert } from 'html-to-text';
 import SMTPPool from "nodemailer/lib/smtp-pool";
 import { MailContext } from "../type/main-context";
 import { RegistrationStatus } from "../entity/registration.entity";
@@ -50,6 +51,26 @@ abstract class BaseMailService implements EmailService {
             throw error;
         }
     }
+
+    // Parte HTML + alternativa en texto plano: los filtros antispam penalizan los
+    // correos que solo traen HTML.
+    _body(html: string): { html: string, text: string } {
+        return {
+            html,
+            text: convert(html, {
+                wordwrap: 100,
+                selectors: [
+                    { selector: 'title', format: 'skip' },
+                    { selector: 'h1', options: { uppercase: false } },
+                    { selector: 'h2', options: { uppercase: false } },
+                    { selector: 'a', options: { hideLinkHrefIfSameAsText: true } },
+                    { selector: 'table', format: 'block' },
+                    { selector: 'tr', format: 'block' },
+                    { selector: 'td', format: 'block' },
+                ],
+            }),
+        };
+    }
 }
 
 class NodemailerEmailService extends BaseMailService {
@@ -67,8 +88,9 @@ class NodemailerEmailService extends BaseMailService {
         await this.transport.sendMail({
             from: this.emailConfig.from,
             to: email,
+            replyTo: this.emailConfig.replyTo || undefined,
             subject: this.emailConfig.submit.subject,
-            html: template
+            ...this._body(template)
         })
     }
 
@@ -82,8 +104,9 @@ class NodemailerEmailService extends BaseMailService {
         await this.transport.sendMail({
             from: this.emailConfig.from,
             to: email,
+            replyTo: this.emailConfig.replyTo || undefined,
             subject: mailTemplate.subject,
-            html: template
+            ...this._body(template)
         })
     }
 
@@ -93,8 +116,10 @@ class NodemailerEmailService extends BaseMailService {
         const info = await this.transport.sendMail({
             from: this.emailConfig.from,
             bcc: emails,
+            // Responder al aviso escribe directamente al solicitante.
+            replyTo: mailContext.registration.email,
             subject: mailTemplate.subject,
-            html: template
+            ...this._body(template)
         })
         return { accepted: info.accepted as string[], rejected: info.rejected as string[] };
     }

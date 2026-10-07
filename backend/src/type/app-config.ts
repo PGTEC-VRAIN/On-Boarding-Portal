@@ -96,6 +96,9 @@ export interface AdminNotificationConfig extends MailTemplate {
 export interface BaseEmailConfig {
     enabled: boolean;
     from: string;
+    // Dirección a la que llegan las respuestas de los participantes (Reply-To).
+    // Vacía: las respuestas van a `from`.
+    replyTo?: string;
     update: MailTemplate
     submit: MailTemplate
     active: MailTemplate
