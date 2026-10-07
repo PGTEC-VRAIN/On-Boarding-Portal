@@ -73,8 +73,11 @@ class NodemailerEmailService extends BaseMailService {
     }
 
     async sendUpdateEmail(email: string, mailContext: MailContext): Promise<void> {
-        const isActive = mailContext.registration.status === RegistrationStatus.ACTIVE;
-        const mailTemplate = isActive ? this.emailConfig.active : this.emailConfig.update;
+        // La plantilla "active" enlaza a la consola y a la emisión de credenciales del
+        // realm que crea el portal; si el DID lo aportó el solicitante no hay realm.
+        const { status, didGenerated } = mailContext.registration;
+        const isActiveWithRealm = status === RegistrationStatus.ACTIVE && didGenerated;
+        const mailTemplate = isActiveWithRealm ? this.emailConfig.active : this.emailConfig.update;
         const template = this._getTemplate(mailTemplate.html, mailContext)
         await this.transport.sendMail({
             from: this.emailConfig.from,

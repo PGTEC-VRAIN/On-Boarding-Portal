@@ -29,6 +29,9 @@ appServer.use(helmet({
       'script-src-attr': ["'unsafe-inline'"],
       'style-src': ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
       'font-src': ["'self'", 'https://fonts.gstatic.com'],
+      // PdfViewer muestra los PDF subidos con <embed src="blob:...">; el
+      // object-src 'none' por defecto de helmet lo bloquearía.
+      'object-src': ["'self'", 'blob:'],
     },
   },
 }));

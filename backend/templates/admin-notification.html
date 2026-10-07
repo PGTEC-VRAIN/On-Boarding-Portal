@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>New Registration Received</title>
+    <title>Nueva solicitud de registro</title>
 </head>
 
 <body style="margin:0;padding:0;background-color:#f4f7f9;font-family:'Segoe UI',Arial,sans-serif">
@@ -20,25 +20,24 @@
                     </tr>
                     <tr>
                         <td style="padding:40px">
-                            <h2 style="color:#333;margin-top:0">New registration submitted</h2>
-                            <p style="color:#555;line-height:1.6;font-size:16px">A new organization has requested to
-                                join the data space. Please review the request in the admin panel.</p>
+                            <h2 style="color:#333;margin-top:0">Nueva solicitud de registro</h2>
+                            <p style="color:#555;line-height:1.6;font-size:16px">Una nueva organización ha solicitado unirse al Espacio de Datos PGTEC. Revisa la solicitud en el panel de administración.</p>
 
                             <div
                                 style="background-color:#f8f9fa;border-radius:6px;padding:20px;margin:25px 0;border-left:4px solid #3634E8">
-                                <p style="margin:0;color:#777;font-size:14px">Organization:</p>
+                                <p style="margin:0;color:#777;font-size:14px">Organización:</p>
                                 <p style="margin:5px 0 15px 0;color:#333;font-weight:bold">
                                     {{ registration.name }}</p>
 
                                 <hr style="border:0;border-top:1px solid #e0e0e0;margin:0 0 15px 0">
 
-                                <p style="margin:0;color:#777;font-size:14px">Contact email:</p>
+                                <p style="margin:0;color:#777;font-size:14px">Correo de contacto:</p>
                                 <p style="margin:5px 0 15px 0;color:#333;font-size:14px">
                                     {{ registration.email }}</p>
 
                                 <hr style="border:0;border-top:1px solid #e0e0e0;margin:0 0 15px 0">
 
-                                <p style="margin:0;color:#777;font-size:14px">Registration ID:</p>
+                                <p style="margin:0;color:#777;font-size:14px">ID de registro:</p>
                                 <p style="margin:5px 0 15px 0;color:#333;font-weight:bold;font-family:monospace">
                                     {{ registration.id }}</p>
 
@@ -54,7 +53,7 @@
                                     <td align="center" style="padding:10px 0">
                                         <a href="{{ serverOrigin }}/admin/{{ registration.id }}" target="_blank"
                                             style="background-color:#3634E8;color:#ffffff;padding:15px 30px;text-decoration:none;border-radius:5px;font-weight:bold;display:inline-block;font-size:16px;">
-                                            Review request
+                                            Revisar solicitud
                                         </a>
                                     </td>
                                 </tr>
@@ -64,8 +63,7 @@
                     <tr>
                         <td
                             style="padding:20px 40px;background-color:#fafafa;border-top:1px solid #eee;text-align:center">
-                            <p style="color:#999;font-size:12px;margin:0">This is an automated message, please do not
-                                reply.<br>
+                            <p style="color:#999;font-size:12px;margin:0">Mensaje automático, por favor no respondas a este correo.<br>
                             </p>
                         </td>
                     </tr>
