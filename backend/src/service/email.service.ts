@@ -21,6 +21,7 @@ interface EmailService {
 
     sendSubmitEmail(email: string, mailContext: MailContext): Promise<void>;
     sendUpdateEmail(email: string, mailContext: MailContext): Promise<void>;
+    sendCitizenEmail(email: string, mailContext: MailContext): Promise<void>;
     sendAdminNotificationEmail(emails: string[], mailContext: MailContext): Promise<AdminNotificationResult>;
 }
 
@@ -28,6 +29,7 @@ abstract class BaseMailService implements EmailService {
 
     abstract sendSubmitEmail(email: string, mailContext: MailContext): Promise<void>;
     abstract sendUpdateEmail(email: string, mailContext: MailContext): Promise<void>;
+    abstract sendCitizenEmail(email: string, mailContext: MailContext): Promise<void>;
     abstract sendAdminNotificationEmail(emails: string[], mailContext: MailContext): Promise<AdminNotificationResult>;
     templateService: TemplateService;
     constructor() {
@@ -110,6 +112,17 @@ class NodemailerEmailService extends BaseMailService {
         })
     }
 
+    async sendCitizenEmail(email: string, mailContext: MailContext): Promise<void> {
+        const template = this._getTemplate(this.emailConfig.citizen.html, mailContext)
+        await this.transport.sendMail({
+            from: this.emailConfig.from,
+            to: email,
+            replyTo: this.emailConfig.replyTo || undefined,
+            subject: this.emailConfig.citizen.subject,
+            ...this._body(template)
+        })
+    }
+
     async sendAdminNotificationEmail(emails: string[], mailContext: MailContext): Promise<AdminNotificationResult> {
         const mailTemplate = this.emailConfig.adminNotification;
         const template = this._getTemplate(mailTemplate.html, mailContext)
@@ -133,6 +146,11 @@ class DisabledMailService extends BaseMailService {
     }
     sendUpdateEmail(email: string, mailContext: MailContext): Promise<void> {
         logger.debug('Mail service is disabled')
+        return Promise.resolve();
+    }
+    sendCitizenEmail(email: string, mailContext: MailContext): Promise<void> {
+        // Sin correo el ciudadano no recibe su contraseña: avisar fuerte.
+        logger.warn('Mail service is disabled: the citizen will not receive their password')
         return Promise.resolve();
     }
     sendAdminNotificationEmail(emails: string[], mailContext: MailContext): Promise<AdminNotificationResult> {

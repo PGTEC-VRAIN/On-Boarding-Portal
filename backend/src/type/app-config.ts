@@ -15,6 +15,7 @@ export interface AppConfig {
     email: EmailConfig;
     documentToSignUrl: string;
     didGenerator: DidGeneratorConfig
+    citizen: CitizenConfig
 }
 
 export interface ServerConfig {
@@ -102,6 +103,7 @@ export interface BaseEmailConfig {
     update: MailTemplate
     submit: MailTemplate
     active: MailTemplate
+    citizen: MailTemplate
     adminNotification: AdminNotificationConfig
 }
 
@@ -118,4 +120,27 @@ export interface DidGeneratorConfig {
 
 export interface ClientScope extends ClientScopeRepresentation {
     type?: 'default' | 'optional' | 'none'
+}
+
+
+// Flujo de ciudadania: una solicitud sin DID entra como persona fisica asociada a un
+// unico participante ya registrado (`did`), y el portal le crea un usuario en el
+// Keycloak de ese participante con la ServiceCredential y los roles configurados.
+export interface CitizenConfig {
+    enabled: boolean;
+    // did:web del participante de ciudadania (registrado a mano en el TIR).
+    did: string;
+    keycloak: {
+        baseUrl: string;
+        // Realm donde se crean los usuarios.
+        realmName: string;
+        // Realm contra el que se autentica `auth` (master si es el admin de Keycloak).
+        authRealm: string;
+        auth: Credentials;
+    };
+    // Roles del cliente `roles-dataspace` que se asignan a cada ciudadano.
+    dataspaceRoles: string[];
+    credentialScope: string;
+    group: string;
+    passwordLength: number;
 }

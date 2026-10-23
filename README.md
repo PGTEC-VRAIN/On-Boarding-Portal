@@ -553,6 +553,16 @@ endpoint answers `403 invalid_client`.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+### Citizen Flow
+
+With `citizen.enabled: true`, an application **without a DID** is treated as a person from the citizenship, not an organization. The portal does not touch the TIR/TIL (all citizens share the DID of the citizenship participant, `citizen.did`, which must already be registered there). It creates a user in that participant's Keycloak (`citizen.keycloak`, realm `provider` by default) with:
+
+- the group `citizen.group`, the client roles `citizen.dataspaceRoles` in `roles-dataspace`, and the `citizen.credentialScope` role in the `did:web` client, plus the credential assigned to the user so it can be issued;
+- a random temporary password, sent by email together with the username (the email) using the `email.citizen` template;
+- the optional **DNI/NIE** (validated, letter included) as the `nif` attribute, which enables sign-in with a digital certificate through the custodial wallet. Without it the person signs in with username and password and stores the credential in a wallet (e.g. Lissi).
+
+The registration is stored with `citizen = true`, status `active`, `did = NULL` (filled with `citizen.did` on read) and no admin notification. Deleting it (or moving it out of `active`) deletes the Keycloak user, never the DID. The typed NIF is **not verified**: it is unique per realm, but anyone can claim one that is not yet registered. The Admin API account in `citizen.keycloak.auth` needs `manage-users` and `view-clients` in the target realm (the master admin works).
+
 ### Enabling Dynamic DID Generation
 
 By default (`didCreationEnabled: false`) the registration form requires applicants to provide an existing DID. When dynamic generation is enabled, the portal creates a `did:web` identifier automatically during realm provisioning, so applicants do not need to supply one.

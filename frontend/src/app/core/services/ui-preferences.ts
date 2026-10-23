@@ -155,6 +155,21 @@ export class UiPreferencesService {
             'submit.trackingId': 'Application ID',
             'submit.notFound': 'Registration request {{id}} not found',
 
+            'form.kindGroup': 'Type of applicant',
+            'form.kindOrganization': 'Organisation',
+            'form.kindCitizen': 'Citizen',
+            'form.citizenGroup': 'Citizen access',
+            'form.citizenLead':
+                'No connector or DID needed. We create your account in the citizens space; you will get your username and a temporary password by email.',
+            'form.citizenName': 'Full name',
+            'form.citizenEmailHint': 'We send your username and temporary password to this address.',
+            'form.nif': 'DNI / NIE',
+            'form.nifInfoLabel': 'What is the DNI/NIE used for?',
+            'form.nifInfo':
+                'If you provide your DNI/NIE, you can sign in to the data space with your digital certificate (FNMT or electronic ID) without typing a password, and your account is linked to that certificate. If you leave it empty nothing happens: you sign in with your username and password and keep your credential in a wallet app such as Lissi, which takes a few more steps. The number is not verified when you sign up: it is only used to recognise your certificate afterwards.',
+            'form.nifHint': 'Only if you want to sign in with your digital certificate. Otherwise you will use a wallet (e.g. Lissi).',
+            'form.invalidNif': 'Enter a valid DNI or NIE (e.g. 12345678Z).',
+            'form.citizenSubmit': 'Create my account',
             'form.entityGroup': 'Entity details',
             'form.name': 'Legal name of the entity',
             'form.namePlaceholder': 'Full legal name',
@@ -462,6 +477,21 @@ export class UiPreferencesService {
             'submit.trackingId': 'Identificador de la solicitud',
             'submit.notFound': 'No se encontró la solicitud {{id}}',
 
+            'form.kindGroup': 'Tipo de solicitante',
+            'form.kindOrganization': 'Organización',
+            'form.kindCitizen': 'Ciudadanía',
+            'form.citizenGroup': 'Acceso de ciudadanía',
+            'form.citizenLead':
+                'No necesitas conector ni DID. Creamos tu cuenta en el espacio de la ciudadanía y recibirás por correo tu usuario y una contraseña temporal.',
+            'form.citizenName': 'Nombre y apellidos',
+            'form.citizenEmailHint': 'Enviaremos a esta dirección tu usuario y la contraseña temporal.',
+            'form.nif': 'DNI / NIE',
+            'form.nifInfoLabel': '¿Para qué sirve el DNI/NIE?',
+            'form.nifInfo':
+                'Si indicas tu DNI/NIE podrás entrar al espacio de datos con tu certificado digital (FNMT o DNI electrónico), sin escribir contraseña, y tu cuenta quedará vinculada a ese certificado. Si lo dejas vacío no pasa nada: entrarás con tu usuario y contraseña y guardarás la credencial en una app de wallet como Lissi, lo que requiere algún paso más. El número no se verifica al darte de alta: solo sirve para reconocer tu certificado después.',
+            'form.nifHint': 'Solo si quieres entrar con tu certificado digital. Si no, accederás con una wallet (por ejemplo Lissi).',
+            'form.invalidNif': 'Introduce un DNI o NIE válido (por ejemplo 12345678Z).',
+            'form.citizenSubmit': 'Crear mi cuenta',
             'form.entityGroup': 'Datos de la entidad',
             'form.name': 'Denominación de la entidad',
             'form.namePlaceholder': 'Nombre legal completo',

@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 import { registrationRepository, RegistrationUpdate } from "../repository/registration.repository";
 import { logger } from "../service/logger";
 import { isDuplicatedKeyError } from "../type/db-errors";
@@ -9,8 +9,56 @@ import { storageService } from "../service/storage.service";
 import { uploadFiles } from "../middleware/storage.middleware";
 import { MailContext } from "../type/main-context";
 import { keycloakService } from "../service/keycloak.service";
+import { citizenService, normalizeNif } from "../service/citizen.service";
+import { configService } from "../service/config.service";
+import { AppError } from "../type/app-error";
 
 const router = Router()
+
+// Solicitud sin DID: persona de la ciudadania. No pasa por el TIR/TIL (el DID es el del
+// participante de ciudadania, ya registrado): se crea su usuario en el Keycloak de
+// ciudadania y se le envian usuario y contraseña temporal por correo.
+async function submitCitizen(req: Request, res: Response, data: any) {
+    const { name, email } = data;
+    if (!name || !email) {
+        return res.status(400).json({ error: 'Name and email are required' });
+    }
+    let nif: string | undefined;
+    if (data.nif) {
+        nif = normalizeNif(String(data.nif)) ?? undefined;
+        if (!nif) {
+            return res.status(400).json({ error: 'Invalid NIF/NIE' });
+        }
+    }
+    const { did } = configService.get().citizen;
+    let registration;
+    try {
+        logger.info(`Processing citizen onboarding for: ${email}`);
+        registration = await registrationRepository.save({
+            name, email, nif, citizen: true, status: RegistrationStatus.ACTIVE,
+            taxId: '', address: '', city: '', postCode: '', country: ''
+        });
+        const account = await citizenService.createUser(name, email, nif);
+        registration.did = did;
+        res.status(201).json({ id: registration.id, did, citizen: true, timestamp: new Date().toISOString() });
+        const mailContext: MailContext = { registration, serverOrigin: (req as any).serverOrigin, account };
+        emailService.sendCitizenEmail(email, mailContext).catch((error) => {
+            logger.warn('Unable to send citizen email', error);
+        });
+    } catch (error) {
+        logger.error('Citizen Submission Error:', error);
+        if (registration) {
+            await registrationRepository.delete(registration.id).catch(() => undefined);
+        }
+        if (isDuplicatedKeyError(error)) {
+            return res.status(400).json({ error: `Email '${email}' has been already submitted` });
+        }
+        if (error instanceof AppError) {
+            return res.status(error.status).json({ error: error.message });
+        }
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
 
 router.post('/registrations/submit', uploadFiles('files', { maxCount: 5, allowedTypes: /pdf/ }), async (req, res) => {
     let filesPath, registration;
@@ -23,6 +71,9 @@ router.post('/registrations/submit', uploadFiles('files', { maxCount: 5, allowed
         logger.debug(`Files received: ${uploadedFiles ? uploadedFiles.length : 0}`);
 
 
+        if (!data.did && configService.get().citizen.enabled) {
+            return await submitCitizen(req, res, data);
+        }
         if (!data.did) {
             if (!keycloakService.config.didCreationEnabled) {
                 return res.status(400).json({ error: 'DID is required' })

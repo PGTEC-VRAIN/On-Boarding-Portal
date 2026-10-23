@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { AfterLoad, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { FileMetadata } from "../type/file-metadata";
 import { configService } from "../service/config.service";
 import { keycloakService } from "../service/keycloak.service";
@@ -22,7 +22,9 @@ export class Registration {
     @Column({ unique: true })
     email!: string;
 
-    @Column({ unique: true })
+    // Null en las solicitudes de ciudadania (varias personas comparten un unico DID, que el
+    // portal rellena al cargarlas); NULL no choca con la restriccion unique.
+    @Column({ unique: true, nullable: true })
     did!: string;
     @Column({
         type: "enum",
@@ -49,6 +51,13 @@ export class Registration {
 
     @Column({ default: false })
     didGenerated!: boolean
+
+    // Persona de la ciudadania (sin DID propio ni organizacion).
+    @Column({ default: false })
+    citizen!: boolean
+    // NIF/NIE opcional: permite entrar con certificado digital.
+    @Column({ nullable: true })
+    nif?: string
     @Column({ nullable: true, type: 'text' })
     reason?: string;
     @CreateDateColumn({ type: DATE_COLUMN_TYPE })
@@ -58,6 +67,13 @@ export class Registration {
     updatedAt?: Date;
 
     files?: FileMetadata[];
+
+    @AfterLoad()
+    fillCitizenDid() {
+        if (this.citizen && !this.did) {
+            this.did = configService.get().citizen.did;
+        }
+    }
 
     adminUrl?: string;
 

@@ -87,7 +87,8 @@ appServer.use((_req, res) => {
       projectWebsiteUrl: app.projectWebsiteUrl,
       marketplaceUrl: app.marketplaceUrl,
       keycloakAdminUrl: app.keycloakAdminUrl,
-      didCreationEnabled: app.keycloak.didCreationEnabled
+      didCreationEnabled: app.keycloak.didCreationEnabled,
+      citizenEnabled: configService.get().citizen.enabled
     });
     await initializeDatabase()
   } catch (error) {

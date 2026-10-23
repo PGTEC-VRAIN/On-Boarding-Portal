@@ -9,6 +9,7 @@ import emailService from "../service/email.service";
 import { logger } from "../service/logger";
 import { registrationService } from "../service/registration.service";
 import { MailContext } from "../type/main-context";
+import { citizenService } from "../service/citizen.service";
 import { keycloakService } from "../service/keycloak.service";
 
 const router = Router()
@@ -90,7 +91,7 @@ router.delete('/admin/registrations/:id', authFilter, async (req: Request, res: 
         }
 
         if (registration.status === RegistrationStatus.ACTIVE) {
-            await registrationService.unregister(registration.did, registration.didGenerated);
+            await registrationService.unregister(registration);
         }
         await registrationRepository.delete(id, queryRunner);
         logger.info(`Registration ${id} deleted by admin.`);
@@ -128,7 +129,7 @@ router.put('/admin/registrations/:id', authFilter, async (req: Request, res: Res
         if (prevRegistration.status !== RegistrationStatus.ACTIVE && status === RegistrationStatus.ACTIVE) {
             await registrationService.register(registration);
         } else if (prevRegistration.status === RegistrationStatus.ACTIVE && status !== RegistrationStatus.ACTIVE) {
-            await registrationService.unregister(registration.did, registration.didGenerated);
+            await registrationService.unregister(registration);
         }
 
         await queryRunner.commitTransaction();
@@ -144,8 +145,8 @@ router.put('/admin/registrations/:id', authFilter, async (req: Request, res: Res
                 registration,
                 previousState: prevRegistration.status,
                 serverOrigin: (req as any).serverOrigin,
-                accountUrl: keycloakService.getAccountUrl(registration.did),
-                adminUrl: keycloakService.getAdminUrl(registration.did)
+                accountUrl: registration.citizen ? citizenService.getAccountUrl() : keycloakService.getAccountUrl(registration.did),
+                adminUrl: registration.citizen ? undefined : keycloakService.getAdminUrl(registration.did)
             }
             await emailService.sendUpdateEmail(registration.email, mailContext)
         } catch (error) {

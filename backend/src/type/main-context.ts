@@ -1,3 +1,4 @@
+import { CitizenAccount } from "../service/citizen.service";
 import { Registration, RegistrationStatus } from "../entity/registration.entity";
 
 export interface MailContext {
@@ -6,4 +7,5 @@ export interface MailContext {
     serverOrigin: string;
     accountUrl?: string;
     adminUrl?: string;
+    account?: CitizenAccount;
 }

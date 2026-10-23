@@ -300,6 +300,27 @@ app:
 # realm gets `<didWebHost>:<realm>` (e.g. did:web:example.com:<realm>).
 didGenerator:
   didWebHost: ""
+# Flujo de ciudadania (ver README): sin DID en la solicitud, la persona se da de alta como
+# usuario del Keycloak de este participante y recibe usuario y contraseña por correo.
+citizen:
+  enabled: false
+  did: ""
+  keycloak:
+    baseUrl: ""
+    realmName: provider
+    authRealm: master
+    auth:
+      grantType: password
+      clientId: admin-cli
+      username: ""
+      password: ""
+  dataspaceRoles:
+    - clearence1
+    - hidris_user
+    - tetis_user
+  credentialScope: ServiceCredential
+  group: consumer
+  passwordLength: 16
 email:
   enabled: false
   type: "nodemailer"
@@ -313,6 +334,10 @@ email:
   active:
     subject: "OnBoarding Portal - Registration activated"
     html: "file://./templates/active.html"
+  # Bienvenida a una persona de la ciudadania: usuario y contraseña temporal.
+  citizen:
+    subject: "OnBoarding Portal - Your citizen account"
+    html: "file://./templates/citizen.html"
   # Notifies portal admins by email when a new registration is submitted.
   adminNotification:
     enabled: true

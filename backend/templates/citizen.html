@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Tu cuenta de ciudadanía</title>
+</head>
+
+<body style="margin:0;padding:0;background-color:#f4f7f9;font-family:'Segoe UI',Arial,sans-serif">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+            <td align="center" style="padding:40px 0">
+                <table border="0" cellpadding="0" cellspacing="0" width="600"
+                    style="background-color:#ffffff;border-radius:8px;overflow:hidden;box-shadow:0 4px 10px rgba(0,0,0,0.05)">
+                    <tr>
+                        <td align="center" style="padding:40px;background-color:#3634E8">
+                            <h1 style="color:#ffffff;margin:0;font-size:24px;letter-spacing:1px">PGTEC · Onboarding Portal</h1>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:40px">
+                            <h2 style="color:#333;margin-top:0">Tu cuenta de ciudadanía está lista</h2>
+                            <p style="color:#555;line-height:1.6;font-size:16px">Hola {{registration.name}}, ya puedes acceder al espacio de datos como ciudadano. Estos son tus datos de acceso:</p>
+
+                            <div style="background-color:#f8f9fa;border-radius:6px;border-left:4px solid #4caf50;padding:20px;margin:25px 0">
+                                <p style="margin:0;color:#777;font-size:12px;text-transform:uppercase;letter-spacing:0.5px">Usuario</p>
+                                <p style="margin:5px 0 15px 0;color:#333;font-size:14px">{{account.username}}</p>
+                                <p style="margin:0;color:#777;font-size:12px;text-transform:uppercase;letter-spacing:0.5px">Contraseña temporal</p>
+                                <p style="margin:5px 0 0 0;color:#333;font-size:16px;font-family:monospace">{{account.password}}</p>
+                            </div>
+
+                            <p style="color:#555;line-height:1.6;font-size:16px">Entra en tu cuenta, cambia la contraseña y, desde ahí, obtén tu credencial para guardarla en tu wallet (por ejemplo Lissi):</p>
+                            <p style="text-align:center;margin:30px 0">
+                                <a href="{{account.accountUrl}}" target="_blank"
+                                    style="background-color:#3634E8;color:#ffffff;padding:14px 28px;border-radius:6px;text-decoration:none;font-weight:600">Entrar en mi cuenta</a>
+                            </p>
+                            <p style="color:#777;line-height:1.6;font-size:14px">Si indicaste tu DNI/NIE, también podrás acceder con tu certificado digital. Guarda este correo en un lugar seguro y no compartas tu contraseña.</p>
+                            <p style="color:#777;font-size:12px">ID de registro: {{registration.id}}</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

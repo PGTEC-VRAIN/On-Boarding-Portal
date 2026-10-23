@@ -4,5 +4,6 @@ import { getHostUrl, getMetadata, getMetadataAsBoolean } from "./metadata.servic
 export const environment: Config = {
   serverHost: getHostUrl(),
   documentToSignUrl: getMetadata('documentToSignUrl', '')!,
-  didCreationEnabled: getMetadataAsBoolean('didCreationEnabled', false)!
+  didCreationEnabled: getMetadataAsBoolean('didCreationEnabled', false)!,
+  citizenEnabled: getMetadataAsBoolean('citizenEnabled', false)!
 }

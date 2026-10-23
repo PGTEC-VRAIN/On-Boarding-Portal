@@ -10,11 +10,13 @@ export interface RegistrationInfo {
     email: string;
     name: string;
     did?: string;
-    taxId: string;
-    address: string;
-    city: string;
-    postCode: string;
-    country: string;
+    taxId?: string;
+    address?: string;
+    city?: string;
+    postCode?: string;
+    country?: string;
+    // Solo ciudadania: DNI/NIE opcional para entrar con certificado.
+    nif?: string;
 }
 
 export const REGISTRATION_UPDATE_KEYS = ['address', 'city', 'country', 'did', 'email', 'name', 'postCode', 'taxId']
@@ -39,7 +41,7 @@ export class OnBoardingService {
         }
     }
 
-    submitRegistration(formValues: RegistrationInfo, file: File): Observable<any> {
+    submitRegistration(formValues: RegistrationInfo, file?: File): Observable<any> {
         const url = this._resolveUrl(this.submitPath);
 
         const headers = this._getHeaders();
@@ -50,7 +52,9 @@ export class OnBoardingService {
             }
         })
 
-        body.append('files', file, file.name);
+        if (file) {
+            body.append('files', file, file.name);
+        }
 
         return this.http.post<any>(url, body, { headers });
     }

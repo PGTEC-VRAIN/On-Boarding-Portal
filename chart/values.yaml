@@ -185,6 +185,26 @@ config:
   # each provisioned realm gets `<didWebHost>:<realm>`, served by did-helper.
   didGenerator:
     didWebHost: "" # e.g. did:web:did.example.com
+  # -- Citizen flow: an application without a DID registers a person as a user of the
+  # citizenship participant's Keycloak (ServiceCredential + `dataspaceRoles`), and the portal
+  # emails them a temporary password. The participant's `did` must already be in the TIR.
+  # Takes precedence over `app.keycloak.didCreationEnabled` for applications without a DID.
+  citizen:
+    enabled: false
+    did: "" # e.g. did:web:ciudadania.example.eu
+    keycloak:
+      baseUrl: "" # e.g. https://keycloak-ciudadania.example.eu
+      realmName: provider
+      authRealm: master
+      auth:
+        username: ${APP_CITIZEN_KEYCLOAK_USERNAME}
+        password: "${APP_CITIZEN_KEYCLOAK_PASSWORD}"
+        grantType: password
+        clientId: "admin-cli"
+    dataspaceRoles: [clearence1, hidris_user, tetis_user]
+    credentialScope: ServiceCredential
+    group: consumer
+    passwordLength: 16
   database:
     type: postgres
     host: ""

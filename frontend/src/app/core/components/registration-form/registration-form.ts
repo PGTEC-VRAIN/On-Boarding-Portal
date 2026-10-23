@@ -35,6 +35,10 @@ export class RegistrationForm {
   readonly maxFileSizeMB = 5;
   pdfDocumentUrl: string;
   didCreationEnabled: boolean;
+  readonly citizenEnabled: boolean;
+  // Con la ciudadania activa, el primer paso permite elegir entre organizacion y persona.
+  readonly kind = signal<'organization' | 'citizen'>('organization');
+  citizenForm: FormGroup;
   contactForm: FormGroup;
   orgForm: FormGroup;
   legalForm: FormGroup;
@@ -49,6 +53,7 @@ export class RegistrationForm {
   ) {
     this.pdfDocumentUrl = config.getProperty('documentToSignUrl');
     this.didCreationEnabled = config.getProperty('didCreationEnabled');
+    this.citizenEnabled = config.getProperty('citizenEnabled');
 
     const didValidators = [Validators.pattern(/^did:[a-z0-9]+:[a-zA-Z0-9\.\-_%:]+$/)];
     if (!this.didCreationEnabled) {
@@ -58,6 +63,12 @@ export class RegistrationForm {
     this.contactForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       did: ['', didValidators]
+    });
+
+    this.citizenForm = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.email]],
+      nif: ['', [Validators.pattern(/^(\d{8}|[XYZxyz]\d{7})[\s-]?[A-Za-z]$/)]]
     });
 
     this.orgForm = this.fb.group({
@@ -95,7 +106,7 @@ export class RegistrationForm {
       return this.ui.t('form.invalidEmail');
     }
     if (control.hasError('pattern')) {
-      return this.ui.t('form.invalidDid');
+      return control === this.citizenForm.get('nif') ? this.ui.t('form.invalidNif') : this.ui.t('form.invalidDid');
     }
     return null;
   }
@@ -145,6 +156,27 @@ export class RegistrationForm {
     }
     control?.markAsTouched();
     control?.updateValueAndValidity();
+  }
+
+  submitCitizen(): void {
+    if (this.citizenForm.invalid) {
+      this.citizenForm.markAllAsTouched();
+      this.focusFirstInvalid();
+      return;
+    }
+    this.isProcessing.set(true);
+    this.onBoardingService.submitRegistration(this.citizenForm.value as RegistrationInfo).subscribe({
+      next: (response) => {
+        this.registrationId = response.id;
+        this.isProcessing.set(false);
+        this.submitted.emit(response.id);
+      },
+      error: (err) => {
+        this.isProcessing.set(false);
+        this.notification.error(err?.error?.error || this.ui.t('form.submitError'));
+        console.error('Submission Error:', err);
+      }
+    });
   }
 
   submitRegistration(): void {
