@@ -59,6 +59,12 @@ export class OnBoardingService {
         return this.http.post<any>(url, body, { headers });
     }
 
+    // Ciudadania: oferta de credencial nueva (URI para la wallet + QR) a partir del enlace del correo.
+    getCitizenCredential(token: string): Observable<{ name: string; uri: string; qr: string }> {
+        const url = this._resolveUrl('/api/citizen/credential');
+        return this.http.get<{ name: string; uri: string; qr: string }>(url, { params: { t: token } });
+    }
+
     getRegistration(id: string): Observable<any> {
         const url = this._resolveUrl(`${this.submitPath}/${id}`);
 

@@ -142,5 +142,26 @@ export interface CitizenConfig {
     dataspaceRoles: string[];
     credentialScope: string;
     group: string;
+    // Longitud de la contraseña aleatoria que se envia por correo: Lissi lleva al ciudadano a
+    // iniciar sesion en Keycloak al aceptar la credencial (flujo de codigo de autorizacion).
     passwordLength: number;
+    // Ofertas de credencial: se crean con el cliente de Lissi (Keycloak ata la oferta al cliente que
+    // la crea y Lissi inicia sesion con el suyo), con un usuario tecnico que se prepara solo.
+    offer: {
+        // Cliente con el que Lissi inicia sesion (en el realm es "Lissi ID Wallet").
+        clientId: string;
+        // Usuario tecnico que crea las ofertas, y su contraseña.
+        botUser: string;
+        botPassword: string;
+        // Rol de realm que se le asigna.
+        role: string;
+        // true: oferta pre-autorizada (sin login). Lissi no la acepta (se detiene tras el token);
+        // false: codigo de autorizacion, la wallet lleva al ciudadano a Keycloak a autenticarse.
+        preAuthorized: boolean;
+        // La oferta caduca dentro de tantos segundos. Keycloak espera en `expire` una fecha (Unix,
+        // segundos): el portal envia ahora + expireSeconds.
+        expireSeconds: number;
+    };
+    // Enlace "obtener mi credencial" del correo: firmado con `secret`, valido `ttlDays` dias.
+    link: { secret: string; ttlDays: number };
 }

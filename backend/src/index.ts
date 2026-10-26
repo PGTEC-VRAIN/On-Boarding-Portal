@@ -10,6 +10,7 @@ import { initializeDatabase } from './service/data.source';
 import oidcController from './controller/openid.controller';
 import registrationController from './controller/registration.controller';
 import adminRegistrationController from './controller/admin-registration.controller';
+import citizenController from './controller/citizen.controller';
 
 import cookieParser from 'cookie-parser';
 import { forwardedMiddleware } from './middleware/forwarded.middleware';
@@ -69,7 +70,7 @@ appServer.get('/health/ready', async (_, res) => {
 });
 
 // login
-appServer.use('/api', oidcController, registrationController, adminRegistrationController)
+appServer.use('/api', oidcController, registrationController, citizenController, adminRegistrationController)
 
 let renderedIndex: string;
 appServer.use((_req, res) => {

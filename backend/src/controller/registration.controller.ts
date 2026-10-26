@@ -38,10 +38,12 @@ async function submitCitizen(req: Request, res: Response, data: any) {
             name, email, nif, citizen: true, status: RegistrationStatus.ACTIVE,
             taxId: '', address: '', city: '', postCode: '', country: ''
         });
+        // Antes de crear el usuario: sin secreto de enlaces el correo no podria llevar el QR.
+        const credentialUrl = citizenService.credentialLink(registration.id, (req as any).serverOrigin);
         const account = await citizenService.createUser(name, email, nif);
         registration.did = did;
         res.status(201).json({ id: registration.id, did, citizen: true, timestamp: new Date().toISOString() });
-        const mailContext: MailContext = { registration, serverOrigin: (req as any).serverOrigin, account };
+        const mailContext: MailContext = { registration, serverOrigin: (req as any).serverOrigin, account, credentialUrl };
         emailService.sendCitizenEmail(email, mailContext).catch((error) => {
             logger.warn('Unable to send citizen email', error);
         });

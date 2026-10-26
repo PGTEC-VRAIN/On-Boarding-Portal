@@ -8,4 +8,6 @@ export interface MailContext {
     accountUrl?: string;
     adminUrl?: string;
     account?: CitizenAccount;
+    // Ciudadania: enlace del correo para obtener la credencial (QR).
+    credentialUrl?: string;
 }

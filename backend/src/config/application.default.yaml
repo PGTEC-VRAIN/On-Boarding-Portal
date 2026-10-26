@@ -321,6 +321,16 @@ citizen:
   credentialScope: ServiceCredential
   group: consumer
   passwordLength: 16
+  offer:
+    clientId: 9c481dc3-2ad0-4fe0-881d-c32ad02fe0fc
+    botUser: offer-bot
+    botPassword: ""
+    role: credential-offer-create
+    preAuthorized: false
+    expireSeconds: 600
+  link:
+    secret: ""
+    ttlDays: 90
 email:
   enabled: false
   type: "nodemailer"
@@ -336,7 +346,7 @@ email:
     html: "file://./templates/active.html"
   # Bienvenida a una persona de la ciudadania: usuario y contraseña temporal.
   citizen:
-    subject: "OnBoarding Portal - Your citizen account"
+    subject: "OnBoarding Portal - Your citizen access"
     html: "file://./templates/citizen.html"
   # Notifies portal admins by email when a new registration is submitted.
   adminNotification:

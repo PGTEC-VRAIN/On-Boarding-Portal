@@ -187,7 +187,7 @@ config:
     didWebHost: "" # e.g. did:web:did.example.com
   # -- Citizen flow: an application without a DID registers a person as a user of the
   # citizenship participant's Keycloak (ServiceCredential + `dataspaceRoles`), and the portal
-  # emails them a temporary password. The participant's `did` must already be in the TIR.
+  # emails them a link that shows the QR to save the credential in their wallet. The participant's `did` must already be in the TIR.
   # Takes precedence over `app.keycloak.didCreationEnabled` for applications without a DID.
   citizen:
     enabled: false
@@ -204,7 +204,29 @@ config:
     dataspaceRoles: [clearence1, hidris_user, tetis_user]
     credentialScope: ServiceCredential
     group: consumer
+    # -- Length of the random password emailed to each citizen. Lissi sends the person to sign in
+    # to Keycloak when accepting the credential (authorization code flow).
     passwordLength: 16
+    # -- Credential offers are created with Lissi's own client (Keycloak ties an offer to the client
+    # that creates it and Lissi signs in with its own), through a technical user the portal prepares
+    # itself (enables direct access grants on that client, creates the user, sets its password).
+    offer:
+      # -- Client Lissi signs in with ("Lissi ID Wallet" in the realm).
+      clientId: 9c481dc3-2ad0-4fe0-881d-c32ad02fe0fc
+      botUser: offer-bot
+      # -- Required when the citizen flow is enabled (e.g. "${CITIZEN_OFFER_BOT_PASSWORD}").
+      botPassword: ""
+      role: credential-offer-create
+      # -- true = pre-authorized offer (no login). Lissi stops after the token with those, so the
+      # default is the authorization code flow (the wallet takes the person to Keycloak to sign in).
+      preAuthorized: false
+      # -- Seconds until the offer (and its QR) expires.
+      expireSeconds: 600
+    # -- Signed link in the welcome email that opens the QR page. `secret` is required when the
+    # citizen flow is enabled (e.g. "${CITIZEN_LINK_SECRET}"); the link is valid `ttlDays` days.
+    link:
+      secret: ""
+      ttlDays: 90
   database:
     type: postgres
     host: ""
