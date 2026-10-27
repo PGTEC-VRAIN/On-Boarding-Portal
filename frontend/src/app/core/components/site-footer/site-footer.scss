@@ -42,28 +42,29 @@
 }
 
 .logo-eu {
-    height: 52px;
+    height: 44px;
 }
 
 .logo-sedia {
-    height: 44px;
+    height: 36px;
 }
 
 .logo-prtr {
-    height: 72px;
+    height: 56px;
 }
 
 .logo-upv {
-    height: 48px;
+    height: 40px;
 }
 
-// Logo apaisado (9,7:1): se limita por altura para que no ocupe media banda.
+// Logo apaisado (9,7:1): se limita por altura para que no ocupe media banda. Con estas
+// alturas los seis logos caben en una sola línea desde 1200 px; por debajo se reparten en varias.
 .logo-vrain {
-    height: 28px;
+    height: 22px;
 }
 
 .logo-edc {
-    height: 44px;
+    height: 38px;
 }
 
 .footer-funding {
@@ -123,6 +124,12 @@
     &:hover {
         color: var(--pgtec-link);
         text-decoration: underline;
+    }
+}
+
+@media (min-width: 1200px) {
+    .footer-logos {
+        flex-wrap: nowrap;
     }
 }
 
