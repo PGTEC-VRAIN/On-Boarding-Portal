@@ -57,6 +57,11 @@
     height: 48px;
 }
 
+// Logo apaisado (9,7:1): se limita por altura para que no ocupe media banda.
+.logo-vrain {
+    height: 28px;
+}
+
 .logo-edc {
     height: 44px;
 }

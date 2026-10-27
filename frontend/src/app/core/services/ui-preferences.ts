@@ -121,6 +121,7 @@ export class UiPreferencesService {
                 'Government of Spain - Ministry of Economic Affairs and Digital Transformation - Secretary of State for Digitalisation and Artificial Intelligence',
             'footer.altPrtr': 'Recovery, Transformation and Resilience Plan',
             'footer.altUpv': 'Universitat Politècnica de València',
+            'footer.altVrain': 'VRAIN - Valencian Research Institute for Artificial Intelligence',
             'footer.altEdc': 'Trusted data space - CRED',
 
             'wizard.stepOf': 'Step {{current}} of {{total}}',
@@ -465,6 +466,7 @@ export class UiPreferencesService {
                 'Gobierno de España - Ministerio de Asuntos Económicos y Transformación Digital - Secretaría de Estado de Digitalización e Inteligencia Artificial',
             'footer.altPrtr': 'Plan de Recuperación, Transformación y Resiliencia',
             'footer.altUpv': 'Universitat Politècnica de València',
+            'footer.altVrain': 'VRAIN - Valencian Research Institute for Artificial Intelligence',
             'footer.altEdc': 'Espacio de datos de confianza - CRED',
 
             'wizard.stepOf': 'Paso {{current}} de {{total}}',
