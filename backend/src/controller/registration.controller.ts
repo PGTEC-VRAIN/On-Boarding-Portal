@@ -9,7 +9,7 @@ import { storageService } from "../service/storage.service";
 import { uploadFiles } from "../middleware/storage.middleware";
 import { MailContext } from "../type/main-context";
 import { keycloakService } from "../service/keycloak.service";
-import { citizenService, normalizeNif } from "../service/citizen.service";
+import { citizenService } from "../service/citizen.service";
 import { configService } from "../service/config.service";
 import { AppError } from "../type/app-error";
 
@@ -17,30 +17,24 @@ const router = Router()
 
 // Solicitud sin DID: persona de la ciudadania. No pasa por el TIR/TIL (el DID es el del
 // participante de ciudadania, ya registrado): se crea su usuario en el Keycloak de
-// ciudadania y se le envian usuario y contraseña temporal por correo.
+// ciudadania y se le envian usuario y contraseña temporal por correo. No se guarda el
+// DNI/NIE: si la peticion lo trae, se ignora.
 async function submitCitizen(req: Request, res: Response, data: any) {
     const { name, email } = data;
     if (!name || !email) {
         return res.status(400).json({ error: 'Name and email are required' });
-    }
-    let nif: string | undefined;
-    if (data.nif) {
-        nif = normalizeNif(String(data.nif)) ?? undefined;
-        if (!nif) {
-            return res.status(400).json({ error: 'Invalid NIF/NIE' });
-        }
     }
     const { did } = configService.get().citizen;
     let registration;
     try {
         logger.info(`Processing citizen onboarding for: ${email}`);
         registration = await registrationRepository.save({
-            name, email, nif, citizen: true, status: RegistrationStatus.ACTIVE,
+            name, email, citizen: true, status: RegistrationStatus.ACTIVE,
             taxId: '', address: '', city: '', postCode: '', country: ''
         });
         // Antes de crear el usuario: sin secreto de enlaces el correo no podria llevar el QR.
         const credentialUrl = citizenService.credentialLink(registration.id, (req as any).serverOrigin);
-        const account = await citizenService.createUser(name, email, nif);
+        const account = await citizenService.createUser(name, email);
         registration.did = did;
         res.status(201).json({ id: registration.id, did, citizen: true, timestamp: new Date().toISOString() });
         const mailContext: MailContext = { registration, serverOrigin: (req as any).serverOrigin, account, credentialUrl };

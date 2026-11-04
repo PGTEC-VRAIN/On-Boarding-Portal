@@ -15,8 +15,6 @@ export interface RegistrationInfo {
     city?: string;
     postCode?: string;
     country?: string;
-    // Solo ciudadania: DNI/NIE opcional para entrar con certificado.
-    nif?: string;
 }
 
 export const REGISTRATION_UPDATE_KEYS = ['address', 'city', 'country', 'did', 'email', 'name', 'postCode', 'taxId']

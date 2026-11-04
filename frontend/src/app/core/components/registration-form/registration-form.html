@@ -34,15 +34,6 @@
                     [attr.aria-invalid]="!!errorFor(cEmail)"
                     [attr.aria-describedby]="describedBy('citizen-email', cEmail, true)" required>
             </app-form-field>
-
-            @let cNif = citizenForm.get('nif');
-            <app-form-field class="pg-span-all" fieldId="citizen-nif" [label]="ui.t('form.nif')"
-                [optionalText]="ui.t('form.optional')" [hint]="ui.t('form.nifHint')"
-                [info]="ui.t('form.nifInfo')" [infoLabel]="ui.t('form.nifInfoLabel')" [error]="errorFor(cNif)">
-                <input id="citizen-nif" class="pg-input" type="text" formControlName="nif" spellcheck="false"
-                    autocapitalize="characters" [attr.aria-invalid]="!!errorFor(cNif)"
-                    [attr.aria-describedby]="describedBy('citizen-nif', cNif, true)">
-            </app-form-field>
         </div>
     </fieldset>
 

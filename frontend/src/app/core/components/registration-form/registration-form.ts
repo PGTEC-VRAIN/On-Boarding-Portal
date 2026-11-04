@@ -67,8 +67,7 @@ export class RegistrationForm {
 
     this.citizenForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email]],
-      nif: ['', [Validators.pattern(/^(\d{8}|[XYZxyz]\d{7})[\s-]?[A-Za-z]$/)]]
+      email: ['', [Validators.required, Validators.email]]
     });
 
     this.orgForm = this.fb.group({
@@ -106,7 +105,7 @@ export class RegistrationForm {
       return this.ui.t('form.invalidEmail');
     }
     if (control.hasError('pattern')) {
-      return control === this.citizenForm.get('nif') ? this.ui.t('form.invalidNif') : this.ui.t('form.invalidDid');
+      return this.ui.t('form.invalidDid');
     }
     return null;
   }

@@ -9,29 +9,10 @@ import { configService } from "./config.service";
 import { logger } from "./logger";
 
 const PASSWORD_CHARSET = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-const DNI_LETTERS = "TRWAGMYFPDXBNJZSQVHLCKE";
-const DNI_REGEX = /^(\d{8})([A-Z])$/;
-const NIE_REGEX = /^([XYZ])(\d{7})([A-Z])$/;
 
 export interface CitizenAccount {
     username: string;
     password: string;
-}
-
-// Normaliza un DNI/NIE (mayusculas, sin espacios ni guiones). Devuelve null si no es
-// valido (formato y letra de control).
-export function normalizeNif(value: string): string | null {
-    const nif = value.toUpperCase().replace(/[\s-]/g, '');
-    const dni = DNI_REGEX.exec(nif);
-    if (dni) {
-        return DNI_LETTERS[Number(dni[1]) % 23] === dni[2] ? nif : null;
-    }
-    const nie = NIE_REGEX.exec(nif);
-    if (nie) {
-        const number = Number('XYZ'.indexOf(nie[1]) + nie[2]);
-        return DNI_LETTERS[number % 23] === nie[3] ? nif : null;
-    }
-    return null;
 }
 
 class CitizenService {
@@ -68,16 +49,9 @@ class CitizenService {
     // para poder emitirla. Lleva una contraseña aleatoria (se envia por correo): al aceptar la
     // oferta, Lissi lleva a la persona a iniciar sesion en Keycloak. Si algun paso falla,
     // borra el usuario.
-    async createUser(name: string, email: string, nif?: string): Promise<CitizenAccount> {
+    async createUser(name: string, email: string): Promise<CitizenAccount> {
         const realm = this.config.keycloak.realmName;
         await this._authClient();
-
-        if (nif) {
-            const taken = await this.adminClient.users.find({ realm, q: `nif:${nif}` });
-            if (taken.length) {
-                throw new AppError('NIF already registered', 409);
-            }
-        }
 
         const password = this._generatePassword();
         const [firstName, ...rest] = name.trim().split(/\s+/);
@@ -88,7 +62,6 @@ class CitizenService {
             enabled: true,
             firstName,
             lastName: rest.join(' '),
-            attributes: nif ? { nif: [nif] } : {},
             // Permanente: la persona puede cambiarla en su cuenta, pero no se le obliga a mitad de la oferta.
             credentials: [{ type: 'password', value: password, temporary: false }],
             // Mismo mecanismo que el usuario admin de cada realm (keycloak.service.ts).
@@ -111,7 +84,7 @@ class CitizenService {
             await this.adminClient.users.del({ id, realm }).catch(() => undefined);
             throw error;
         }
-        logger.info(`Created citizen user '${email}'${nif ? ' with NIF' : ''}`);
+        logger.info(`Created citizen user '${email}'`);
         return { username: email, password };
     }
 
