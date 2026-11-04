@@ -55,7 +55,8 @@ export class Registration {
     // Persona de la ciudadania (sin DID propio ni organizacion).
     @Column({ default: false })
     citizen!: boolean
-    // NIF/NIE opcional: permite entrar con certificado digital.
+    // Ya no se escribe (no guardamos el DNI/NIE de la ciudadania). La columna se queda para
+    // no borrar datos al arrancar (synchronize); vaciarla es un paso manual aparte.
     @Column({ nullable: true })
     nif?: string
     @Column({ nullable: true, type: 'text' })
