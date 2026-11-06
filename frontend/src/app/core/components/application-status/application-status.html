@@ -42,6 +42,11 @@
                     {{ service.name }}<span class="pg-visually-hidden"> {{ ui.t('common.newTab') }}</span>
                 </a>
                 }
+                @if (ui.marketplaceUrl) {
+                <a class="pg-link resource-link" [href]="ui.marketplaceUrl" target="_blank" rel="noopener noreferrer">
+                    {{ ui.t('track.marketplaceLink') }}<span class="pg-visually-hidden"> {{ ui.t('common.newTab') }}</span>
+                </a>
+                }
             </div>
         </div>
     </section>

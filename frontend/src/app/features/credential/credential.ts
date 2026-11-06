@@ -8,6 +8,7 @@ import { UiPreferencesService } from '../../core/services/ui-preferences';
 import { Toolbar } from '../../core/components/toolbar/toolbar';
 import { SiteFooter } from '../../core/components/site-footer/site-footer';
 import { Icon } from '../../core/components/icon/icon';
+import { LISSI_ANDROID_URL, LISSI_IOS_URL } from '../../core/constants/lissi';
 
 type CredentialError = 'invalid' | 'tooMany' | 'server';
 
@@ -25,6 +26,8 @@ export class CitizenCredential {
   private readonly sanitizer = inject(DomSanitizer);
   private readonly destroyRef = inject(DestroyRef);
   readonly ui = inject(UiPreferencesService);
+  readonly lissiIos = LISSI_IOS_URL;
+  readonly lissiAndroid = LISSI_ANDROID_URL;
 
   private token = '';
   readonly loading = signal(true);
