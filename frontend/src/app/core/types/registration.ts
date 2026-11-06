@@ -19,6 +19,8 @@ export interface Registration {
     // true si el portal creó el realm y el DID (didCreationEnabled); false si el
     // DID lo aportó la organización.
     didGenerated?: boolean;
+    // Persona de la ciudadania (sin organizacion ni conector).
+    citizen?: boolean;
 }
 
 export interface FileMetadata {

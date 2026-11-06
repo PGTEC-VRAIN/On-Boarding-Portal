@@ -16,6 +16,36 @@
         <p class="pg-note">{{ note() }}</p>
     </section>
 
+    @if (registration().citizen) {
+    <section class="pg-card meanwhile" aria-labelledby="meanwhile-title">
+        <h2 class="pg-h3 meanwhile-title" id="meanwhile-title">{{ ui.t('track.meanwhile') }}</h2>
+        <div class="resource">
+            <span class="resource-icon"><app-icon icon="key" [size]="22" /></span>
+            <div class="resource-body">
+                <span class="resource-title">{{ ui.t('track.walletTitle') }}</span>
+                <span class="resource-desc">{{ ui.t('track.walletDesc') }}</span>
+                <a class="pg-link resource-link" [href]="lissiIos" target="_blank" rel="noopener noreferrer">
+                    {{ ui.t('guide.lissiIos') }}<span class="pg-visually-hidden"> {{ ui.t('common.newTab') }}</span>
+                </a>
+                <a class="pg-link resource-link" [href]="lissiAndroid" target="_blank" rel="noopener noreferrer">
+                    {{ ui.t('guide.lissiAndroid') }}<span class="pg-visually-hidden"> {{ ui.t('common.newTab') }}</span>
+                </a>
+            </div>
+        </div>
+        <div class="resource">
+            <span class="resource-icon"><app-icon icon="external" [size]="22" /></span>
+            <div class="resource-body">
+                <span class="resource-title">{{ ui.t('track.servicesTitle') }}</span>
+                <span class="resource-desc">{{ ui.t('track.servicesDesc') }}</span>
+                @for (service of services; track service.url) {
+                <a class="pg-link resource-link" [href]="service.url" target="_blank" rel="noopener noreferrer">
+                    {{ service.name }}<span class="pg-visually-hidden"> {{ ui.t('common.newTab') }}</span>
+                </a>
+                }
+            </div>
+        </div>
+    </section>
+    } @else {
     <section class="pg-card meanwhile" aria-labelledby="meanwhile-title">
         <h2 class="pg-h3 meanwhile-title" id="meanwhile-title">{{ ui.t('track.meanwhile') }}</h2>
         <div class="resource">
@@ -53,4 +83,5 @@
             </div>
         </div>
     </section>
+    }
 </div>

@@ -320,7 +320,7 @@ citizen:
     - tetis_user
   credentialScope: ServiceCredential
   group: consumer
-  passwordLength: 16
+  passwordLength: 10
   offer:
     clientId: 9c481dc3-2ad0-4fe0-881d-c32ad02fe0fc
     botUser: offer-bot

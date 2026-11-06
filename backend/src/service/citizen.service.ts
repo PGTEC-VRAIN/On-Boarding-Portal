@@ -8,7 +8,10 @@ import { AppError } from "../type/app-error";
 import { configService } from "./config.service";
 import { logger } from "./logger";
 
-const PASSWORD_CHARSET = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+// Contraseña temporal pensada para teclearla en el movil: letras minusculas (sin las ambiguas)
+// seguidas de digitos, p. ej. "kmbtu48273". Keycloak obliga a cambiarla al primer inicio de sesion.
+const LETTERS = "abcdefghjkmnprstuvxyz";
+const DIGITS = "23456789";
 
 export interface CitizenAccount {
     username: string;
@@ -54,16 +57,19 @@ class CitizenService {
         await this._authClient();
 
         const password = this._generatePassword();
+        const username = await this._availableUsername(name, realm);
         const [firstName, ...rest] = name.trim().split(/\s+/);
         const user: UserRepresentation & { verifiableCredentials?: { credentialScopeName: string }[] } = {
-            username: email,
+            username,
             email,
             emailVerified: true,
             enabled: true,
             firstName,
             lastName: rest.join(' '),
-            // Permanente: la persona puede cambiarla en su cuenta, pero no se le obliga a mitad de la oferta.
-            credentials: [{ type: 'password', value: password, temporary: false }],
+            // Temporal: al iniciar sesion en Keycloak (al aceptar la oferta desde la wallet) se le
+            // obliga a elegir una contraseña nueva antes de continuar.
+            credentials: [{ type: 'password', value: password, temporary: true }],
+            requiredActions: ['UPDATE_PASSWORD'],
             // Mismo mecanismo que el usuario admin de cada realm (keycloak.service.ts).
             verifiableCredentials: [{ credentialScopeName: this.config.credentialScope }],
         };
@@ -80,18 +86,19 @@ class CitizenService {
         try {
             await this._assignAccess(id, realm);
         } catch (error) {
-            logger.error(`Unable to set up citizen user '${email}', removing it`, error);
+            logger.error(`Unable to set up citizen user '${username}', removing it`, error);
             await this.adminClient.users.del({ id, realm }).catch(() => undefined);
             throw error;
         }
-        logger.info(`Created citizen user '${email}'`);
-        return { username: email, password };
+        logger.info(`Created citizen user '${username}'`);
+        return { username, password };
     }
 
     async removeUser(email: string): Promise<void> {
         const realm = this.config.keycloak.realmName;
         await this._authClient();
-        const users = await this.adminClient.users.find({ realm, username: email, exact: true });
+        // Por correo: el nombre de usuario se deriva del nombre (y antes de eso era el propio correo).
+        const users = await this.adminClient.users.find({ realm, email, exact: true });
         for (const { id } of users) {
             await this.adminClient.users.del({ id: id!, realm });
             logger.info(`Deleted citizen user '${email}'`);
@@ -128,9 +135,28 @@ class CitizenService {
         await this.adminClient.users.addClientRoleMappings({ id: userId, realm, clientUniqueId: client.id, roles });
     }
 
+    // passwordLength = letras + digitos a partes iguales (10 -> 5 letras y 5 digitos).
     private _generatePassword(): string {
-        const bytes = crypto.randomBytes(this.config.passwordLength);
-        return Array.from(bytes).map(byte => PASSWORD_CHARSET[byte % PASSWORD_CHARSET.length]).join('');
+        const half = Math.max(1, Math.floor(this.config.passwordLength / 2));
+        const pick = (charset: string) => charset[crypto.randomInt(charset.length)];
+        return Array.from({ length: half }, () => pick(LETTERS)).join('')
+            + Array.from({ length: half }, () => pick(DIGITS)).join('');
+    }
+
+    // Usuario facil de escribir: el primer nombre sin acentos y en minusculas ("Ana García López"
+    // -> "ana"); si ya existe (otra persona con el mismo nombre) se le añade un numero (ana2, ana3...).
+    private async _availableUsername(name: string, realm: string): Promise<string> {
+        const first = name.trim().split(/\s+/)[0] ?? '';
+        const clean = first.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]/g, '');
+        // Keycloak pide al menos 3 caracteres.
+        const base = (clean || 'usuario').padEnd(3, 'x');
+        for (let n = 1; ; n++) {
+            const candidate = n === 1 ? base : `${base}${n}`;
+            const found = await this.adminClient.users.find({ realm, username: candidate, exact: true });
+            if (found.length === 0) {
+                return candidate;
+            }
+        }
     }
 
     private async _authClient() {

@@ -1,0 +1,85 @@
+<app-toolbar />
+<main id="main" class="pg-container guide">
+    <header class="pg-section-head">
+        <p class="pg-eyebrow">{{ ui.t('guide.eyebrow') }}</p>
+        <h1 class="pg-h1">{{ ui.t('guide.title') }}</h1>
+        <p class="pg-lead">{{ ui.t('guide.lead') }}</p>
+    </header>
+
+    <ol class="guide-steps">
+        <li class="pg-card guide-step">
+            <span class="step-num" aria-hidden="true">1</span>
+            <div class="step-body">
+                <h2 class="pg-h3">{{ ui.t('guide.s1Title') }}</h2>
+                <p>{{ ui.t('guide.s1Desc') }}</p>
+                <img class="shot" src="/guide/citizen-step1.png" width="649" height="488" [alt]="ui.t('guide.s1Alt')">
+                <a class="pg-btn pg-btn--primary pg-btn--small" routerLink="/submit" fragment="register">
+                    {{ ui.t('guide.s1Cta') }}
+                    <app-icon icon="arrow-right" [size]="18" />
+                </a>
+            </div>
+        </li>
+
+        <li class="pg-card guide-step">
+            <span class="step-num" aria-hidden="true">2</span>
+            <div class="step-body">
+                <h2 class="pg-h3">{{ ui.t('guide.s2Title') }}</h2>
+                <p>{{ ui.t('guide.s2Desc') }}</p>
+                <ul class="pg-check-list">
+                    <li><app-icon icon="check" />{{ ui.t('guide.s2Name') }}</li>
+                    <li><app-icon icon="check" />{{ ui.t('guide.s2Email') }}</li>
+                </ul>
+            </div>
+        </li>
+
+        <li class="pg-card guide-step">
+            <span class="step-num" aria-hidden="true">3</span>
+            <div class="step-body">
+                <h2 class="pg-h3">{{ ui.t('guide.s3Title') }}</h2>
+                <p>{{ ui.t('guide.s3Desc') }}</p>
+                <p class="pg-note">{{ ui.t('guide.s3Spam') }}</p>
+                <img class="shot" src="/guide/citizen-email.png" width="640" height="1100" [alt]="ui.t('guide.s3Alt')">
+            </div>
+        </li>
+
+        <li class="pg-card guide-step">
+            <span class="step-num" aria-hidden="true">4</span>
+            <div class="step-body">
+                <h2 class="pg-h3">{{ ui.t('guide.s4Title') }}</h2>
+                <p>{{ ui.t('guide.s4Desc') }}</p>
+                <div class="actions">
+                    <a class="pg-btn pg-btn--primary pg-btn--small" [href]="lissiIos" target="_blank" rel="noopener noreferrer">
+                        {{ ui.t('guide.lissiIos') }}<span class="pg-visually-hidden"> {{ ui.t('common.newTab') }}</span>
+                    </a>
+                    <a class="pg-btn pg-btn--primary pg-btn--small" [href]="lissiAndroid" target="_blank" rel="noopener noreferrer">
+                        {{ ui.t('guide.lissiAndroid') }}<span class="pg-visually-hidden"> {{ ui.t('common.newTab') }}</span>
+                    </a>
+                </div>
+            </div>
+        </li>
+
+        <li class="pg-card guide-step">
+            <span class="step-num" aria-hidden="true">5</span>
+            <div class="step-body">
+                <h2 class="pg-h3">{{ ui.t('guide.s5Title') }}</h2>
+                <p>{{ ui.t('guide.s5Desc') }}</p>
+                <ol class="sub-steps">
+                    <li>{{ ui.t('guide.s5a') }}</li>
+                    <li>{{ ui.t('guide.s5b') }}</li>
+                    <li>{{ ui.t('guide.s5c') }}</li>
+                    <li>{{ ui.t('guide.s5d') }}</li>
+                </ol>
+                <p class="pg-note">{{ ui.t('guide.s5Note') }}</p>
+            </div>
+        </li>
+
+        <li class="pg-card guide-step">
+            <span class="step-num" aria-hidden="true">6</span>
+            <div class="step-body">
+                <h2 class="pg-h3">{{ ui.t('guide.s6Title') }}</h2>
+                <p>{{ ui.t('guide.s6Desc') }}</p>
+            </div>
+        </li>
+    </ol>
+</main>
+<app-site-footer />

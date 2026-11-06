@@ -27,6 +27,7 @@ export class RegistrationForm {
 
   readonly stepChange = output<number>();
   readonly submitted = output<string>();
+  readonly citizenSubmitted = output<void>();
 
   readonly step = signal(0);
   isProcessing = signal<boolean>(false);
@@ -168,6 +169,7 @@ export class RegistrationForm {
       next: (response) => {
         this.registrationId = response.id;
         this.isProcessing.set(false);
+        this.citizenSubmitted.emit();
         this.submitted.emit(response.id);
       },
       error: (err) => {

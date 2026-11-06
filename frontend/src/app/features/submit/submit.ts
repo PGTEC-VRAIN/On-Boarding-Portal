@@ -20,6 +20,7 @@ import { RegistrationStatus } from '../../core/types/registration-status';
 type SubmitMode = 'register' | 'search';
 
 const STATUS_STEP = 3;
+const CITIZEN_STATUS_STEP = 1;
 const STEP_HEADINGS = ['org', 'contact', 'contract', 'status'];
 
 @Component({
@@ -54,23 +55,36 @@ export class Submit {
   readonly formStep = signal(0);
   readonly trackedRegistration = signal<Registration | null>(null);
   readonly submittedId = signal<string | null>(null);
+  readonly citizenDone = signal(false);
   readonly _editing = signal(false);
   private lastSearchedId: string | null = null;
+
+  // Vista de seguimiento de una persona de la ciudadania: otros pasos (correo y wallet).
+  readonly isCitizenStatus = computed(() => {
+    if (this.mode() !== 'search') return false;
+    const registration = this.trackedRegistration();
+    return registration ? !!registration.citizen : this.citizenDone();
+  });
 
   readonly currentStep = computed(() => {
     if (this.mode() === 'register') {
       return this.formStep();
     }
+    // Ciudadania: datos enviados (1), ahora toca consultar el correo (2).
+    if (this.isCitizenStatus()) {
+      return CITIZEN_STATUS_STEP;
+    }
     // An active registration has completed every step.
     return this.trackedRegistration()?.status === RegistrationStatus.ACTIVE ? STATUS_STEP + 1 : STATUS_STEP;
   });
 
-  readonly heading = computed(() => STEP_HEADINGS[Math.min(this.currentStep(), STATUS_STEP)]);
+  readonly heading = computed(() =>
+    this.isCitizenStatus() ? 'citizenStatus' : STEP_HEADINGS[Math.min(this.currentStep(), STATUS_STEP)]);
 
-  readonly steps = computed<WizardStep[]>(() => [1, 2, 3, 4].map(n => ({
-    label: this.ui.t(`wizard.step${n}`),
-    description: this.ui.t(`wizard.step${n}Desc`),
-  })));
+  readonly steps = computed<WizardStep[]>(() => [1, 2, 3, 4].map(n => {
+    const prefix = this.isCitizenStatus() ? 'wizard.citizenStep' : 'wizard.step';
+    return { label: this.ui.t(`${prefix}${n}`), description: this.ui.t(`${prefix}${n}Desc`) };
+  }));
 
   constructor() {
     this.route.fragment.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(fragment => {
@@ -82,6 +96,7 @@ export class Submit {
       if (!id) {
         this.lastSearchedId = null;
         this.submittedId.set(null);
+        this.citizenDone.set(false);
         this.trackedRegistration.set(null);
         return;
       }
@@ -110,6 +125,7 @@ export class Submit {
 
   lookUpAnother(): void {
     this.submittedId.set(null);
+    this.citizenDone.set(false);
     this.trackingId = '';
     this.setIdQueryParam();
   }

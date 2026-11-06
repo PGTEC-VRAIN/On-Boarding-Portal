@@ -204,9 +204,9 @@ config:
     dataspaceRoles: [clearence1, hidris_user, tetis_user]
     credentialScope: ServiceCredential
     group: consumer
-    # -- Length of the random password emailed to each citizen. Lissi sends the person to sign in
+    # -- Length of the temporary password emailed to each citizen (half letters, half digits; 10 = 5+5). Lissi sends the person to sign in
     # to Keycloak when accepting the credential (authorization code flow).
-    passwordLength: 16
+    passwordLength: 10
     # -- Credential offers are created with Lissi's own client (Keycloak ties an offer to the client
     # that creates it and Lissi signs in with its own), through a technical user the portal prepares
     # itself (enables direct access grants on that client, creates the user, sets its password).

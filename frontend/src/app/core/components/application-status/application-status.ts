@@ -7,6 +7,8 @@ import { ServerConfigService } from '../../services/server-config';
 import { StatusTag } from '../status-tag/status-tag';
 import { StatusTimeline, TimelineItem, TimelineState } from '../status-timeline/status-timeline';
 import { Icon } from '../icon/icon';
+import { LISSI_ANDROID_URL, LISSI_IOS_URL } from '../../constants/lissi';
+import { CITIZEN_SERVICES } from '../../constants/citizen-services';
 
 /** Status card (headline, tag and timeline) plus the "in the meantime" resources. */
 @Component({
@@ -22,9 +24,15 @@ export class ApplicationStatus {
   readonly documentUrl = inject(ServerConfigService).getProperty('documentToSignUrl') || '';
 
   readonly registration = input.required<Registration>();
+  readonly lissiIos = LISSI_IOS_URL;
+  readonly lissiAndroid = LISSI_ANDROID_URL;
+  readonly services = CITIZEN_SERVICES;
 
   readonly note = computed(() => {
-    const { status, didGenerated } = this.registration();
+    const { status, didGenerated, citizen } = this.registration();
+    if (citizen) {
+      return this.ui.t('track.note.citizen');
+    }
     // Sin realm creado por el portal no se envían enlaces de gestión de usuarios.
     if (status === RegistrationStatus.ACTIVE && !didGenerated) {
       return this.ui.t('track.note.activeOwnDid');
@@ -36,6 +44,9 @@ export class ApplicationStatus {
 
   readonly timeline = computed<TimelineItem[]>(() => {
     const registration = this.registration();
+    if (registration.citizen) {
+      return this.citizenTimeline(registration);
+    }
     const status = registration.status;
     const filesCount = registration.files?.length ?? 0;
     const isActive = status === RegistrationStatus.ACTIVE;
@@ -98,4 +109,33 @@ export class ApplicationStatus {
       },
     ];
   });
+
+  // La ciudadania no firma contrato ni despliega conector: solo queda guardar la credencial
+  // (el enlace llega por correo) y usarla en un servicio.
+  private citizenTimeline(registration: Registration): TimelineItem[] {
+    return [
+      {
+        title: this.ui.t('timeline.sent'),
+        description: this.ui.replace('timeline.citizenSentDesc', {
+          date: this.datePipe.transform(registration.createdAt, 'dd/MM/yyyy HH:mm') ?? '',
+        }),
+        state: 'done',
+      },
+      {
+        title: this.ui.t('timeline.citizenAccount'),
+        description: this.ui.t('timeline.citizenAccountDesc'),
+        state: 'done',
+      },
+      {
+        title: this.ui.t('timeline.citizenEmail'),
+        description: this.ui.t('timeline.citizenEmailDesc'),
+        state: 'current',
+      },
+      {
+        title: this.ui.t('timeline.citizenServices'),
+        description: this.ui.t('timeline.citizenServicesDesc'),
+        state: 'pending',
+      },
+    ];
+  }
 }

@@ -35,7 +35,7 @@
 
         <div class="wizard-main">
             @if (mode() === 'register') {
-            <app-registration-form (stepChange)="formStep.set($event)" (submitted)="onSubmitted($event)" />
+            <app-registration-form (stepChange)="formStep.set($event)" (submitted)="onSubmitted($event)" (citizenSubmitted)="citizenDone.set(true)" />
             } @else {
 
             @if (submittedId(); as id) {
